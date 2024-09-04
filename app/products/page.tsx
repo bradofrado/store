@@ -121,7 +121,7 @@ const sortOptions = [
   { name: 'Price: Low to High', href: '#' },
   { name: 'Price: High to Low', href: '#' },
 ]
-const filters = [
+const filters: {id: string, name: string, options: {value: string, label: string, checked?: boolean}[]}[] = [
   {
     id: 'category',
     name: 'Category',
@@ -665,7 +665,7 @@ export default function Example() {
                   >
                     <div className="py-1">
                       {sortOptions.map((option) => (
-                        <MenuItem key={option}>
+                        <MenuItem key={option.name}>
                           <a
                             href={option.href}
                             className="block px-4 py-2 text-sm font-medium text-gray-900 data-[focus]:bg-gray-100"
