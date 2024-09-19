@@ -1,43 +1,4 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
 'use client'
-
-import { Fragment, useState } from 'react'
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from '@headlessui/react'
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  QuestionMarkCircleIcon,
-  ShoppingBagIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const categories = [
   {
