@@ -13,9 +13,9 @@
   }
   ```
 */
-'use client'
+'use client';
 
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react';
 import {
   Dialog,
   DialogBackdrop,
@@ -32,10 +32,15 @@ import {
   TabList,
   TabPanel,
   TabPanels,
-} from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid'
-import { CategoryFiltersView } from './components/category-filters-view'
+} from '@headlessui/react';
+import {
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  ShoppingBagIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid';
+import { CategoryFiltersView } from './components/category-filters-view';
 
 const navigation = {
   categories: [
@@ -46,14 +51,18 @@ const navigation = {
         {
           name: 'New Arrivals',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+          imageAlt:
+            'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
         {
           name: 'Basic Tees',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+          imageAlt:
+            'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
       ],
       sections: [
@@ -104,13 +113,16 @@ const navigation = {
         {
           name: 'New Arrivals',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
+          imageAlt:
+            'Drawstring top with elastic loop closure and textured interior padding.',
         },
         {
           name: 'Artwork Tees',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
           imageAlt:
             'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
         },
@@ -158,8 +170,8 @@ const navigation = {
     { name: 'Company', href: '#' },
     { name: 'Stores', href: '#' },
   ],
-}
-const breadcrumbs = [{ id: 1, name: 'Men', href: '#' }]
+};
+const breadcrumbs = [{ id: 1, name: 'Men', href: '#' }];
 const filters = [
   {
     id: 'color',
@@ -196,30 +208,35 @@ const filters = [
       { value: '2xl', label: '2XL' },
     ],
   },
-]
+];
 const products = [
   {
     id: 1,
     name: 'Basic Tee 8-Pack',
     href: '#',
     price: '$256',
-    description: 'Get the full lineup of our Basic Tees. Have a fresh shirt all week, and an extra for laundry day.',
+    description:
+      'Get the full lineup of our Basic Tees. Have a fresh shirt all week, and an extra for laundry day.',
     options: '8 colors',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg',
-    imageAlt: 'Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green.',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg',
+    imageAlt:
+      'Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green.',
   },
   {
     id: 2,
     name: 'Basic Tee',
     href: '#',
     price: '$32',
-    description: 'Look like a visionary CEO and wear the same black t-shirt every day.',
+    description:
+      'Look like a visionary CEO and wear the same black t-shirt every day.',
     options: 'Black',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-02.jpg',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-02.jpg',
     imageAlt: 'Front of plain black t-shirt.',
   },
   // More products...
-]
+];
 const footerNavigation = {
   products: [
     { name: 'Bags', href: '#' },
@@ -245,8 +262,8 @@ const footerNavigation = {
     { name: 'FAQ', href: '#' },
     { name: 'Find a store', href: '#' },
   ],
-}
+};
 
 export default function Example() {
-  return <CategoryFiltersView />
+  return <CategoryFiltersView />;
 }

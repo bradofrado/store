@@ -1,21 +1,6 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-'use client'
+'use client';
 
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react';
 import {
   Dialog,
   DialogBackdrop,
@@ -29,17 +14,17 @@ import {
   TabList,
   TabPanel,
   TabPanels,
-} from '@headlessui/react'
+} from '@headlessui/react';
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
   QuestionMarkCircleIcon,
   ShoppingBagIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
+const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP'];
 const navigation = {
   categories: [
     {
@@ -48,26 +33,34 @@ const navigation = {
         {
           name: 'New Arrivals',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+          imageAlt:
+            'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
         {
           name: 'Basic Tees',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+          imageAlt:
+            'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
         {
           name: 'Accessories',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
-          imageAlt: 'Model wearing minimalist watch with black wristband and white watch face.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
+          imageAlt:
+            'Model wearing minimalist watch with black wristband and white watch face.',
         },
         {
           name: 'Carry',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
-          imageAlt: 'Model opening tan leather long wallet with credit card pockets and cash pouch.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
+          imageAlt:
+            'Model opening tan leather long wallet with credit card pockets and cash pouch.',
         },
       ],
     },
@@ -77,27 +70,33 @@ const navigation = {
         {
           name: 'New Arrivals',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
-          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+          imageAlt:
+            'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
         },
         {
           name: 'Basic Tees',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.',
         },
         {
           name: 'Accessories',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
           imageAlt:
             'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
         {
           name: 'Carry',
           href: '/products',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
-          imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
+          imageAlt:
+            'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
         },
       ],
     },
@@ -106,53 +105,71 @@ const navigation = {
     { name: 'Orders', href: '/orders' },
     //{ name: 'Stores', href: '#' },
   ],
-}
+};
 const categories = [
   {
     name: 'New Arrivals',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg',
   },
   {
     name: 'Productivity',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-02.jpg',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-02.jpg',
   },
   {
     name: 'Workspace',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-04.jpg',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-04.jpg',
   },
   {
     name: 'Accessories',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-05.jpg',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-05.jpg',
   },
-  { name: 'Sale', href: '#', imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-03.jpg' },
-]
+  {
+    name: 'Sale',
+    href: '#',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-03.jpg',
+  },
+];
 const collections = [
   {
     name: 'Handcrafted Collection',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
-    imageAlt: 'Brown leather key ring with brass metal loops and rivets on wood table.',
-    description: 'Keep your phone, keys, and wallet together, so you can lose everything at once.',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
+    imageAlt:
+      'Brown leather key ring with brass metal loops and rivets on wood table.',
+    description:
+      'Keep your phone, keys, and wallet together, so you can lose everything at once.',
   },
   {
     name: 'Organized Desk Collection',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
-    imageAlt: 'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
-    description: 'The rest of the house will still be a mess, but your desk will look great.',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
+    imageAlt:
+      'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
+    description:
+      'The rest of the house will still be a mess, but your desk will look great.',
   },
   {
     name: 'Focus Collection',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-03.jpg',
-    imageAlt: 'Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.',
-    description: 'Be more productive than enterprise project managers with a single piece of paper.',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-03.jpg',
+    imageAlt:
+      'Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.',
+    description:
+      'Be more productive than enterprise project managers with a single piece of paper.',
   },
-]
+];
 const footerNavigation = {
   shop: [
     { name: 'Bags', href: '#' },
@@ -180,44 +197,50 @@ const footerNavigation = {
     { name: 'Instagram', href: '#' },
     { name: 'Pinterest', href: '#' },
   ],
-}
+};
 
-export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNode}> = ({children}) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+export const ApplicationLayout: React.FunctionComponent<{
+  children: React.ReactNode;
+}> = ({ children }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white">
+    <div className='bg-white'>
       {/* Mobile menu */}
-      <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="relative z-40 lg:hidden">
+      <Dialog
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+        className='relative z-40 lg:hidden'
+      >
         <DialogBackdrop
           transition
-          className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
+          className='fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0'
         />
 
-        <div className="fixed inset-0 z-40 flex">
+        <div className='fixed inset-0 z-40 flex'>
           <DialogPanel
             transition
-            className="relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:-translate-x-full"
+            className='relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:-translate-x-full'
           >
-            <div className="flex px-4 pb-2 pt-5">
+            <div className='flex px-4 pb-2 pt-5'>
               <button
-                type="button"
+                type='button'
                 onClick={() => setMobileMenuOpen(false)}
-                className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
+                className='-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400'
               >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                <span className='sr-only'>Close menu</span>
+                <XMarkIcon aria-hidden='true' className='h-6 w-6' />
               </button>
             </div>
 
             {/* Links */}
-            <TabGroup className="mt-2">
-              <div className="border-b border-gray-200">
-                <TabList className="-mb-px flex space-x-8 px-4">
+            <TabGroup className='mt-2'>
+              <div className='border-b border-gray-200'>
+                <TabList className='-mb-px flex space-x-8 px-4'>
                   {navigation.categories.map((category) => (
                     <Tab
                       key={category.name}
-                      className="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-indigo-600 data-[selected]:text-indigo-600"
+                      className='flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-indigo-600 data-[selected]:text-indigo-600'
                     >
                       {category.name}
                     </Tab>
@@ -226,18 +249,34 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
               </div>
               <TabPanels as={Fragment}>
                 {navigation.categories.map((category) => (
-                  <TabPanel key={category.name} className="space-y-12 px-4 py-6">
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-10">
+                  <TabPanel
+                    key={category.name}
+                    className='space-y-12 px-4 py-6'
+                  >
+                    <div className='grid grid-cols-2 gap-x-4 gap-y-10'>
                       {category.featured.map((item) => (
-                        <div key={item.name} className="group relative">
-                          <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                            <img alt={item.imageAlt} src={item.imageSrc} className="object-cover object-center" />
+                        <div key={item.name} className='group relative'>
+                          <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
+                            <img
+                              alt={item.imageAlt}
+                              src={item.imageSrc}
+                              className='object-cover object-center'
+                            />
                           </div>
-                          <a href={item.href} className="mt-6 block text-sm font-medium text-gray-900">
-                            <span aria-hidden="true" className="absolute inset-0 z-10" />
+                          <a
+                            href={item.href}
+                            className='mt-6 block text-sm font-medium text-gray-900'
+                          >
+                            <span
+                              aria-hidden='true'
+                              className='absolute inset-0 z-10'
+                            />
                             {item.name}
                           </a>
-                          <p aria-hidden="true" className="mt-1 text-sm text-gray-500">
+                          <p
+                            aria-hidden='true'
+                            className='mt-1 text-sm text-gray-500'
+                          >
                             Shop now
                           </p>
                         </div>
@@ -248,48 +287,60 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
               </TabPanels>
             </TabGroup>
 
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
               {navigation.pages.map((page) => (
-                <div key={page.name} className="flow-root">
-                  <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
+                <div key={page.name} className='flow-root'>
+                  <a
+                    href={page.href}
+                    className='-m-2 block p-2 font-medium text-gray-900'
+                  >
                     {page.name}
                   </a>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+            <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
+              <div className='flow-root'>
+                <a
+                  href='#'
+                  className='-m-2 block p-2 font-medium text-gray-900'
+                >
                   Create an account
                 </a>
               </div>
-              <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+              <div className='flow-root'>
+                <a
+                  href='#'
+                  className='-m-2 block p-2 font-medium text-gray-900'
+                >
                   Sign in
                 </a>
               </div>
             </div>
 
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
               {/* Currency selector */}
               <form>
-                <div className="inline-block">
-                  <label htmlFor="mobile-currency" className="sr-only">
+                <div className='inline-block'>
+                  <label htmlFor='mobile-currency' className='sr-only'>
                     Currency
                   </label>
-                  <div className="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white">
+                  <div className='group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white'>
                     <select
-                      id="mobile-currency"
-                      name="currency"
-                      className="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
+                      id='mobile-currency'
+                      name='currency'
+                      className='flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800'
                     >
                       {currencies.map((currency) => (
                         <option key={currency}>{currency}</option>
                       ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                      <ChevronDownIcon aria-hidden="true" className="h-5 w-5 text-gray-500" />
+                    <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center'>
+                      <ChevronDownIcon
+                        aria-hidden='true'
+                        className='h-5 w-5 text-gray-500'
+                      />
                     </div>
                   </div>
                 </div>
@@ -299,41 +350,50 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
         </div>
       </Dialog>
 
-      <div className="relative bg-gray-900">
-       {/* Navigation */}
-       <header className="relative z-10">
-          <nav aria-label="Top">
+      <div className='relative bg-gray-900'>
+        {/* Navigation */}
+        <header className='relative z-10'>
+          <nav aria-label='Top'>
             {/* Top navigation */}
-            <div className="bg-gray-900">
-              <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <div className='bg-gray-900'>
+              <div className='mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
                 {/* Currency selector */}
                 <form>
                   <div>
-                    <label htmlFor="desktop-currency" className="sr-only">
+                    <label htmlFor='desktop-currency' className='sr-only'>
                       Currency
                     </label>
-                    <div className="group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white">
+                    <div className='group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white'>
                       <select
-                        id="desktop-currency"
-                        name="currency"
-                        className="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100"
+                        id='desktop-currency'
+                        name='currency'
+                        className='flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100'
                       >
                         {currencies.map((currency) => (
                           <option key={currency}>{currency}</option>
                         ))}
                       </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                        <ChevronDownIcon aria-hidden="true" className="h-5 w-5 text-gray-300" />
+                      <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center'>
+                        <ChevronDownIcon
+                          aria-hidden='true'
+                          className='h-5 w-5 text-gray-300'
+                        />
                       </div>
                     </div>
                   </div>
                 </form>
 
-                <div className="flex items-center space-x-6">
-                  <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
+                <div className='flex items-center space-x-6'>
+                  <a
+                    href='#'
+                    className='text-sm font-medium text-white hover:text-gray-100'
+                  >
                     Sign in
                   </a>
-                  <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
+                  <a
+                    href='#'
+                    className='text-sm font-medium text-white hover:text-gray-100'
+                  >
                     Create an account
                   </a>
                 </div>
@@ -341,62 +401,77 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
             </div>
 
             {/* Secondary navigation */}
-            <div className="bg-white bg-opacity-10 backdrop-blur-md backdrop-filter">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className='bg-white bg-opacity-10 backdrop-blur-md backdrop-filter'>
+              <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
                 <div>
-                  <div className="flex h-16 items-center justify-between">
+                  <div className='flex h-16 items-center justify-between'>
                     {/* Logo (lg+) */}
-                    <div className="hidden lg:flex lg:flex-1 lg:items-center">
-                      <a href="/">
-                        <span className="sr-only">Your Company</span>
+                    <div className='hidden lg:flex lg:flex-1 lg:items-center'>
+                      <a href='/'>
+                        <span className='sr-only'>Your Company</span>
                         <img
-                          alt=""
-                          src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                          className="h-8 w-auto"
+                          alt=''
+                          src='https://tailwindui.com/img/logos/mark.svg?color=white'
+                          className='h-8 w-auto'
                         />
                       </a>
                     </div>
 
-                    <div className="hidden h-full lg:flex">
+                    <div className='hidden h-full lg:flex'>
                       {/* Flyout menus */}
-                      <PopoverGroup className="inset-x-0 bottom-0 px-4">
-                        <div className="flex h-full justify-center space-x-8">
+                      <PopoverGroup className='inset-x-0 bottom-0 px-4'>
+                        <div className='flex h-full justify-center space-x-8'>
                           {navigation.categories.map((category) => (
-                            <Popover key={category.name} className="flex">
-                              <div className="relative flex">
-                                <PopoverButton className="group relative z-10 flex items-center justify-center text-sm font-medium text-white transition-colors duration-200 ease-out">
+                            <Popover key={category.name} className='flex'>
+                              <div className='relative flex'>
+                                <PopoverButton className='group relative z-10 flex items-center justify-center text-sm font-medium text-white transition-colors duration-200 ease-out'>
                                   {category.name}
                                   <span
-                                    aria-hidden="true"
-                                    className="absolute inset-x-0 -bottom-px h-0.5 transition duration-200 ease-out group-data-[open]:bg-white"
+                                    aria-hidden='true'
+                                    className='absolute inset-x-0 -bottom-px h-0.5 transition duration-200 ease-out group-data-[open]:bg-white'
                                   />
                                 </PopoverButton>
                               </div>
 
                               <PopoverPanel
                                 transition
-                                className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+                                className='absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in'
                               >
                                 {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                                <div aria-hidden="true" className="absolute inset-0 top-1/2 bg-white shadow" />
+                                <div
+                                  aria-hidden='true'
+                                  className='absolute inset-0 top-1/2 bg-white shadow'
+                                />
 
-                                <div className="relative bg-white">
-                                  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                                    <div className="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
+                                <div className='relative bg-white'>
+                                  <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+                                    <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
                                       {category.featured.map((item) => (
-                                        <div key={item.name} className="group relative">
-                                          <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
+                                        <div
+                                          key={item.name}
+                                          className='group relative'
+                                        >
+                                          <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
                                             <img
                                               alt={item.imageAlt}
                                               src={item.imageSrc}
-                                              className="object-cover object-center"
+                                              className='object-cover object-center'
                                             />
                                           </div>
-                                          <a href={item.href} className="mt-4 block font-medium text-gray-900">
-                                            <span aria-hidden="true" className="absolute inset-0 z-10" />
+                                          <a
+                                            href={item.href}
+                                            className='mt-4 block font-medium text-gray-900'
+                                          >
+                                            <span
+                                              aria-hidden='true'
+                                              className='absolute inset-0 z-10'
+                                            />
                                             {item.name}
                                           </a>
-                                          <p aria-hidden="true" className="mt-1">
+                                          <p
+                                            aria-hidden='true'
+                                            className='mt-1'
+                                          >
                                             Shop now
                                           </p>
                                         </div>
@@ -412,7 +487,7 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
                             <a
                               key={page.name}
                               href={page.href}
-                              className="flex items-center text-sm font-medium text-white"
+                              className='flex items-center text-sm font-medium text-white'
                             >
                               {page.name}
                             </a>
@@ -422,46 +497,76 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
                     </div>
 
                     {/* Mobile menu and search (lg-) */}
-                    <div className="flex flex-1 items-center lg:hidden">
-                      <button type="button" onClick={() => setMobileMenuOpen(true)} className="-ml-2 p-2 text-white">
-                        <span className="sr-only">Open menu</span>
-                        <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+                    <div className='flex flex-1 items-center lg:hidden'>
+                      <button
+                        type='button'
+                        onClick={() => setMobileMenuOpen(true)}
+                        className='-ml-2 p-2 text-white'
+                      >
+                        <span className='sr-only'>Open menu</span>
+                        <Bars3Icon aria-hidden='true' className='h-6 w-6' />
                       </button>
 
                       {/* Search */}
-                      <a href="#" className="ml-2 p-2 text-white">
-                        <span className="sr-only">Search</span>
-                        <MagnifyingGlassIcon aria-hidden="true" className="h-6 w-6" />
+                      <a href='#' className='ml-2 p-2 text-white'>
+                        <span className='sr-only'>Search</span>
+                        <MagnifyingGlassIcon
+                          aria-hidden='true'
+                          className='h-6 w-6'
+                        />
                       </a>
                     </div>
 
                     {/* Logo (lg-) */}
-                    <a href="#" className="lg:hidden">
-                      <span className="sr-only">Your Company</span>
-                      <img alt="" src="https://tailwindui.com/img/logos/mark.svg?color=white" className="h-8 w-auto" />
+                    <a href='#' className='lg:hidden'>
+                      <span className='sr-only'>Your Company</span>
+                      <img
+                        alt=''
+                        src='https://tailwindui.com/img/logos/mark.svg?color=white'
+                        className='h-8 w-auto'
+                      />
                     </a>
 
-                    <div className="flex flex-1 items-center justify-end">
-                      <a href="#" className="hidden text-sm font-medium text-white lg:block">
+                    <div className='flex flex-1 items-center justify-end'>
+                      <a
+                        href='#'
+                        className='hidden text-sm font-medium text-white lg:block'
+                      >
                         Search
                       </a>
 
-                      <div className="flex items-center lg:ml-8">
+                      <div className='flex items-center lg:ml-8'>
                         {/* Help */}
-                        <a href="#" className="p-2 text-white lg:hidden">
-                          <span className="sr-only">Help</span>
-                          <QuestionMarkCircleIcon aria-hidden="true" className="h-6 w-6" />
+                        <a href='#' className='p-2 text-white lg:hidden'>
+                          <span className='sr-only'>Help</span>
+                          <QuestionMarkCircleIcon
+                            aria-hidden='true'
+                            className='h-6 w-6'
+                          />
                         </a>
-                        <a href="#" className="hidden text-sm font-medium text-white lg:block">
+                        <a
+                          href='#'
+                          className='hidden text-sm font-medium text-white lg:block'
+                        >
                           Help
                         </a>
 
                         {/* Cart */}
-                        <div className="ml-4 flow-root lg:ml-8">
-                          <a href="/cart" className="group -m-2 flex items-center p-2">
-                            <ShoppingBagIcon aria-hidden="true" className="h-6 w-6 flex-shrink-0 text-white" />
-                            <span className="ml-2 text-sm font-medium text-white">0</span>
-                            <span className="sr-only">items in cart, view bag</span>
+                        <div className='ml-4 flow-root lg:ml-8'>
+                          <a
+                            href='/cart'
+                            className='group -m-2 flex items-center p-2'
+                          >
+                            <ShoppingBagIcon
+                              aria-hidden='true'
+                              className='h-6 w-6 flex-shrink-0 text-white'
+                            />
+                            <span className='ml-2 text-sm font-medium text-white'>
+                              0
+                            </span>
+                            <span className='sr-only'>
+                              items in cart, view bag
+                            </span>
                           </a>
                         </div>
                       </div>
@@ -472,25 +577,27 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
             </div>
           </nav>
         </header>
-        </div>
-      
+      </div>
 
       {children}
 
-      <footer aria-labelledby="footer-heading" className="bg-gray-900">
-        <h2 id="footer-heading" className="sr-only">
+      <footer aria-labelledby='footer-heading' className='bg-gray-900'>
+        <h2 id='footer-heading' className='sr-only'>
           Footer
         </h2>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="py-20 xl:grid xl:grid-cols-3 xl:gap-8">
-            <div className="grid grid-cols-2 gap-8 xl:col-span-2">
-              <div className="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
+        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+          <div className='py-20 xl:grid xl:grid-cols-3 xl:gap-8'>
+            <div className='grid grid-cols-2 gap-8 xl:col-span-2'>
+              <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
                 <div>
-                  <h3 className="text-sm font-medium text-white">Shop</h3>
-                  <ul role="list" className="mt-6 space-y-6">
+                  <h3 className='text-sm font-medium text-white'>Shop</h3>
+                  <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.shop.map((item) => (
-                      <li key={item.name} className="text-sm">
-                        <a href={item.href} className="text-gray-300 hover:text-white">
+                      <li key={item.name} className='text-sm'>
+                        <a
+                          href={item.href}
+                          className='text-gray-300 hover:text-white'
+                        >
                           {item.name}
                         </a>
                       </li>
@@ -498,11 +605,14 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-white">Company</h3>
-                  <ul role="list" className="mt-6 space-y-6">
+                  <h3 className='text-sm font-medium text-white'>Company</h3>
+                  <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.company.map((item) => (
-                      <li key={item.name} className="text-sm">
-                        <a href={item.href} className="text-gray-300 hover:text-white">
+                      <li key={item.name} className='text-sm'>
+                        <a
+                          href={item.href}
+                          className='text-gray-300 hover:text-white'
+                        >
                           {item.name}
                         </a>
                       </li>
@@ -510,13 +620,16 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
                   </ul>
                 </div>
               </div>
-              <div className="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
+              <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
                 <div>
-                  <h3 className="text-sm font-medium text-white">Account</h3>
-                  <ul role="list" className="mt-6 space-y-6">
+                  <h3 className='text-sm font-medium text-white'>Account</h3>
+                  <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.account.map((item) => (
-                      <li key={item.name} className="text-sm">
-                        <a href={item.href} className="text-gray-300 hover:text-white">
+                      <li key={item.name} className='text-sm'>
+                        <a
+                          href={item.href}
+                          className='text-gray-300 hover:text-white'
+                        >
                           {item.name}
                         </a>
                       </li>
@@ -524,11 +637,14 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-white">Connect</h3>
-                  <ul role="list" className="mt-6 space-y-6">
+                  <h3 className='text-sm font-medium text-white'>Connect</h3>
+                  <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.connect.map((item) => (
-                      <li key={item.name} className="text-sm">
-                        <a href={item.href} className="text-gray-300 hover:text-white">
+                      <li key={item.name} className='text-sm'>
+                        <a
+                          href={item.href}
+                          className='text-gray-300 hover:text-white'
+                        >
                           {item.name}
                         </a>
                       </li>
@@ -537,24 +653,28 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
                 </div>
               </div>
             </div>
-            <div className="mt-12 md:mt-16 xl:mt-0">
-              <h3 className="text-sm font-medium text-white">Sign up for our newsletter</h3>
-              <p className="mt-6 text-sm text-gray-300">The latest deals and savings, sent to your inbox weekly.</p>
-              <form className="mt-2 flex sm:max-w-md">
-                <label htmlFor="email-address" className="sr-only">
+            <div className='mt-12 md:mt-16 xl:mt-0'>
+              <h3 className='text-sm font-medium text-white'>
+                Sign up for our newsletter
+              </h3>
+              <p className='mt-6 text-sm text-gray-300'>
+                The latest deals and savings, sent to your inbox weekly.
+              </p>
+              <form className='mt-2 flex sm:max-w-md'>
+                <label htmlFor='email-address' className='sr-only'>
                   Email address
                 </label>
                 <input
-                  id="email-address"
-                  type="text"
+                  id='email-address'
+                  type='text'
                   required
-                  autoComplete="email"
-                  className="w-full min-w-0 appearance-none rounded-md border border-white bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900"
+                  autoComplete='email'
+                  className='w-full min-w-0 appearance-none rounded-md border border-white bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900'
                 />
-                <div className="ml-4 flex-shrink-0">
+                <div className='ml-4 flex-shrink-0'>
                   <button
-                    type="submit"
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                    type='submit'
+                    className='flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900'
                   >
                     Sign up
                   </button>
@@ -563,11 +683,13 @@ export const ApplicationLayout: React.FunctionComponent<{children: React.ReactNo
             </div>
           </div>
 
-          <div className="border-t border-gray-800 py-10">
-            <p className="text-sm text-gray-400">Copyright &copy; 2021 Your Company, Inc.</p>
+          <div className='border-t border-gray-800 py-10'>
+            <p className='text-sm text-gray-400'>
+              Copyright &copy; 2021 Your Company, Inc.
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
-}
+  );
+};
