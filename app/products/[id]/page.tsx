@@ -1,41 +1,37 @@
 'use client';
 
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
+import { Radio, RadioGroup } from '@headlessui/react';
 import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Radio,
-  RadioGroup,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from '@headlessui/react';
-import {
-  Bars3Icon,
   CurrencyDollarIcon,
   GlobeAmericasIcon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-  UserIcon,
-  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/20/solid';
+import { Product, ProductItem } from '@/types/product';
+import { formatDollarAmount } from '@/utils/common';
+import { ProductCard } from '@/components/product-card';
 
-const product = {
+const colors = [
+  { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
+  {
+    name: 'Heather Grey',
+    bgColor: 'bg-gray-400',
+    selectedColor: 'ring-gray-400',
+  },
+];
+const sizes = [
+  { name: 'XXS', inStock: true },
+  { name: 'XS', inStock: true },
+  { name: 'S', inStock: true },
+  { name: 'M', inStock: true },
+  { name: 'L', inStock: true },
+  { name: 'XL', inStock: false },
+];
+
+const product: ProductItem = {
+  id: 0,
   name: 'Basic Tee',
-  price: '$35',
-  href: '#',
-  breadcrumbs: [
-    { id: 1, name: 'Women', href: '#' },
-    { id: 2, name: 'Clothing', href: '#' },
-  ],
+  price: 35,
   images: [
     {
       id: 1,
@@ -58,22 +54,6 @@ const product = {
       imageAlt: "Front of women's Basic Tee in black.",
       primary: false,
     },
-  ],
-  colors: [
-    { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
-    {
-      name: 'Heather Grey',
-      bgColor: 'bg-gray-400',
-      selectedColor: 'ring-gray-400',
-    },
-  ],
-  sizes: [
-    { name: 'XXS', inStock: true },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: false },
   ],
   description: `
     <p>The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit. They are hand cut and sewn locally, with a special dye technique that gives each tee it's own look.</p>
@@ -117,16 +97,16 @@ const reviews = {
     // More reviews...
   ],
 };
-const relatedProducts = [
+const relatedProducts: Product[] = [
   {
     id: 1,
     name: 'Basic Tee',
-    href: '#',
     imageSrc:
       'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg',
     imageAlt: "Front of men's Basic Tee in white.",
-    price: '$35',
-    color: 'Aspen White',
+    price: 35,
+    description: "Front of men's Basic Tee in white.",
+    options: 'Aspen White',
   },
   // More products...
 ];
@@ -135,10 +115,9 @@ function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
-  const [open, setOpen] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+export default function ProductItemPage() {
+  const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const [selectedSize, setSelectedSize] = useState(sizes[2]);
 
   return (
     <main className='mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8'>
@@ -148,7 +127,9 @@ export default function Example() {
             <h1 className='text-xl font-medium text-gray-900'>
               {product.name}
             </h1>
-            <p className='text-xl font-medium text-gray-900'>{product.price}</p>
+            <p className='text-xl font-medium text-gray-900'>
+              {formatDollarAmount(product.price)}
+            </p>
           </div>
           {/* Reviews */}
           <div className='mt-4'>
@@ -220,7 +201,7 @@ export default function Example() {
                   onChange={setSelectedColor}
                   className='flex items-center space-x-3'
                 >
-                  {product.colors.map((color) => (
+                  {colors.map((color) => (
                     <Radio
                       key={color.name}
                       value={color}
@@ -261,7 +242,7 @@ export default function Example() {
                   onChange={setSelectedSize}
                   className='grid grid-cols-3 gap-3 sm:grid-cols-6'
                 >
-                  {product.sizes.map((size) => (
+                  {sizes.map((size) => (
                     <Radio
                       key={size.name}
                       value={size}
@@ -411,31 +392,7 @@ export default function Example() {
 
         <div className='mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
           {relatedProducts.map((relatedProduct) => (
-            <div key={relatedProduct.id} className='group relative'>
-              <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80'>
-                <img
-                  alt={relatedProduct.imageAlt}
-                  src={relatedProduct.imageSrc}
-                  className='h-full w-full object-cover object-center lg:h-full lg:w-full'
-                />
-              </div>
-              <div className='mt-4 flex justify-between'>
-                <div>
-                  <h3 className='text-sm text-gray-700'>
-                    <a href={relatedProduct.href}>
-                      <span aria-hidden='true' className='absolute inset-0' />
-                      {relatedProduct.name}
-                    </a>
-                  </h3>
-                  <p className='mt-1 text-sm text-gray-500'>
-                    {relatedProduct.color}
-                  </p>
-                </div>
-                <p className='text-sm font-medium text-gray-900'>
-                  {relatedProduct.price}
-                </p>
-              </div>
-            </div>
+            <ProductCard {...relatedProduct} key={relatedProduct.id} />
           ))}
         </div>
       </section>
