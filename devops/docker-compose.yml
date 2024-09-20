@@ -1,0 +1,18 @@
+volumes:
+  db:
+  cache:
+version: '3'
+name: store
+services:
+  db:
+    container_name: db
+    image: postgres:15
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app
+    volumes:
+      - db:/var/lib/postgresql/data

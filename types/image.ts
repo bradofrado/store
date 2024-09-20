@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const imageSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   imageSrc: z.string(),
   imageAlt: z.string(),
   primary: z.boolean(),
