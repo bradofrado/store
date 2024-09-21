@@ -31,6 +31,16 @@ export const addItemToCart = async ({
   return newItem;
 };
 
+export const getNumberOfCartItems = async ({
+  userId,
+}: {
+  userId: string;
+}): Promise<number> => {
+  const items = await getCartItems({ db: prisma, userId });
+
+  return items.length;
+};
+
 export const changeQuantityOfCartItem = async ({
   cartItemId,
   quantity,

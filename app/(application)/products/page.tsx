@@ -5,7 +5,7 @@ import { Product } from '@/types/product';
 
 const products: Product[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Basic Tee 8-Pack',
     price: 256,
     description:
@@ -15,9 +15,10 @@ const products: Product[] = [
       'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg',
     imageAlt:
       'Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green.',
+    details: [],
   },
   {
-    id: 2,
+    id: '2',
     name: 'Basic Tee',
     price: 32,
     description:
@@ -26,6 +27,7 @@ const products: Product[] = [
     imageSrc:
       'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-02.jpg',
     imageAlt: 'Front of plain black t-shirt.',
+    details: [],
   },
   // More products...
 ];

@@ -23,6 +23,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { Cart } from '@/components/cart';
 
 const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP'];
 const navigation = {
@@ -201,7 +202,8 @@ const footerNavigation = {
 
 export const ApplicationLayout: React.FunctionComponent<{
   children: React.ReactNode;
-}> = ({ children }) => {
+  numCartItems: number;
+}> = ({ children, numCartItems }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -303,7 +305,7 @@ export const ApplicationLayout: React.FunctionComponent<{
             <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
               <div className='flow-root'>
                 <a
-                  href='#'
+                  href='/sign-up'
                   className='-m-2 block p-2 font-medium text-gray-900'
                 >
                   Create an account
@@ -311,7 +313,7 @@ export const ApplicationLayout: React.FunctionComponent<{
               </div>
               <div className='flow-root'>
                 <a
-                  href='#'
+                  href='/sign-in'
                   className='-m-2 block p-2 font-medium text-gray-900'
                 >
                   Sign in
@@ -385,13 +387,13 @@ export const ApplicationLayout: React.FunctionComponent<{
 
                 <div className='flex items-center space-x-6'>
                   <a
-                    href='#'
+                    href='/sign-in'
                     className='text-sm font-medium text-white hover:text-gray-100'
                   >
                     Sign in
                   </a>
                   <a
-                    href='#'
+                    href='/sign-up'
                     className='text-sm font-medium text-white hover:text-gray-100'
                   >
                     Create an account
@@ -551,24 +553,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                           Help
                         </a>
 
-                        {/* Cart */}
-                        <div className='ml-4 flow-root lg:ml-8'>
-                          <a
-                            href='/cart'
-                            className='group -m-2 flex items-center p-2'
-                          >
-                            <ShoppingBagIcon
-                              aria-hidden='true'
-                              className='h-6 w-6 flex-shrink-0 text-white'
-                            />
-                            <span className='ml-2 text-sm font-medium text-white'>
-                              0
-                            </span>
-                            <span className='sr-only'>
-                              items in cart, view bag
-                            </span>
-                          </a>
-                        </div>
+                        <Cart numItems={numCartItems} />
                       </div>
                     </div>
                   </div>
