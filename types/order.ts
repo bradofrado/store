@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { productItemSchema, productVariantSchema } from './product';
+import { productSchema, productVariantSchema } from './product';
 
 export const orderItemSchema = z.object({
   id: z.string(),
-  product: productItemSchema,
+  product: productSchema,
   quantity: z.number(),
   variants: productVariantSchema,
 });

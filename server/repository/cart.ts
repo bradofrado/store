@@ -1,10 +1,6 @@
 import { Db, Prisma } from '@/prisma';
 import { CartItem } from '@/types/cart';
-import {
-  prismaToProduct,
-  prismaToProductItem,
-  productPayload,
-} from './product';
+import { prismaToProduct, productPayload } from './product';
 import { z } from 'zod';
 import { productVariantSchema } from '@/types/product';
 
@@ -115,7 +111,7 @@ export const prismaToCart = (
   return {
     id: prismaCart.id,
     userId: prismaCart.userId,
-    product: prismaToProductItem(prismaCart.product),
+    product: prismaToProduct(prismaCart.product),
     quantity: prismaCart.quantity,
     variants: productVariantSchema.parse(prismaCart.variants),
   };

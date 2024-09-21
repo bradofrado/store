@@ -1,10 +1,6 @@
 import { Db, Prisma } from '@/prisma';
 import { Order, OrderItem } from '@/types/order';
-import {
-  prismaToProduct,
-  prismaToProductItem,
-  productPayload,
-} from './product';
+import { prismaToProduct, productPayload } from './product';
 import { z } from 'zod';
 import { productVariantSchema } from '@/types/product';
 
@@ -139,7 +135,7 @@ export const prismaToOrderItem = (
 ): OrderItem => {
   return {
     id: prismaOrderItem.id,
-    product: prismaToProductItem(prismaOrderItem.product),
+    product: prismaToProduct(prismaOrderItem.product),
     quantity: prismaOrderItem.quantity,
     variants: productVariantSchema.parse(prismaOrderItem.variants),
   };

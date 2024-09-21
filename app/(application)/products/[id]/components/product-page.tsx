@@ -7,7 +7,7 @@ import {
   GlobeAmericasIcon,
 } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/20/solid';
-import { Product, ProductItem } from '@/types/product';
+import { Product } from '@/types/product';
 import { formatDollarAmount } from '@/utils/common';
 import { ProductCard } from '@/components/product-card';
 
@@ -70,6 +70,7 @@ const relatedProducts: Product[] = [
     description: "Front of men's Basic Tee in white.",
     options: 'Aspen White',
     details: [],
+    images: [],
   },
   // More products...
 ];
@@ -79,8 +80,8 @@ function classNames(...classes: (string | undefined)[]) {
 }
 
 interface ProductItemViewProps {
-  product: ProductItem;
-  addProductToCart: (product: ProductItem) => Promise<void>;
+  product: Product;
+  addProductToCart: (product: Product) => Promise<void>;
 }
 export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   product,

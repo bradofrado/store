@@ -1,14 +1,25 @@
 import { prisma } from '@/prisma';
 import {
   createCartItem,
+  deleteCartItem,
   deleteCartItems,
-  getCartItems,
+  getCartItems as getCartItemsRepo,
   updateCartItem,
 } from '../repository/cart';
 import { Order } from '@/types/order';
 import { createOrder } from '../repository/order';
-import { ProductItem } from '@/types/product';
+import { Product } from '@/types/product';
 import { CartItem } from '@/types/cart';
+
+export const getCartItems = async ({
+  userId,
+}: {
+  userId: string;
+}): Promise<CartItem[]> => {
+  const items = await getCartItemsRepo({ db: prisma, userId });
+
+  return items;
+};
 
 export const addItemToCart = async ({
   userId,
@@ -16,7 +27,7 @@ export const addItemToCart = async ({
   variants,
 }: {
   userId: string;
-  product: ProductItem;
+  product: Product;
   variants: Record<string, string>;
 }): Promise<CartItem> => {
   const cartItem: CartItem = {
@@ -31,12 +42,20 @@ export const addItemToCart = async ({
   return newItem;
 };
 
+export const removeCartItem = async ({
+  cartItemId,
+}: {
+  cartItemId: string;
+}): Promise<void> => {
+  await deleteCartItem({ db: prisma, id: cartItemId });
+};
+
 export const getNumberOfCartItems = async ({
   userId,
 }: {
   userId: string;
 }): Promise<number> => {
-  const items = await getCartItems({ db: prisma, userId });
+  const items = await getCartItems({ userId });
 
   return items.length;
 };
@@ -62,7 +81,7 @@ export const checkoutCart = async ({
 }: {
   userId: string;
 }): Promise<Order> => {
-  const items = await getCartItems({ db: prisma, userId });
+  const items = await getCartItems({ userId });
   if (items.length === 0) {
     throw new Error('No items in cart');
   }

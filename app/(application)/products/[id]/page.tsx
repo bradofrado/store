@@ -1,11 +1,14 @@
-import { ProductItem } from '@/types/product';
-import { addProductToCart } from './actions';
+import { Product } from '@/types/product';
+import { addProductToCart } from '../../actions';
 import { ProductItemView } from './components/product-page';
 
-const product: ProductItem = {
+const product: Product = {
   id: 'cm1chu9kx000019c5gjkcahft',
   name: 'Basic Tee',
   price: 35,
+  options: '',
+  imageSrc: '',
+  imageAlt: '',
   images: [
     {
       id: '1',

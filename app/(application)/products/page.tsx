@@ -15,6 +15,7 @@ const products: Product[] = [
       'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg',
     imageAlt:
       'Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green.',
+    images: [],
     details: [],
   },
   {
@@ -27,6 +28,7 @@ const products: Product[] = [
     imageSrc:
       'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-02.jpg',
     imageAlt: 'Front of plain black t-shirt.',
+    images: [],
     details: [],
   },
   // More products...

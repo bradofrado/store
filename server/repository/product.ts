@@ -1,5 +1,5 @@
 import { Db, Prisma } from '@/prisma';
-import { Product, ProductItem } from '@/types/product';
+import { Product } from '@/types/product';
 import { prismaToImage } from './image';
 
 export const productPayload = {
@@ -19,16 +19,6 @@ export const getProducts = async ({
   });
 
   return products.map(prismaToProduct);
-};
-
-export const getProductItems = async ({
-  db,
-}: GetProductsRequest): Promise<ProductItem[]> => {
-  const products = await db.product.findMany({
-    ...productPayload,
-  });
-
-  return products.map(prismaToProductItem);
 };
 
 interface GetProductRequest {
@@ -123,20 +113,8 @@ export const prismaToProduct = (
     description: prismaProduct.description,
     imageSrc: mainImage?.imageSrc ?? '',
     imageAlt: mainImage?.imageAlt ?? '',
-    options: '',
-    details: prismaProduct.details,
-  };
-};
-
-export const prismaToProductItem = (
-  prismaProduct: Prisma.ProductGetPayload<typeof productPayload>
-): ProductItem => {
-  return {
-    id: prismaProduct.id,
-    name: prismaProduct.name,
-    price: prismaProduct.price,
     images: prismaProduct.images.map(prismaToImage),
-    description: prismaProduct.description,
+    options: '',
     details: prismaProduct.details,
   };
 };
