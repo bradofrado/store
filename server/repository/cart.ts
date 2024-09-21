@@ -1,6 +1,10 @@
 import { Db, Prisma } from '@/prisma';
 import { CartItem } from '@/types/cart';
-import { prismaToProduct, productPayload } from './product';
+import {
+  prismaToProduct,
+  prismaToProductItem,
+  productPayload,
+} from './product';
 import { z } from 'zod';
 import { productVariantSchema } from '@/types/product';
 
@@ -12,11 +16,16 @@ const cartPayload = {
 
 interface GetCartItemsRequest {
   db: Db;
+  userId: string;
 }
-export const getCarts = async ({
+export const getCartItems = async ({
   db,
+  userId,
 }: GetCartItemsRequest): Promise<CartItem[]> => {
   const cartItems = await db.cartItem.findMany({
+    where: {
+      userId,
+    },
     ...cartPayload,
   });
 
@@ -46,19 +55,20 @@ export const createCartItem = async ({
 
 interface UpdateCartItemRequest {
   db: Db;
-  item: CartItem;
+  id: string;
+  quantity: number;
 }
 export const updateCartItem = async ({
   db,
-  item,
+  id,
+  quantity,
 }: UpdateCartItemRequest): Promise<CartItem> => {
   const prismaCartItem = await db.cartItem.update({
     where: {
-      id: item.id,
+      id,
     },
     data: {
-      quantity: item.quantity,
-      variants: item.variants,
+      quantity,
     },
     ...cartPayload,
   });
@@ -84,13 +94,28 @@ export const deleteCartItem = async ({
   return prismaToCart(prismaCartItem);
 };
 
+interface DeleteCartItemsRequest {
+  db: Db;
+  userId: string;
+}
+export const deleteCartItems = async ({
+  db,
+  userId,
+}: DeleteCartItemsRequest): Promise<void> => {
+  await db.cartItem.deleteMany({
+    where: {
+      userId,
+    },
+  });
+};
+
 export const prismaToCart = (
   prismaCart: Prisma.CartItemGetPayload<typeof cartPayload>
 ): CartItem => {
   return {
     id: prismaCart.id,
     userId: prismaCart.userId,
-    product: prismaToProduct(prismaCart.product),
+    product: prismaToProductItem(prismaCart.product),
     quantity: prismaCart.quantity,
     variants: productVariantSchema.parse(prismaCart.variants),
   };

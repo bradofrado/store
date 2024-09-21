@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { productSchema, productVariantSchema } from './product';
+import { productItemSchema, productVariantSchema } from './product';
 
 export const cartItemSchema = z.object({
   id: z.string(),
   userId: z.string(),
-  product: productSchema,
+  product: productItemSchema,
   quantity: z.number(),
   variants: productVariantSchema,
 });
