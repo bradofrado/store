@@ -1,1 +1,1 @@
-export const getProductUrl = (id: string): string => `/product/${id}`;
+export const getProductUrl = (id: string): string => `/products/${id}`;
