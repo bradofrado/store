@@ -4,11 +4,14 @@ import {
   addItemToCart,
   changeQuantityOfCartItem,
   checkoutCart,
+  getCartItems,
   removeCartItem as removeCartItemService,
 } from '@/server/service/cart';
+import { createCheckoutLink } from '@/server/service/stripe';
 import { CartItem } from '@/types/cart';
 import { Product } from '@/types/product';
 import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
 export const addProductToCart = async (product: Product) => {
   const user = auth();
@@ -31,10 +34,21 @@ export const removeCartItem = async (cartItemId: string) => {
   await removeCartItemService({ cartItemId });
 };
 
-export const checkout = async (): Promise<void> => {
+export const checkout = async (): Promise<string | null> => {
+  // const user = auth();
+  // const userId = user.userId;
+  // if (!userId) return;
+
+  //await checkoutCart({ userId });
+  return await getCheckoutLink();
+};
+
+export const getCheckoutLink = async () => {
   const user = auth();
   const userId = user.userId;
-  if (!userId) return;
+  if (!userId) return null;
 
-  await checkoutCart({ userId });
+  const checkoutUrl = await createCheckoutLink({ userId });
+
+  return checkoutUrl;
 };

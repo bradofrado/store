@@ -3,7 +3,7 @@ import { addProductToCart } from '../../actions';
 import { ProductItemView } from './components/product-page';
 
 const product: Product = {
-  id: 'cm1chu9kx000019c5gjkcahft',
+  id: 'prod_QtND8GmmMYqBcP',
   name: 'Basic Tee',
   price: 35,
   options: '',

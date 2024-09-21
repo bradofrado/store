@@ -10,6 +10,7 @@ import {
   QuestionMarkCircleIcon,
   XMarkIcon as XMarkIconMini,
 } from '@heroicons/react/20/solid';
+import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 type CartItemWithStock = CartItem & { inStock: boolean; leadTime: string };
@@ -17,7 +18,7 @@ type CartItemWithStock = CartItem & { inStock: boolean; leadTime: string };
 interface CartViewProps {
   changeQuantity: (cartId: string, quantity: number) => Promise<void>;
   removeItem: (cartId: string) => Promise<void>;
-  checkout: () => Promise<void>;
+  checkout: () => Promise<string | null>;
   items: CartItemWithStock[];
 }
 export const CartView: React.FunctionComponent<CartViewProps> = ({
@@ -165,12 +166,13 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
 
 interface OrderSummaryProps {
   items: CartItemWithStock[];
-  checkout: () => Promise<void>;
+  checkout: () => Promise<string | null>;
 }
 const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
   items,
   checkout,
 }) => {
+  const router = useRouter();
   const subtotal = useMemo(
     () =>
       items.reduce((acc, item) => acc + item.quantity * item.product.price, 0),
@@ -184,7 +186,9 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
   );
 
   const onCheckout = () => {
-    checkout();
+    checkout().then((url) => {
+      url && router.push(url);
+    });
   };
 
   return (
