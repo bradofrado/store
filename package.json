@@ -10,6 +10,7 @@
     "lint": "next lint",
     "format": "prettier --write --ignore-path .gitignore .",
     "compose": "docker compose -f devops/docker-compose.yml up --build -d",
+    "typecheck": "tsc --noEmit",
     "db:deploy": "npm run withenv prisma migrate deploy",
     "db:studio": "npm run withenv prisma studio"
   },

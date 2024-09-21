@@ -88,18 +88,23 @@ export const checkoutCart = async ({
 
   const order: Order = {
     id: '',
+    //TODO: Get this from stripe?
+    number: '0',
+    invoiceSrc: '',
     orders: items.map((item) => ({
       id: '',
       product: item.product,
       quantity: item.quantity,
       variants: item.variants,
+      status: 'pending',
+      shippedDate: null,
     })),
-    status: 'pending',
     total: items.reduce(
       (acc, item) => acc + item.product.price * item.quantity,
       0
     ),
     userId,
+    datePlaced: new Date(),
   };
 
   const createdOrder = await createOrder({ db: prisma, order });

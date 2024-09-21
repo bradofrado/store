@@ -1,5 +1,10 @@
 import { Db, Prisma } from '@/prisma';
-import { Order, OrderItem } from '@/types/order';
+import {
+  Order,
+  OrderItem,
+  OrderStatus,
+  orderStatusSchema,
+} from '@/types/order';
 import { prismaToProduct, productPayload } from './product';
 import { z } from 'zod';
 import { productVariantSchema } from '@/types/product';
@@ -18,9 +23,16 @@ const orderPayload = {
 
 interface GetOrdersRequest {
   db: Db;
+  userId: string;
 }
-export const getOrders = async ({ db }: GetOrdersRequest): Promise<Order[]> => {
+export const getOrders = async ({
+  db,
+  userId,
+}: GetOrdersRequest): Promise<Order[]> => {
   const orders = await db.order.findMany({
+    where: {
+      userId,
+    },
     ...orderPayload,
   });
 
@@ -68,10 +80,13 @@ export const createOrder = async ({
           },
           quantity: order.quantity,
           variants: order.variants,
+          status: order.status,
+          shippedDate: order.shippedDate,
         })),
       },
-      status: order.status,
       total: order.total,
+      number: order.number,
+      invoiceSrc: order.invoiceSrc,
     },
     ...orderPayload,
   });
@@ -79,25 +94,30 @@ export const createOrder = async ({
   return prismaToOrder(prismaOrder);
 };
 
-interface UpdateOrderRequest {
+interface UpdateOrderItemRequest {
   db: Db;
-  order: Order;
+  orderItemId: string;
+  status: OrderStatus;
+  dateShipped: Date | null;
 }
-export const updateOrder = async ({
+export const updateOrderItem = async ({
   db,
-  order,
-}: UpdateOrderRequest): Promise<Order> => {
-  const prismaOrder = await db.order.update({
+  orderItemId,
+  status,
+  dateShipped,
+}: UpdateOrderItemRequest): Promise<OrderItem> => {
+  const prismaOrder = await db.orderItem.update({
     where: {
-      id: order.id,
+      id: orderItemId,
     },
     data: {
-      status: order.status,
+      status,
+      shippedDate: dateShipped,
     },
-    ...orderPayload,
+    ...orderItemPayload,
   });
 
-  return prismaToOrder(prismaOrder);
+  return prismaToOrderItem(prismaOrder);
 };
 
 interface DeleteOrderRequest {
@@ -125,8 +145,10 @@ export const prismaToOrder = (
     id: prismaOrder.id,
     userId: prismaOrder.userId,
     orders: prismaOrder.items.map(prismaToOrderItem),
-    status: prismaOrder.status,
     total: prismaOrder.total,
+    number: prismaOrder.number,
+    invoiceSrc: prismaOrder.invoiceSrc,
+    datePlaced: prismaOrder.createdAt,
   };
 };
 
@@ -138,5 +160,7 @@ export const prismaToOrderItem = (
     product: prismaToProduct(prismaOrderItem.product),
     quantity: prismaOrderItem.quantity,
     variants: productVariantSchema.parse(prismaOrderItem.variants),
+    status: orderStatusSchema.parse(prismaOrderItem.status),
+    shippedDate: prismaOrderItem.shippedDate,
   };
 };

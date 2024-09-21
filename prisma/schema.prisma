@@ -48,10 +48,11 @@ model CartItem {
 
 model Order {
     id       String      @id @default(cuid())
+    number   String
+    invoiceSrc String
     userId    String
     items     OrderItem[]
     total     Float
-    status    String
     createdAt DateTime    @default(now())
     updatedAt DateTime    @updatedAt
 }
@@ -66,4 +67,6 @@ model OrderItem {
     order     Order    @relation(fields: [orderId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    status    String
+    shippedDate DateTime?
 }
