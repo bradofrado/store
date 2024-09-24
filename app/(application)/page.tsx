@@ -115,7 +115,7 @@ export default function Example() {
             </h2>
             <a
               href='/products'
-              className='hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block'
+              className='hidden text-sm font-semibold text-primary hover:text-primary-lighter sm:block'
             >
               Browse all categories
               <span aria-hidden='true'> &rarr;</span>
@@ -156,7 +156,7 @@ export default function Example() {
           <div className='mt-6 px-4 sm:hidden'>
             <a
               href='/products'
-              className='block text-sm font-semibold text-indigo-600 hover:text-indigo-500'
+              className='block text-sm font-semibold text-primary hover:text-primary-lighter'
             >
               Browse all categories
               <span aria-hidden='true'> &rarr;</span>

@@ -213,7 +213,7 @@ export default function Example() {
                     name='email-address'
                     type='email'
                     autoComplete='email'
-                    className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                    className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                   />
                 </div>
               </div>
@@ -238,7 +238,7 @@ export default function Example() {
                       name='first-name'
                       type='text'
                       autoComplete='given-name'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -256,7 +256,7 @@ export default function Example() {
                       name='last-name'
                       type='text'
                       autoComplete='family-name'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -273,7 +273,7 @@ export default function Example() {
                       id='company'
                       name='company'
                       type='text'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -291,7 +291,7 @@ export default function Example() {
                       name='address'
                       type='text'
                       autoComplete='street-address'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -308,7 +308,7 @@ export default function Example() {
                       id='apartment'
                       name='apartment'
                       type='text'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -326,7 +326,7 @@ export default function Example() {
                       name='city'
                       type='text'
                       autoComplete='address-level2'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -343,7 +343,7 @@ export default function Example() {
                       id='country'
                       name='country'
                       autoComplete='country-name'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     >
                       <option>United States</option>
                       <option>Canada</option>
@@ -365,7 +365,7 @@ export default function Example() {
                       name='region'
                       type='text'
                       autoComplete='address-level1'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -383,7 +383,7 @@ export default function Example() {
                       name='postal-code'
                       type='text'
                       autoComplete='postal-code'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -401,7 +401,7 @@ export default function Example() {
                       name='phone'
                       type='text'
                       autoComplete='tel'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -425,7 +425,7 @@ export default function Example() {
                       value={deliveryMethod}
                       aria-label={deliveryMethod.title}
                       aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
-                      className='group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500'
+                      className='group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-primary-lighter'
                     >
                       <span className='flex flex-1'>
                         <span className='flex flex-col'>
@@ -442,11 +442,11 @@ export default function Example() {
                       </span>
                       <CheckCircleIcon
                         aria-hidden='true'
-                        className='h-5 w-5 text-indigo-600 [.group:not([data-checked])_&]:hidden'
+                        className='h-5 w-5 text-primary [.group:not([data-checked])_&]:hidden'
                       />
                       <span
                         aria-hidden='true'
-                        className='pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500'
+                        className='pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-primary-lighter'
                       />
                     </Radio>
                   ))}
@@ -469,14 +469,14 @@ export default function Example() {
                           id={paymentMethod.id}
                           name='payment-type'
                           type='radio'
-                          className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                          className='h-4 w-4 border-gray-300 text-primary focus:ring-primary-lighter'
                         />
                       ) : (
                         <input
                           id={paymentMethod.id}
                           name='payment-type'
                           type='radio'
-                          className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                          className='h-4 w-4 border-gray-300 text-primary focus:ring-primary-lighter'
                         />
                       )}
 
@@ -505,7 +505,7 @@ export default function Example() {
                       name='card-number'
                       type='text'
                       autoComplete='cc-number'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -523,7 +523,7 @@ export default function Example() {
                       name='name-on-card'
                       type='text'
                       autoComplete='cc-name'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -541,7 +541,7 @@ export default function Example() {
                       name='expiration-date'
                       type='text'
                       autoComplete='cc-exp'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -559,7 +559,7 @@ export default function Example() {
                       name='cvc'
                       type='text'
                       autoComplete='csc'
-                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                      className='block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-lighter focus:ring-primary-lighter sm:text-sm'
                     />
                   </div>
                 </div>
@@ -626,7 +626,7 @@ export default function Example() {
                           <select
                             id='quantity'
                             name='quantity'
-                            className='rounded-md border border-gray-300 text-left text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+                            className='rounded-md border border-gray-300 text-left text-base font-medium text-gray-700 shadow-sm focus:border-primary-lighter focus:outline-none focus:ring-1 focus:ring-primary-lighter sm:text-sm'
                           >
                             <option value={1}>1</option>
                             <option value={2}>2</option>
@@ -667,7 +667,7 @@ export default function Example() {
               <div className='border-t border-gray-200 px-4 py-6 sm:px-6'>
                 <button
                   type='submit'
-                  className='w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50'
+                  className='w-full rounded-md border border-transparent bg-primary px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-darker focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2 focus:ring-offset-gray-50'
                 >
                   Confirm order
                 </button>

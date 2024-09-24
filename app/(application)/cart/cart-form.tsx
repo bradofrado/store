@@ -123,7 +123,7 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
                       <select
                         id={`quantity-${productIdx}`}
                         name={`quantity-${productIdx}`}
-                        className='max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+                        className='max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-primary-lighter focus:outline-none focus:ring-1 focus:ring-primary-lighter sm:text-sm'
                         onChange={(e) => onChangeQuantity(e, id)}
                         value={quantity}
                       >
@@ -263,7 +263,7 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
       <div className='mt-6'>
         <button
           type='submit'
-          className='w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50'
+          className='w-full rounded-md border border-transparent bg-primary px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-darker focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2 focus:ring-offset-gray-50'
         >
           Checkout
         </button>

@@ -49,14 +49,14 @@ export const OrderHistory: React.FunctionComponent<OrderHistoryProps> = ({
               <div className='mt-6 space-y-4 sm:flex sm:space-x-4 sm:space-y-0 md:mt-0'>
                 {/* <a
                       href={order.href}
-                      className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:w-auto"
+                      className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2 md:w-auto"
                     >
                       View Order
                       <span className="sr-only">{order.number}</span>
                     </a> */}
                 <a
                   href={order.invoiceSrc}
-                  className='flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:w-auto'
+                  className='flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2 md:w-auto'
                 >
                   View Invoice
                   <span className='sr-only'>for order {order.number}</span>
@@ -86,14 +86,14 @@ export const OrderHistory: React.FunctionComponent<OrderHistoryProps> = ({
                         <div className='mt-2 flex text-sm font-medium sm:mt-4'>
                           <a
                             href={getProductUrl(product.id)}
-                            className='text-indigo-600 hover:text-indigo-500'
+                            className='text-primary hover:text-primary-lighter'
                           >
                             View Product
                           </a>
                           <div className='ml-4 border-l border-gray-200 pl-4 sm:ml-6 sm:pl-6'>
                             <a
                               href='#'
-                              className='text-indigo-600 hover:text-indigo-500'
+                              className='text-primary hover:text-primary-lighter'
                             >
                               Buy Again
                             </a>

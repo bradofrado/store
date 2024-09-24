@@ -191,7 +191,7 @@ export const CategoryFiltersView: React.FunctionComponent<{
                               id={`filter-mobile-${section}-${optionIdx}`}
                               name={section}
                               type='checkbox'
-                              className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                              className='h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary-lighter'
                               onChange={onFilterChange}
                             />
                             <label
@@ -324,7 +324,7 @@ export const CategoryFiltersView: React.FunctionComponent<{
                               id={`filter-mobile-${section}-${optionIdx}`}
                               name={section}
                               type='checkbox'
-                              className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                              className='h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary-lighter'
                               onChange={onFilterChange}
                             />
                             <label

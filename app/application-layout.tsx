@@ -225,7 +225,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                   {navigation.categories.map((category) => (
                     <Tab
                       key={category.name}
-                      className='flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-indigo-600 data-[selected]:text-indigo-600'
+                      className='flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-primary data-[selected]:text-primary'
                     >
                       {category.name}
                     </Tab>
@@ -382,7 +382,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                 {navigation.categories.map((category) => (
                   <Popover key={category.name} className='flex'>
                     <div className='relative flex'>
-                      <PopoverButton className='relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600'>
+                      <PopoverButton className='relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-primary data-[open]:text-primary'>
                         {category.name}
                       </PopoverButton>
                     </div>
@@ -630,7 +630,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                 <div className='ml-4 flex-shrink-0'>
                   <button
                     type='submit'
-                    className='flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900'
+                    className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-darker focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2 focus:ring-offset-gray-900'
                   >
                     Sign up
                   </button>
