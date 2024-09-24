@@ -18,22 +18,27 @@ import {
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
-  QuestionMarkCircleIcon,
   ShoppingBagIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Cart } from '@/components/cart';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  useAuth,
+} from '@clerk/nextjs';
+import { AvatarDropdown } from '@/components/avatar-dropdown';
 
-const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP'];
 const navigation = {
   categories: [
     {
+      id: 'women',
       name: 'Women',
       featured: [
         {
           name: 'New Arrivals',
-          href: '/products',
+          href: '#',
           imageSrc:
             'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
           imageAlt:
@@ -41,162 +46,142 @@ const navigation = {
         },
         {
           name: 'Basic Tees',
-          href: '/products',
+          href: '#',
           imageSrc:
             'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
           imageAlt:
             'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
+      ],
+      sections: [
         {
-          name: 'Accessories',
-          href: '/products',
-          imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
-          imageAlt:
-            'Model wearing minimalist watch with black wristband and white watch face.',
+          id: 'clothing',
+          name: 'Clothing',
+          items: [
+            { name: 'Tops', href: '#' },
+            { name: 'Dresses', href: '#' },
+            { name: 'Pants', href: '#' },
+            { name: 'Denim', href: '#' },
+            { name: 'Sweaters', href: '#' },
+            { name: 'T-Shirts', href: '#' },
+            { name: 'Jackets', href: '#' },
+            { name: 'Activewear', href: '#' },
+            { name: 'Browse All', href: '#' },
+          ],
         },
         {
-          name: 'Carry',
-          href: '/products',
-          imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
-          imageAlt:
-            'Model opening tan leather long wallet with credit card pockets and cash pouch.',
+          id: 'accessories',
+          name: 'Accessories',
+          items: [
+            { name: 'Watches', href: '#' },
+            { name: 'Wallets', href: '#' },
+            { name: 'Bags', href: '#' },
+            { name: 'Sunglasses', href: '#' },
+            { name: 'Hats', href: '#' },
+            { name: 'Belts', href: '#' },
+          ],
+        },
+        {
+          id: 'brands',
+          name: 'Brands',
+          items: [
+            { name: 'Full Nelson', href: '#' },
+            { name: 'My Way', href: '#' },
+            { name: 'Re-Arranged', href: '#' },
+            { name: 'Counterfeit', href: '#' },
+            { name: 'Significant Other', href: '#' },
+          ],
         },
       ],
     },
     {
+      id: 'men',
       name: 'Men',
       featured: [
         {
           name: 'New Arrivals',
-          href: '/products',
+          href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+            'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
           imageAlt:
-            'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+            'Drawstring top with elastic loop closure and textured interior padding.',
         },
         {
-          name: 'Basic Tees',
-          href: '/products',
+          name: 'Artwork Tees',
+          href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
-          imageAlt: 'Model wearing light heather gray t-shirt.',
+            'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
+          imageAlt:
+            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
+        },
+      ],
+      sections: [
+        {
+          id: 'clothing',
+          name: 'Clothing',
+          items: [
+            { name: 'Tops', href: '/products' },
+            { name: 'Pants', href: '/products' },
+            { name: 'Sweaters', href: '/products' },
+            { name: 'T-Shirts', href: '/products' },
+            { name: 'Jackets', href: '/products' },
+            { name: 'Activewear', href: '/products' },
+            { name: 'Browse All', href: '/products' },
+          ],
         },
         {
+          id: 'accessories',
           name: 'Accessories',
-          href: '/products',
-          imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
-          imageAlt:
-            'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
+          items: [
+            { name: 'Watches', href: '/products' },
+            { name: 'Wallets', href: '/products' },
+            { name: 'Bags', href: '/products' },
+            { name: 'Sunglasses', href: '/products' },
+            { name: 'Hats', href: '/products' },
+            { name: 'Belts', href: '/products' },
+          ],
         },
         {
-          name: 'Carry',
-          href: '/products',
-          imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
-          imageAlt:
-            'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
+          id: 'brands',
+          name: 'Brands',
+          items: [
+            { name: 'Re-Arranged', href: '/products' },
+            { name: 'Counterfeit', href: '/products' },
+            { name: 'Full Nelson', href: '/products' },
+            { name: 'My Way', href: '/products' },
+          ],
         },
       ],
     },
   ],
-  pages: [
-    { name: 'Orders', href: '/orders' },
-    //{ name: 'Stores', href: '#' },
-  ],
+  pages: [{ name: 'Orders', href: '/orders' }],
 };
-const categories = [
-  {
-    name: 'New Arrivals',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg',
-  },
-  {
-    name: 'Productivity',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-02.jpg',
-  },
-  {
-    name: 'Workspace',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-04.jpg',
-  },
-  {
-    name: 'Accessories',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-05.jpg',
-  },
-  {
-    name: 'Sale',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-03.jpg',
-  },
-];
-const collections = [
-  {
-    name: 'Handcrafted Collection',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
-    imageAlt:
-      'Brown leather key ring with brass metal loops and rivets on wood table.',
-    description:
-      'Keep your phone, keys, and wallet together, so you can lose everything at once.',
-  },
-  {
-    name: 'Organized Desk Collection',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
-    imageAlt:
-      'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
-    description:
-      'The rest of the house will still be a mess, but your desk will look great.',
-  },
-  {
-    name: 'Focus Collection',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-03.jpg',
-    imageAlt:
-      'Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.',
-    description:
-      'Be more productive than enterprise project managers with a single piece of paper.',
-  },
-];
 const footerNavigation = {
   shop: [
-    { name: 'Bags', href: '#' },
-    { name: 'Tees', href: '#' },
-    { name: 'Objects', href: '#' },
-    { name: 'Home Goods', href: '#' },
-    { name: 'Accessories', href: '#' },
+    { name: 'Bags', href: '/products' },
+    { name: 'Tees', href: '/products' },
+    { name: 'Objects', href: '/products' },
+    { name: 'Home Goods', href: '/products' },
+    { name: 'Accessories', href: '/products' },
   ],
   company: [
-    { name: 'Who we are', href: '#' },
-    { name: 'Sustainability', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Careers', href: '#' },
-    { name: 'Terms & Conditions', href: '#' },
-    { name: 'Privacy', href: '#' },
+    { name: 'Who we are', href: '/products' },
+    { name: 'Sustainability', href: '/products' },
+    { name: 'Press', href: '/products' },
+    { name: 'Careers', href: '/products' },
+    { name: 'Terms & Conditions', href: '/products' },
+    { name: 'Privacy', href: '/products' },
   ],
   account: [
-    { name: 'Manage Account', href: '#' },
-    { name: 'Returns & Exchanges', href: '#' },
-    { name: 'Redeem a Gift Card', href: '#' },
+    { name: 'Manage Account', href: '/products' },
+    { name: 'Returns & Exchanges', href: '/products' },
+    { name: 'Redeem a Gift Card', href: '/products' },
   ],
   connect: [
-    { name: 'Contact Us', href: '#' },
-    { name: 'Facebook', href: '#' },
-    { name: 'Instagram', href: '#' },
-    { name: 'Pinterest', href: '#' },
+    { name: 'Contact Us', href: '/products' },
+    { name: 'Facebook', href: '/products' },
+    { name: 'Instagram', href: '/products' },
+    { name: 'Pinterest', href: '/products' },
   ],
 };
 
@@ -204,16 +189,13 @@ export const ApplicationLayout: React.FunctionComponent<{
   children: React.ReactNode;
   numCartItems: number;
 }> = ({ children, numCartItems }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const auth = useAuth();
+  const [open, setOpen] = useState(false);
 
   return (
     <div className='bg-white'>
       {/* Mobile menu */}
-      <Dialog
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-        className='relative z-40 lg:hidden'
-      >
+      <Dialog open={open} onClose={setOpen} className='relative z-40 lg:hidden'>
         <DialogBackdrop
           transition
           className='fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0'
@@ -227,9 +209,10 @@ export const ApplicationLayout: React.FunctionComponent<{
             <div className='flex px-4 pb-2 pt-5'>
               <button
                 type='button'
-                onClick={() => setMobileMenuOpen(false)}
-                className='-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400'
+                onClick={() => setOpen(false)}
+                className='relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400'
               >
+                <span className='absolute -inset-0.5' />
                 <span className='sr-only'>Close menu</span>
                 <XMarkIcon aria-hidden='true' className='h-6 w-6' />
               </button>
@@ -253,12 +236,12 @@ export const ApplicationLayout: React.FunctionComponent<{
                 {navigation.categories.map((category) => (
                   <TabPanel
                     key={category.name}
-                    className='space-y-12 px-4 py-6'
+                    className='space-y-10 px-4 pb-8 pt-10'
                   >
-                    <div className='grid grid-cols-2 gap-x-4 gap-y-10'>
+                    <div className='grid grid-cols-2 gap-x-4'>
                       {category.featured.map((item) => (
-                        <div key={item.name} className='group relative'>
-                          <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
+                        <div key={item.name} className='group relative text-sm'>
+                          <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75'>
                             <img
                               alt={item.imageAlt}
                               src={item.imageSrc}
@@ -267,7 +250,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                           </div>
                           <a
                             href={item.href}
-                            className='mt-6 block text-sm font-medium text-gray-900'
+                            className='mt-6 block font-medium text-gray-900'
                           >
                             <span
                               aria-hidden='true'
@@ -275,15 +258,38 @@ export const ApplicationLayout: React.FunctionComponent<{
                             />
                             {item.name}
                           </a>
-                          <p
-                            aria-hidden='true'
-                            className='mt-1 text-sm text-gray-500'
-                          >
+                          <p aria-hidden='true' className='mt-1'>
                             Shop now
                           </p>
                         </div>
                       ))}
                     </div>
+                    {category.sections.map((section) => (
+                      <div key={section.name}>
+                        <p
+                          id={`${category.id}-${section.id}-heading-mobile`}
+                          className='font-medium text-gray-900'
+                        >
+                          {section.name}
+                        </p>
+                        <ul
+                          role='list'
+                          aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
+                          className='mt-6 flex flex-col space-y-6'
+                        >
+                          {section.items.map((item) => (
+                            <li key={item.name} className='flow-root'>
+                              <a
+                                href={item.href}
+                                className='-m-2 block p-2 text-gray-500'
+                              >
+                                {item.name}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </TabPanel>
                 ))}
               </TabPanels>
@@ -305,264 +311,229 @@ export const ApplicationLayout: React.FunctionComponent<{
             <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
               <div className='flow-root'>
                 <a
-                  href='/sign-up'
-                  className='-m-2 block p-2 font-medium text-gray-900'
-                >
-                  Create an account
-                </a>
-              </div>
-              <div className='flow-root'>
-                <a
-                  href='/sign-in'
+                  href='#'
                   className='-m-2 block p-2 font-medium text-gray-900'
                 >
                   Sign in
                 </a>
               </div>
+              <div className='flow-root'>
+                <a
+                  href='#'
+                  className='-m-2 block p-2 font-medium text-gray-900'
+                >
+                  Create account
+                </a>
+              </div>
             </div>
 
-            <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
-              {/* Currency selector */}
-              <form>
-                <div className='inline-block'>
-                  <label htmlFor='mobile-currency' className='sr-only'>
-                    Currency
-                  </label>
-                  <div className='group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white'>
-                    <select
-                      id='mobile-currency'
-                      name='currency'
-                      className='flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800'
-                    >
-                      {currencies.map((currency) => (
-                        <option key={currency}>{currency}</option>
-                      ))}
-                    </select>
-                    <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center'>
-                      <ChevronDownIcon
-                        aria-hidden='true'
-                        className='h-5 w-5 text-gray-500'
-                      />
-                    </div>
-                  </div>
-                </div>
-              </form>
+            <div className='border-t border-gray-200 px-4 py-6'>
+              <a href='#' className='-m-2 flex items-center p-2'>
+                <img
+                  alt=''
+                  src='https://tailwindui.com/img/flags/flag-canada.svg'
+                  className='block h-auto w-5 flex-shrink-0'
+                />
+                <span className='ml-3 block text-base font-medium text-gray-900'>
+                  CAD
+                </span>
+                <span className='sr-only'>, change currency</span>
+              </a>
             </div>
           </DialogPanel>
         </div>
       </Dialog>
 
-      <div className='relative bg-gray-900'>
-        {/* Navigation */}
-        <header className='relative z-10'>
-          <nav aria-label='Top'>
-            {/* Top navigation */}
-            <div className='bg-gray-900'>
-              <div className='mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
-                {/* Currency selector */}
-                <form>
-                  <div>
-                    <label htmlFor='desktop-currency' className='sr-only'>
-                      Currency
-                    </label>
-                    <div className='group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white'>
-                      <select
-                        id='desktop-currency'
-                        name='currency'
-                        className='flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100'
-                      >
-                        {currencies.map((currency) => (
-                          <option key={currency}>{currency}</option>
-                        ))}
-                      </select>
-                      <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center'>
-                        <ChevronDownIcon
-                          aria-hidden='true'
-                          className='h-5 w-5 text-gray-300'
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </form>
+      <header className='relative bg-white z-10'>
+        <p className='flex h-10 items-center justify-center bg-gray-900 px-4 text-sm font-medium text-white sm:px-6 lg:px-8'>
+          Get free delivery on orders over $100
+        </p>
 
-                <div className='flex items-center space-x-6'>
-                  <a
-                    href='/sign-in'
-                    className='text-sm font-medium text-white hover:text-gray-100'
-                  >
-                    Sign in
-                  </a>
-                  <a
-                    href='/sign-up'
-                    className='text-sm font-medium text-white hover:text-gray-100'
-                  >
-                    Create an account
-                  </a>
-                </div>
-              </div>
+        <nav
+          aria-label='Top'
+          className='px-4 sm:px-6 lg:px-8 border-b border-gray-200'
+        >
+          <div className='flex h-16 items-center'>
+            <button
+              type='button'
+              onClick={() => setOpen(true)}
+              className='relative rounded-md bg-white p-2 text-gray-400 lg:hidden'
+            >
+              <span className='absolute -inset-0.5' />
+              <span className='sr-only'>Open menu</span>
+              <Bars3Icon aria-hidden='true' className='h-6 w-6' />
+            </button>
+
+            {/* Logo */}
+            <div className='ml-4 flex lg:ml-0'>
+              <a href='/'>
+                <span className='sr-only'>Your Company</span>
+                <img
+                  alt=''
+                  src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
+                  className='h-8 w-auto'
+                />
+              </a>
             </div>
 
-            {/* Secondary navigation */}
-            <div className='bg-white bg-opacity-10 backdrop-blur-md backdrop-filter'>
-              <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-                <div>
-                  <div className='flex h-16 items-center justify-between'>
-                    {/* Logo (lg+) */}
-                    <div className='hidden lg:flex lg:flex-1 lg:items-center'>
-                      <a href='/'>
-                        <span className='sr-only'>Your Company</span>
-                        <img
-                          alt=''
-                          src='https://tailwindui.com/img/logos/mark.svg?color=white'
-                          className='h-8 w-auto'
-                        />
-                      </a>
+            {/* Flyout menus */}
+            <PopoverGroup className='hidden lg:ml-8 lg:block lg:self-stretch'>
+              <div className='flex h-full space-x-8'>
+                {navigation.categories.map((category) => (
+                  <Popover key={category.name} className='flex'>
+                    <div className='relative flex'>
+                      <PopoverButton className='relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600'>
+                        {category.name}
+                      </PopoverButton>
                     </div>
 
-                    <div className='hidden h-full lg:flex'>
-                      {/* Flyout menus */}
-                      <PopoverGroup className='inset-x-0 bottom-0 px-4'>
-                        <div className='flex h-full justify-center space-x-8'>
-                          {navigation.categories.map((category) => (
-                            <Popover key={category.name} className='flex'>
-                              <div className='relative flex'>
-                                <PopoverButton className='group relative z-10 flex items-center justify-center text-sm font-medium text-white transition-colors duration-200 ease-out'>
-                                  {category.name}
-                                  <span
-                                    aria-hidden='true'
-                                    className='absolute inset-x-0 -bottom-px h-0.5 transition duration-200 ease-out group-data-[open]:bg-white'
-                                  />
-                                </PopoverButton>
-                              </div>
-
-                              <PopoverPanel
-                                transition
-                                className='absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in'
-                              >
-                                {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                                <div
-                                  aria-hidden='true'
-                                  className='absolute inset-0 top-1/2 bg-white shadow'
-                                />
-
-                                <div className='relative bg-white'>
-                                  <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-                                    <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
-                                      {category.featured.map((item) => (
-                                        <div
-                                          key={item.name}
-                                          className='group relative'
-                                        >
-                                          <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
-                                            <img
-                                              alt={item.imageAlt}
-                                              src={item.imageSrc}
-                                              className='object-cover object-center'
-                                            />
-                                          </div>
-                                          <a
-                                            href={item.href}
-                                            className='mt-4 block font-medium text-gray-900'
-                                          >
-                                            <span
-                                              aria-hidden='true'
-                                              className='absolute inset-0 z-10'
-                                            />
-                                            {item.name}
-                                          </a>
-                                          <p
-                                            aria-hidden='true'
-                                            className='mt-1'
-                                          >
-                                            Shop now
-                                          </p>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                </div>
-                              </PopoverPanel>
-                            </Popover>
-                          ))}
-
-                          {navigation.pages.map((page) => (
-                            <a
-                              key={page.name}
-                              href={page.href}
-                              className='flex items-center text-sm font-medium text-white'
-                            >
-                              {page.name}
-                            </a>
-                          ))}
-                        </div>
-                      </PopoverGroup>
-                    </div>
-
-                    {/* Mobile menu and search (lg-) */}
-                    <div className='flex flex-1 items-center lg:hidden'>
-                      <button
-                        type='button'
-                        onClick={() => setMobileMenuOpen(true)}
-                        className='-ml-2 p-2 text-white'
-                      >
-                        <span className='sr-only'>Open menu</span>
-                        <Bars3Icon aria-hidden='true' className='h-6 w-6' />
-                      </button>
-
-                      {/* Search */}
-                      <a href='#' className='ml-2 p-2 text-white'>
-                        <span className='sr-only'>Search</span>
-                        <MagnifyingGlassIcon
-                          aria-hidden='true'
-                          className='h-6 w-6'
-                        />
-                      </a>
-                    </div>
-
-                    {/* Logo (lg-) */}
-                    <a href='#' className='lg:hidden'>
-                      <span className='sr-only'>Your Company</span>
-                      <img
-                        alt=''
-                        src='https://tailwindui.com/img/logos/mark.svg?color=white'
-                        className='h-8 w-auto'
+                    <PopoverPanel
+                      transition
+                      className='absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in'
+                    >
+                      {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
+                      <div
+                        aria-hidden='true'
+                        className='absolute inset-0 top-1/2 bg-white shadow'
                       />
-                    </a>
 
-                    <div className='flex flex-1 items-center justify-end'>
-                      <a
-                        href='#'
-                        className='hidden text-sm font-medium text-white lg:block'
-                      >
-                        Search
-                      </a>
-
-                      <div className='flex items-center lg:ml-8'>
-                        {/* Help */}
-                        <a href='#' className='p-2 text-white lg:hidden'>
-                          <span className='sr-only'>Help</span>
-                          <QuestionMarkCircleIcon
-                            aria-hidden='true'
-                            className='h-6 w-6'
-                          />
-                        </a>
-                        <a
-                          href='#'
-                          className='hidden text-sm font-medium text-white lg:block'
-                        >
-                          Help
-                        </a>
-
-                        <Cart numItems={numCartItems} />
+                      <div className='relative bg-white'>
+                        <div className='mx-auto max-w-7xl px-8'>
+                          <div className='grid grid-cols-2 gap-x-8 gap-y-10 py-16'>
+                            <div className='col-start-2 grid grid-cols-2 gap-x-8'>
+                              {category.featured.map((item) => (
+                                <div
+                                  key={item.name}
+                                  className='group relative text-base sm:text-sm'
+                                >
+                                  <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75'>
+                                    <img
+                                      alt={item.imageAlt}
+                                      src={item.imageSrc}
+                                      className='object-cover object-center'
+                                    />
+                                  </div>
+                                  <a
+                                    href={item.href}
+                                    className='mt-6 block font-medium text-gray-900'
+                                  >
+                                    <span
+                                      aria-hidden='true'
+                                      className='absolute inset-0 z-10'
+                                    />
+                                    {item.name}
+                                  </a>
+                                  <p aria-hidden='true' className='mt-1'>
+                                    Shop now
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                            <div className='row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm'>
+                              {category.sections.map((section) => (
+                                <div key={section.name}>
+                                  <p
+                                    id={`${section.name}-heading`}
+                                    className='font-medium text-gray-900'
+                                  >
+                                    {section.name}
+                                  </p>
+                                  <ul
+                                    role='list'
+                                    aria-labelledby={`${section.name}-heading`}
+                                    className='mt-6 space-y-6 sm:mt-4 sm:space-y-4'
+                                  >
+                                    {section.items.map((item) => (
+                                      <li key={item.name} className='flex'>
+                                        <a
+                                          href={item.href}
+                                          className='hover:text-gray-800'
+                                        >
+                                          {item.name}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    </PopoverPanel>
+                  </Popover>
+                ))}
+
+                {navigation.pages.map((page) => (
+                  <a
+                    key={page.name}
+                    href={page.href}
+                    className='flex items-center text-sm font-medium text-gray-700 hover:text-gray-800'
+                  >
+                    {page.name}
+                  </a>
+                ))}
+              </div>
+            </PopoverGroup>
+
+            <div className='ml-auto flex items-center'>
+              <SignedOut>
+                <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
+                  <div className='text-sm font-medium text-gray-700 hover:text-gray-800'>
+                    <SignInButton mode='modal'>Sign in</SignInButton>
+                  </div>
+                  <span aria-hidden='true' className='h-6 w-px bg-gray-200' />
+                  <div className='text-sm font-medium text-gray-700 hover:text-gray-800'>
+                    <SignUpButton mode='modal'>Create account</SignUpButton>
                   </div>
                 </div>
+              </SignedOut>
+
+              {/* <div className='hidden lg:ml-8 lg:flex'>
+                <a
+                  href='#'
+                  className='flex items-center text-gray-700 hover:text-gray-800'
+                >
+                  <img
+                    alt=''
+                    src='https://tailwindui.com/img/flags/flag-canada.svg'
+                    className='block h-auto w-5 flex-shrink-0'
+                  />
+                  <span className='ml-3 block text-sm font-medium'>CAD</span>
+                  <span className='sr-only'>, change currency</span>
+                </a>
+              </div> */}
+
+              {/* Search */}
+              <div className='flex lg:ml-6'>
+                <a href='#' className='p-2 text-gray-400 hover:text-gray-500'>
+                  <span className='sr-only'>Search</span>
+                  <MagnifyingGlassIcon aria-hidden='true' className='h-6 w-6' />
+                </a>
+              </div>
+
+              <SignedIn>
+                {' '}
+                <AvatarDropdown />
+              </SignedIn>
+
+              {/* Cart */}
+              <div className='ml-4 flow-root lg:ml-6'>
+                <a href='/cart' className='group -m-2 flex items-center p-2'>
+                  <ShoppingBagIcon
+                    aria-hidden='true'
+                    className='h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
+                  />
+                  <span className='ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800'>
+                    {numCartItems}
+                  </span>
+                  <span className='sr-only'>items in cart, view bag</span>
+                </a>
               </div>
             </div>
-          </nav>
-        </header>
-      </div>
+          </div>
+        </nav>
+      </header>
 
       {children}
 
