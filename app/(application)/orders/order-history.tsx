@@ -1,37 +1,11 @@
 import { getProductUrl } from '@/app/utils';
 import { Order } from '@/types/order';
-import { displayDate, displayDateFull, formatDollarAmount } from '@/utils/common';
+import {
+  displayDate,
+  displayDateFull,
+  formatDollarAmount,
+} from '@/utils/common';
 import { CheckIcon } from '@heroicons/react/24/outline';
-
-const orders = [
-  {
-    number: 'WU88191111',
-    date: 'January 22, 2021',
-    datetime: '2021-01-22',
-    href: '#',
-    invoiceHref: '#',
-    total: '$302.00',
-    products: [
-      {
-        id: 1,
-        name: 'Nomad Tumbler',
-        description:
-          "This durable double-walled insulated tumbler keeps your beverages at the perfect temperature all day long. Hot, cold, or even lukewarm if you're weird like that, this bottle is ready for your next adventure.",
-        href: '#',
-        price: '$35.00',
-        status: 'out-for-delivery',
-        date: 'January 5, 2021',
-        datetime: '2021-01-05',
-        imageSrc:
-          'https://tailwindui.com/img/ecommerce-images/order-history-page-06-product-01.jpg',
-        imageAlt:
-          'Olive drab green insulated bottle with flared screw lid and flat top.',
-      },
-      // More products...
-    ],
-  },
-  // More orders...
-];
 
 interface OrderHistoryProps {
   orders: Order[];
@@ -106,7 +80,7 @@ export const OrderHistory: React.FunctionComponent<OrderHistoryProps> = ({
                             </p>
                           </div>
                           <p className='mt-1 font-medium text-gray-900 sm:ml-6 sm:mt-0'>
-                            {formatDollarAmount(product.price)}
+                            {formatDollarAmount(product.price ?? 0)}
                           </p>
                         </div>
                         <div className='mt-2 flex text-sm font-medium sm:mt-4'>

@@ -10,10 +10,14 @@ export const createCheckoutLink = async ({ userId }: { userId: string }) => {
   const customer = await getCustomer({ userId, db: prisma });
   if (!customer) throw new Error('Customer not found');
 
+  if (cartItems.some(({ product }) => !product.priceId)) {
+    throw new Error('Products have to have a price');
+  }
+
   const checkoutSession = await createCheckoutSession({
     fromUrl: 'http://localhost:3000/cart',
     products: cartItems.map(({ product }) => ({
-      stripeProductId: product.id,
+      stripeProductId: product.priceId ?? '',
       quantity: 1,
     })),
     customerId: customer?.stripeId,

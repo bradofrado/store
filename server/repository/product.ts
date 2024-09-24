@@ -5,6 +5,7 @@ import { prismaToImage } from './image';
 export const productPayload = {
   include: {
     images: true,
+    prices: true,
   },
 } satisfies Prisma.ProductFindManyArgs;
 
@@ -52,10 +53,28 @@ export const createProduct = async ({
 }: CreateProductRequest): Promise<Product> => {
   const newProduct = await db.product.create({
     data: {
+      id: product.id ? product.id : undefined,
       name: product.name,
-      price: product.price,
       description: product.description,
       details: product.details,
+      images: {
+        createMany: {
+          data: product.images.map((image) => ({
+            imageSrc: image.imageSrc,
+            imageAlt: image.imageAlt,
+            primary: image.primary,
+          })),
+        },
+      },
+      prices:
+        product.price !== null
+          ? {
+              create: {
+                id: product.priceId ? product.priceId : undefined,
+                price: product.price,
+              },
+            }
+          : undefined,
     },
     ...productPayload,
   });
@@ -78,9 +97,28 @@ export const updateProduct = async ({
     },
     data: {
       name: product.name,
-      price: product.price,
       description: product.description,
       details: product.details,
+      images: {
+        deleteMany: {},
+        createMany: {
+          data: product.images.map((image) => ({
+            imageSrc: image.imageSrc,
+            imageAlt: image.imageAlt,
+            primary: image.primary,
+          })),
+        },
+      },
+      prices:
+        product.priceId !== null && product.price !== null
+          ? {
+              deleteMany: {},
+              create: {
+                id: product.priceId,
+                price: product.price,
+              },
+            }
+          : undefined,
     },
     ...productPayload,
   });
@@ -102,14 +140,77 @@ export const deleteProduct = async ({
   });
 };
 
+interface CreatePriceRequest {
+  db: Db;
+  price: number;
+  priceId?: string;
+  productId: string;
+}
+export const createPrice = async ({
+  db,
+  price,
+  priceId,
+  productId,
+}: CreatePriceRequest): Promise<void> => {
+  await db.price.create({
+    data: {
+      id: priceId,
+      price: price,
+      product: {
+        connect: {
+          id: productId,
+        },
+      },
+    },
+  });
+};
+
+interface UpdatePriceRequest {
+  db: Db;
+  price: number;
+  priceId: string;
+}
+export const updatePrice = async ({
+  db,
+  price,
+  priceId,
+}: UpdatePriceRequest): Promise<void> => {
+  await db.price.update({
+    where: {
+      id: priceId,
+    },
+    data: {
+      price: price,
+    },
+  });
+};
+
+interface DeletePriceRequest {
+  db: Db;
+  priceId: string;
+}
+export const deletePrice = async ({
+  db,
+  priceId,
+}: DeletePriceRequest): Promise<void> => {
+  await db.price.delete({
+    where: {
+      id: priceId,
+    },
+  });
+};
+
 export const prismaToProduct = (
   prismaProduct: Prisma.ProductGetPayload<typeof productPayload>
 ): Product => {
   const mainImage = prismaProduct.images.find((image) => image.primary);
+  const mainPrice = prismaProduct.prices[0];
+
   return {
     id: prismaProduct.id,
     name: prismaProduct.name,
-    price: prismaProduct.price,
+    price: mainPrice?.price ?? null,
+    priceId: mainPrice?.id ?? null,
     description: prismaProduct.description,
     imageSrc: mainImage?.imageSrc ?? '',
     imageAlt: mainImage?.imageAlt ?? '',

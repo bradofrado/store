@@ -20,7 +20,7 @@ model Product {
     id          String   @id @default(cuid())
     name        String
     description String
-    price       Float
+    prices      Price[]
     images      Image[]
     cartItems   CartItem[]
     orderItems  OrderItem[]
@@ -29,13 +29,22 @@ model Product {
     updatedAt   DateTime @updatedAt
 }
 
+model Price {
+    id String @id @default(cuid())
+    price Float
+    productId String
+    product Product @relation(fields: [productId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
 model Image {
     id        String   @id @default(cuid())
     imageSrc  String
     imageAlt  String
     primary   Boolean
     productId String
-    product   Product  @relation(fields: [productId], references: [id])
+    product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

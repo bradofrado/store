@@ -18,7 +18,7 @@ type CartItemWithStock = CartItem & { inStock: boolean; leadTime: string };
 interface CartViewProps {
   changeQuantity: (cartId: string, quantity: number) => Promise<void>;
   removeItem: (cartId: string) => Promise<void>;
-  checkout: () => Promise<string | null>;
+  checkout: () => Promise<void>;
   items: CartItemWithStock[];
 }
 export const CartView: React.FunctionComponent<CartViewProps> = ({
@@ -39,6 +39,16 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
     removeItem(cartId);
   };
 
+  const onCheckout = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      checkout();
+    } catch (error) {
+      console.error('Error checking out:', error);
+    }
+  };
+
   if (items.length === 0) {
     return (
       <div className='mt-4'>
@@ -54,7 +64,10 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
   }
 
   return (
-    <form className='mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16'>
+    <form
+      className='mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16'
+      onSubmit={onCheckout}
+    >
       <section aria-labelledby='cart-heading' className='lg:col-span-7'>
         <h2 id='cart-heading' className='sr-only'>
           Items in your shopping cart
@@ -93,7 +106,7 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
                       </div>
                       <ProductVariants variants={variants} />
                       <p className='mt-1 text-sm font-medium text-gray-900'>
-                        {formatDollarAmount(product.price)}
+                        {formatDollarAmount(product.price ?? 0)}
                       </p>
                     </div>
 
@@ -159,23 +172,24 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
         </ul>
       </section>
 
-      <OrderSummary items={items} checkout={checkout} />
+      <OrderSummary items={items} />
     </form>
   );
 };
 
 interface OrderSummaryProps {
   items: CartItemWithStock[];
-  checkout: () => Promise<string | null>;
 }
 const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
   items,
-  checkout,
 }) => {
   const router = useRouter();
   const subtotal = useMemo(
     () =>
-      items.reduce((acc, item) => acc + item.quantity * item.product.price, 0),
+      items.reduce(
+        (acc, item) => acc + item.quantity * (item.product.price ?? 0),
+        0
+      ),
     [items]
   );
   const shippingEstimate = useMemo(() => 5, []);
@@ -184,12 +198,6 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
     () => subtotal + shippingEstimate + taxEstimate,
     [subtotal, shippingEstimate, taxEstimate]
   );
-
-  const onCheckout = () => {
-    checkout().then((url) => {
-      url && router.push(url);
-    });
-  };
 
   return (
     <section
@@ -253,7 +261,6 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
         <button
           type='submit'
           className='w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50'
-          onClick={onCheckout}
         >
           Checkout
         </button>

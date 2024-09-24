@@ -100,7 +100,7 @@ export const checkoutCart = async ({
       shippedDate: null,
     })),
     total: items.reduce(
-      (acc, item) => acc + item.product.price * item.quantity,
+      (acc, item) => acc + (item.product.price ?? 0) * item.quantity,
       0
     ),
     userId,

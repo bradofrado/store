@@ -6,7 +6,8 @@ export const productVariantSchema = z.record(z.string());
 export const productSchema = z.object({
   id: z.string(),
   name: z.string(),
-  price: z.number(),
+  price: z.nullable(z.number()),
+  priceId: z.nullable(z.string()),
   description: z.string(),
   options: z.string(),
   imageSrc: z.string(),

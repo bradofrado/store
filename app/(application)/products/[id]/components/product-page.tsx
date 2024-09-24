@@ -67,6 +67,7 @@ const relatedProducts: Product[] = [
       'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg',
     imageAlt: "Front of men's Basic Tee in white.",
     price: 35,
+    priceId: '1',
     description: "Front of men's Basic Tee in white.",
     options: 'Aspen White',
     details: [],
@@ -104,7 +105,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
               {product.name}
             </h1>
             <p className='text-xl font-medium text-gray-900'>
-              {formatDollarAmount(product.price)}
+              {formatDollarAmount(product.price ?? 0)}
             </p>
           </div>
           {/* Reviews */}

@@ -34,13 +34,14 @@ export const removeCartItem = async (cartItemId: string) => {
   await removeCartItemService({ cartItemId });
 };
 
-export const checkout = async (): Promise<string | null> => {
-  // const user = auth();
-  // const userId = user.userId;
-  // if (!userId) return;
+export const checkout = async (): Promise<void> => {
+  const url = await getCheckoutLink();
 
-  //await checkoutCart({ userId });
-  return await getCheckoutLink();
+  if (url) {
+    redirect(url);
+  }
+
+  throw new Error("Couldn't create checkout link");
 };
 
 export const getCheckoutLink = async () => {

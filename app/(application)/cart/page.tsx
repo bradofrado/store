@@ -4,45 +4,6 @@ import { auth } from '@clerk/nextjs/server';
 import { getCartItems } from '@/server/service/cart';
 import { changeCartItemQuantity, checkout, removeCartItem } from '../actions';
 
-const products: Product[] = [
-  {
-    id: '1',
-    name: 'Basic Tee',
-    price: 32.0,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in sienna.",
-    images: [],
-    details: [],
-    options: '',
-    description: '',
-  },
-  {
-    id: '2',
-    name: 'Basic Tee',
-    price: 32.0,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    images: [],
-    details: [],
-    options: '',
-    description: '',
-  },
-  {
-    id: '3',
-    name: 'Nomad Tumbler',
-    price: 35.0,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-    imageAlt: 'Insulated bottle with white base and black snap lid.',
-    images: [],
-    details: [],
-    options: '',
-    description: '',
-  },
-];
-
 const relatedProducts = [
   {
     id: 1,
