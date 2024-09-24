@@ -27,16 +27,19 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
   removeItem,
   checkout,
 }) => {
-  const onChangeQuantity = (
+  const router = useRouter();
+  const onChangeQuantity = async (
     event: React.ChangeEvent<HTMLSelectElement>,
     cartId: string
   ) => {
     const quantity = parseInt(event.target.value);
-    changeQuantity(cartId, quantity);
+    await changeQuantity(cartId, quantity);
+    router.refresh();
   };
 
-  const onRemove = (cartId: string) => {
-    removeItem(cartId);
+  const onRemove = async (cartId: string) => {
+    await removeItem(cartId);
+    router.refresh();
   };
 
   const onCheckout = (e: React.FormEvent) => {
