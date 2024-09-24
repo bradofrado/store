@@ -315,3 +315,20 @@ export const validPathRegex =
 export const isValidPath = (path: string): boolean => {
   return validPathRegex.test(path);
 };
+
+export const encodeState = <T>(state: T): string => {
+  if (typeof state === 'string') {
+    return state;
+  }
+
+  return JSON.stringify(state);
+};
+
+export const decodeState = <T>(state: string): T => {
+  try {
+    return JSON.parse(state) as T;
+  } catch {
+    //If it fails to parse, then it is probably a string
+    return state as T;
+  }
+};

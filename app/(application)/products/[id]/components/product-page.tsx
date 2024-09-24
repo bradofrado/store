@@ -183,6 +183,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
             <div className='divide-y'>
               {Object.entries(variant).map(([key, value]) => (
                 <VariantPicker
+                  key={key}
                   name={capitalizeFirstLetter(key)}
                   variants={
                     productVariants[key as keyof typeof productVariants]

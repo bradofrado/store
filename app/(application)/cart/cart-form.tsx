@@ -85,7 +85,7 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
               { id, product, quantity, variants, inStock, leadTime },
               productIdx
             ) => (
-              <li key={product.id} className='flex py-6 sm:py-10'>
+              <li key={id} className='flex py-6 sm:py-10'>
                 <div className='flex-shrink-0'>
                   <img
                     alt={product.imageAlt}

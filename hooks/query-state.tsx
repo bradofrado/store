@@ -1,4 +1,5 @@
 'use client';
+import { decodeState, encodeState } from '@/utils/common';
 import {
   createContext,
   useCallback,
@@ -145,21 +146,4 @@ export const QueryStateProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </QueryStateContext.Provider>
   );
-};
-
-export const encodeState = <T,>(state: T): string => {
-  if (typeof state === 'string') {
-    return state;
-  }
-
-  return JSON.stringify(state);
-};
-
-export const decodeState = <T,>(state: string): T => {
-  try {
-    return JSON.parse(state) as T;
-  } catch {
-    //If it fails to parse, then it is probably a string
-    return state as T;
-  }
 };
