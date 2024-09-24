@@ -9,18 +9,21 @@ import {
 } from '@/server/service/cart';
 import { createCheckoutLink } from '@/server/service/stripe';
 import { CartItem } from '@/types/cart';
-import { Product } from '@/types/product';
+import { Product, ProductVariant } from '@/types/product';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
-export const addProductToCart = async (product: Product) => {
+export const addProductToCart = async (
+  product: Product,
+  variants: ProductVariant
+) => {
   const user = auth();
   const userId = user.userId;
   if (!userId) {
     return;
   }
 
-  await addItemToCart({ product, variants: {}, userId });
+  await addItemToCart({ product, variants, userId });
 };
 
 export const changeCartItemQuantity = async (

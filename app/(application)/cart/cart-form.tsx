@@ -100,7 +100,7 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
                       <div className='flex justify-between'>
                         <h3 className='text-sm'>
                           <a
-                            href={getProductUrl(product.id)}
+                            href={getProductUrl(product.id, variants)}
                             className='font-medium text-gray-700 hover:text-gray-800'
                           >
                             {product.name}

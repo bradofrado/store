@@ -1,15 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Radio, RadioGroup } from '@headlessui/react';
 import {
   CurrencyDollarIcon,
   GlobeAmericasIcon,
 } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/20/solid';
-import { Product } from '@/types/product';
-import { formatDollarAmount } from '@/utils/common';
+import { Product, ProductVariant, productVariants } from '@/types/product';
+import { capitalizeFirstLetter, formatDollarAmount } from '@/utils/common';
 import { ProductCard } from '@/components/product-card';
+import { useQueryState } from '@/hooks/query-state';
 
 const colors = [
   { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
@@ -18,14 +19,6 @@ const colors = [
     bgColor: 'bg-gray-400',
     selectedColor: 'ring-gray-400',
   },
-];
-const sizes = [
-  { name: 'XXS', inStock: true },
-  { name: 'XS', inStock: true },
-  { name: 'S', inStock: true },
-  { name: 'M', inStock: true },
-  { name: 'L', inStock: true },
-  { name: 'XL', inStock: false },
 ];
 
 const policies = [
@@ -82,18 +75,34 @@ function classNames(...classes: (string | undefined)[]) {
 
 interface ProductItemViewProps {
   product: Product;
-  addProductToCart: (product: Product) => Promise<void>;
+  addProductToCart: (
+    product: Product,
+    variants: ProductVariant
+  ) => Promise<void>;
 }
 export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   product,
   addProductToCart,
 }) => {
+  const [variant, setVariant] = useQueryState<ProductVariant>({
+    key: 'variant',
+    defaultValue: Object.entries(productVariants).reduce(
+      (prev, [key, value]) => ({ ...prev, [key]: value[0] }),
+      {}
+    ),
+  });
+
   const [selectedColor, setSelectedColor] = useState(colors[0]);
-  const [selectedSize, setSelectedSize] = useState(sizes[2]);
+
+  const onChange = (variantName: string) => (value: string) => {
+    const copy = { ...variant };
+    copy[variantName] = value;
+    setVariant(copy);
+  };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    addProductToCart(product);
+    addProductToCart(product, variant);
   };
 
   return (
@@ -169,73 +178,19 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
         <div className='mt-8 lg:col-span-5'>
           <form onSubmit={onSubmit}>
             {/* Color picker */}
-            <div>
-              <h2 className='text-sm font-medium text-gray-900'>Color</h2>
+            <ColorPicker value={selectedColor} onChange={setSelectedColor} />
 
-              <fieldset aria-label='Choose a color' className='mt-2'>
-                <RadioGroup
-                  value={selectedColor}
-                  onChange={setSelectedColor}
-                  className='flex items-center space-x-3'
-                >
-                  {colors.map((color) => (
-                    <Radio
-                      key={color.name}
-                      value={color}
-                      aria-label={color.name}
-                      className={classNames(
-                        color.selectedColor,
-                        'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1'
-                      )}
-                    >
-                      <span
-                        aria-hidden='true'
-                        className={classNames(
-                          color.bgColor,
-                          'h-8 w-8 rounded-full border border-black border-opacity-10'
-                        )}
-                      />
-                    </Radio>
-                  ))}
-                </RadioGroup>
-              </fieldset>
-            </div>
-
-            {/* Size picker */}
-            <div className='mt-8'>
-              <div className='flex items-center justify-between'>
-                <h2 className='text-sm font-medium text-gray-900'>Size</h2>
-                <a
-                  href='#'
-                  className='text-sm font-medium text-indigo-600 hover:text-indigo-500'
-                >
-                  See sizing chart
-                </a>
-              </div>
-
-              <fieldset aria-label='Choose a size' className='mt-2'>
-                <RadioGroup
-                  value={selectedSize}
-                  onChange={setSelectedSize}
-                  className='grid grid-cols-3 gap-3 sm:grid-cols-6'
-                >
-                  {sizes.map((size) => (
-                    <Radio
-                      key={size.name}
-                      value={size}
-                      disabled={!size.inStock}
-                      className={classNames(
-                        size.inStock
-                          ? 'cursor-pointer focus:outline-none'
-                          : 'cursor-not-allowed opacity-25',
-                        'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-indigo-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-indigo-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-indigo-700 sm:flex-1'
-                      )}
-                    >
-                      {size.name}
-                    </Radio>
-                  ))}
-                </RadioGroup>
-              </fieldset>
+            <div className='divide-y'>
+              {Object.entries(variant).map(([key, value]) => (
+                <VariantPicker
+                  name={capitalizeFirstLetter(key)}
+                  variants={
+                    productVariants[key as keyof typeof productVariants]
+                  }
+                  value={value}
+                  onChange={onChange(key)}
+                />
+              ))}
             </div>
 
             <button
@@ -374,5 +329,100 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
         </div>
       </section>
     </main>
+  );
+};
+
+interface VariantPickerProps {
+  name: string;
+  variants: string[];
+  value: string;
+  onChange: (value: string) => void;
+}
+const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
+  name,
+  variants,
+  value,
+  onChange,
+}) => {
+  return (
+    <div className='py-4'>
+      <div className='flex items-center justify-between'>
+        <h2 className='text-sm font-medium text-gray-900'>{name}</h2>
+        {/* <a
+          href='#'
+          className='text-sm font-medium text-indigo-600 hover:text-indigo-500'
+        >
+          See sizing chart
+        </a> */}
+      </div>
+
+      <fieldset aria-label={`Choose a ${name}`} className='mt-2'>
+        <RadioGroup
+          value={value}
+          onChange={onChange}
+          className='grid grid-cols-3 gap-3 sm:grid-cols-6'
+        >
+          {variants.map((variant) => (
+            <Radio
+              key={variant}
+              value={variant}
+              disabled={false}
+              className={classNames(
+                true
+                  ? 'cursor-pointer focus:outline-none'
+                  : 'cursor-not-allowed opacity-25',
+                'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-indigo-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-indigo-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-indigo-700 sm:flex-1'
+              )}
+            >
+              {variant}
+            </Radio>
+          ))}
+        </RadioGroup>
+      </fieldset>
+    </div>
+  );
+};
+
+type ProductColor = (typeof colors)[number];
+interface ColorPickerProps {
+  value: ProductColor;
+  onChange: (color: ProductColor) => void;
+}
+const ColorPicker: React.FunctionComponent<ColorPickerProps> = ({
+  value,
+  onChange,
+}) => {
+  return (
+    <div>
+      <h2 className='text-sm font-medium text-gray-900'>Color</h2>
+
+      <fieldset aria-label='Choose a color' className='mt-2'>
+        <RadioGroup
+          value={value}
+          onChange={onChange}
+          className='flex items-center space-x-3'
+        >
+          {colors.map((color) => (
+            <Radio
+              key={color.name}
+              value={color}
+              aria-label={color.name}
+              className={classNames(
+                color.selectedColor,
+                'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1'
+              )}
+            >
+              <span
+                aria-hidden='true'
+                className={classNames(
+                  color.bgColor,
+                  'h-8 w-8 rounded-full border border-black border-opacity-10'
+                )}
+              />
+            </Radio>
+          ))}
+        </RadioGroup>
+      </fieldset>
+    </div>
   );
 };
