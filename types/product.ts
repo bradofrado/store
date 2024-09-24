@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import { imageSchema } from './image';
 
-export const productVariantSchema = z.record(z.string());
-export type ProductVariant = z.infer<typeof productVariantSchema>;
+export const variantSelectionSchema = z.record(z.string());
+export type VariantSelection = z.infer<typeof variantSelectionSchema>;
+
+export const productVariantSchema = z.record(z.array(z.string()));
 
 export const productSchema = z.object({
   id: z.string(),
@@ -15,6 +17,7 @@ export const productSchema = z.object({
   imageAlt: z.string(),
   images: z.array(imageSchema),
   details: z.array(z.string()),
+  variants: productVariantSchema,
 });
 export type Product = z.infer<typeof productSchema>;
 

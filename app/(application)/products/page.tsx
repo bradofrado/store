@@ -1,10 +1,21 @@
 import { ProductCard } from '@/components/product-card';
 import { CategoryFiltersView } from './components/category-filters-view';
 import { Product } from '@/types/product';
-import { getProducts } from '@/server/service/product';
+import { getProducts, searchProducts } from '@/server/service/product';
+import { decodeState } from '@/utils/common';
 
-export default async function ProductsPage() {
-  const products = await getProducts();
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams?: { filter?: string };
+}) {
+  let products: Product[];
+  if (searchParams?.filter) {
+    products = await searchProducts(decodeState(searchParams.filter));
+  } else {
+    products = await getProducts();
+  }
+
   return (
     <CategoryFiltersView>
       <h2 id='product-heading' className='sr-only'>

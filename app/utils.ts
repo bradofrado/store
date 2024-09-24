@@ -1,5 +1,8 @@
 import { encodeState } from '@/utils/common';
-import { ProductVariant } from '@/types/product';
+import { VariantSelection } from '@/types/product';
 
-export const getProductUrl = (id: string, variants?: ProductVariant): string =>
-  `/products/${id}?variant=${encodeState(variants)}`;
+export const getProductUrl = (
+  id: string,
+  variants?: VariantSelection
+): string =>
+  `/products/${id}${variants !== undefined ? `?variant=${encodeState(variants)}` : ''}`;

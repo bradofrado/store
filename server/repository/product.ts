@@ -1,5 +1,5 @@
 import { Db, Prisma } from '@/prisma';
-import { Product } from '@/types/product';
+import { Product, productVariantSchema } from '@/types/product';
 import { prismaToImage } from './image';
 
 export const productPayload = {
@@ -57,6 +57,7 @@ export const createProduct = async ({
       name: product.name,
       description: product.description,
       details: product.details,
+      variants: product.variants,
       images: {
         createMany: {
           data: product.images.map((image) => ({
@@ -99,6 +100,7 @@ export const updateProduct = async ({
       name: product.name,
       description: product.description,
       details: product.details,
+      variants: product.variants,
       images: {
         deleteMany: {},
         createMany: {
@@ -217,5 +219,6 @@ export const prismaToProduct = (
     images: prismaProduct.images.map(prismaToImage),
     options: '',
     details: prismaProduct.details,
+    variants: productVariantSchema.parse(prismaProduct.variants),
   };
 };

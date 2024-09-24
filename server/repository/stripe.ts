@@ -72,6 +72,16 @@ export const validateStripeWebhook = async (request: Request) => {
   return stripe.webhooks.constructEvent(reqBuffer, signature, signingSecret);
 };
 
+export const searchProducts = async (
+  query: string
+): Promise<stripe.Product[]> => {
+  const result = await stripeClient.products.search({
+    query,
+  });
+
+  return result.data;
+};
+
 const getStripeProduct = async (productId: string) => {
   const product = await stripeClient.products.retrieve(productId, {
     expand: ['default_price'],
@@ -125,5 +135,9 @@ export const stripeToProduct = async (
     })),
     imageSrc: product.images[0],
     imageAlt: product.name,
+    variants: Object.entries(product.metadata).reduce(
+      (prev, [key, value]) => ({ ...prev, [key]: value.split(',') }),
+      {}
+    ),
   };
 };

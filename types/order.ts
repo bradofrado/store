@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { productSchema, productVariantSchema } from './product';
+import { productSchema, variantSelectionSchema } from './product';
 
 export const orderStatusSchema = z.union([
   z.literal('pending'),
@@ -13,7 +13,7 @@ export const orderItemSchema = z.object({
   id: z.string(),
   product: productSchema,
   quantity: z.number(),
-  variants: productVariantSchema,
+  variants: variantSelectionSchema,
   status: orderStatusSchema,
   shippedDate: z.date().nullable(),
 });

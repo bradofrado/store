@@ -1,5 +1,6 @@
 'use client';
 import { decodeState, encodeState } from '@/utils/common';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   createContext,
   useCallback,
@@ -80,12 +81,9 @@ export const QueryStateProvider: React.FC<{ children: React.ReactNode }> = ({
     typeof window !== 'undefined' ? window.location.href : ''
   );
   const [forceRerender, setForceRerender] = useState(0);
-  const router = window.location;
+  const router = useRouter();
 
-  const searchParams = useMemo(
-    () => new URL(urlRef.current).searchParams,
-    [urlRef.current]
-  );
+  const searchParams = useSearchParams();
 
   const setUrl = useCallback(
     (newUrl: string) => {
@@ -123,7 +121,7 @@ export const QueryStateProvider: React.FC<{ children: React.ReactNode }> = ({
     if (window.location.href !== urlRef.current) {
       const url = new URL(urlRef.current);
       const path = url.pathname + url.search + url.hash;
-      window.history.pushState({}, '', path);
+      router.push(path, { scroll: false });
     }
   }, [urlRef, forceRerender, router]);
 

@@ -7,7 +7,7 @@ import {
 } from '@/types/order';
 import { prismaToProduct, productPayload } from './product';
 import { z } from 'zod';
-import { productVariantSchema } from '@/types/product';
+import { variantSelectionSchema } from '@/types/product';
 
 const orderItemPayload = {
   include: {
@@ -159,7 +159,7 @@ export const prismaToOrderItem = (
     id: prismaOrderItem.id,
     product: prismaToProduct(prismaOrderItem.product),
     quantity: prismaOrderItem.quantity,
-    variants: productVariantSchema.parse(prismaOrderItem.variants),
+    variants: variantSelectionSchema.parse(prismaOrderItem.variants),
     status: orderStatusSchema.parse(prismaOrderItem.status),
     shippedDate: prismaOrderItem.shippedDate,
   };

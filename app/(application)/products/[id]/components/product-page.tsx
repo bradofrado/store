@@ -7,7 +7,7 @@ import {
   GlobeAmericasIcon,
 } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/20/solid';
-import { Product, ProductVariant, productVariants } from '@/types/product';
+import { Product, productVariants, VariantSelection } from '@/types/product';
 import { capitalizeFirstLetter, formatDollarAmount } from '@/utils/common';
 import { ProductCard } from '@/components/product-card';
 import { useQueryState } from '@/hooks/query-state';
@@ -65,6 +65,7 @@ const relatedProducts: Product[] = [
     options: 'Aspen White',
     details: [],
     images: [],
+    variants: {},
   },
   // More products...
 ];
@@ -77,16 +78,16 @@ interface ProductItemViewProps {
   product: Product;
   addProductToCart: (
     product: Product,
-    variants: ProductVariant
+    variants: VariantSelection
   ) => Promise<void>;
 }
 export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   product,
   addProductToCart,
 }) => {
-  const [variant, setVariant] = useQueryState<ProductVariant>({
+  const [variant, setVariant] = useQueryState<VariantSelection>({
     key: 'variant',
-    defaultValue: Object.entries(productVariants).reduce(
+    defaultValue: Object.entries(product.variants).reduce(
       (prev, [key, value]) => ({ ...prev, [key]: value[0] }),
       {}
     ),
@@ -185,9 +186,12 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
                 <VariantPicker
                   key={key}
                   name={capitalizeFirstLetter(key)}
-                  variants={
-                    productVariants[key as keyof typeof productVariants]
-                  }
+                  variants={productVariants[
+                    key as keyof typeof productVariants
+                  ].map((variant) => ({
+                    name: variant,
+                    inStock: product.variants[key].includes(variant),
+                  }))}
                   value={value}
                   onChange={onChange(key)}
                 />
@@ -335,7 +339,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
 
 interface VariantPickerProps {
   name: string;
-  variants: string[];
+  variants: { name: string; inStock: boolean }[];
   value: string;
   onChange: (value: string) => void;
 }
@@ -365,17 +369,17 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
         >
           {variants.map((variant) => (
             <Radio
-              key={variant}
-              value={variant}
-              disabled={false}
+              key={variant.name}
+              value={variant.name}
+              disabled={!variant.inStock}
               className={classNames(
-                true
+                variant.inStock
                   ? 'cursor-pointer focus:outline-none'
                   : 'cursor-not-allowed opacity-25',
                 'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-indigo-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-indigo-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-indigo-700 sm:flex-1'
               )}
             >
-              {variant}
+              {variant.name}
             </Radio>
           ))}
         </RadioGroup>
