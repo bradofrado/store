@@ -22,7 +22,6 @@ export type OrderItem = z.infer<typeof orderItemSchema>;
 export const orderSchema = z.object({
   id: z.string(),
   number: z.string(),
-  userId: z.string(),
   orders: z.array(orderItemSchema),
   total: z.number(),
   datePlaced: z.date(),

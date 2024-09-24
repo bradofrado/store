@@ -31,3 +31,17 @@ export const getCustomer = async ({
     },
   });
 };
+
+export const getCustomerFromStripeId = async ({
+  stripeId,
+  db,
+}: {
+  stripeId: string;
+  db: Db;
+}): Promise<Customer | null> => {
+  return await db.customer.findUnique({
+    where: {
+      stripeId,
+    },
+  });
+};

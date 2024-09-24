@@ -1,5 +1,10 @@
 import { prisma } from '@/prisma';
 import {
+  getCustomer,
+  getCustomerFromStripeId,
+} from '@/server/repository/customer';
+import { createOrder } from '@/server/repository/order';
+import {
   createPrice,
   createProduct,
   deletePrice,
@@ -7,7 +12,13 @@ import {
   updatePrice,
   updateProduct,
 } from '@/server/repository/product';
-import { getProduct, validateStripeWebhook } from '@/server/repository/stripe';
+import {
+  getCharge,
+  getOrderFromCharge,
+  getProduct,
+  validateStripeWebhook,
+} from '@/server/repository/stripe';
+import { checkoutCart } from '@/server/service/cart';
 
 export async function POST(request: Request) {
   try {
@@ -86,6 +97,37 @@ export async function POST(request: Request) {
       });
 
       return new Response('Deleted price', { status: 200 });
+    } else if (event.type === 'charge.succeeded') {
+      const charge = await getCharge(event.data.object.id);
+      if (typeof charge.customer !== 'string') {
+        return new Response('Invalid Charge. Expected customer id', {
+          status: 400,
+        });
+      }
+
+      const customer = await getCustomerFromStripeId({
+        db: prisma,
+        stripeId: charge.customer,
+      });
+      if (!customer) {
+        return new Response('Invalid Charge. Customer does not exist', {
+          status: 400,
+        });
+      }
+      if (!charge.receipt_url) {
+        return new Response('Invalid Charge. Missing receipt information', {
+          status: 400,
+        });
+      }
+
+      const newOrder = await checkoutCart({
+        userId: customer.clerkId,
+        number: charge.receipt_number ?? `${charge.created}`,
+        invoiceSrc: charge.receipt_url,
+        datePlaced: new Date(charge.created * 1000),
+      });
+
+      return new Response('Created order', { status: 200 });
     }
 
     return new Response('Unhandled event', { status: 400 });

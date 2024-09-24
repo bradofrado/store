@@ -13,7 +13,7 @@ datasource db {
 
 model Customer {
     clerkId  String @id
-    stripeId String
+    stripeId String @unique
 }
 
 model Product {

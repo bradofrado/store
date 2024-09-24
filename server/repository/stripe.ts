@@ -1,3 +1,4 @@
+import { Order, OrderItem } from '@/types/order';
 import { Product } from '@/types/product';
 import stripe from 'stripe';
 
@@ -80,6 +81,66 @@ export const searchProducts = async (
   });
 
   return result.data;
+};
+
+export const getOrderFromCharge = async (chargeId: string): Promise<Order> => {
+  const charge = await stripeClient.charges.retrieve(chargeId);
+
+  const chargeToOrder = async (charge: stripe.Charge): Promise<Order> => {
+    if (typeof charge.payment_intent !== 'string') {
+      throw new Error('No payment intent on charge ' + charge.id);
+    }
+
+    if (
+      typeof charge.receipt_url !== 'string' ||
+      typeof charge.receipt_number !== 'string'
+    ) {
+      throw new Error('No receipt url on charge ' + charge.id);
+    }
+
+    const transactions = await stripeClient.checkout.sessions.list({
+      payment_intent: charge.payment_intent,
+    });
+    const lineItems = await stripeClient.checkout.sessions.listLineItems(
+      transactions.data[0].id
+    );
+
+    return {
+      id: charge.id,
+      datePlaced: new Date(charge.created * 1000),
+      invoiceSrc: charge.receipt_url,
+      number: charge.receipt_number,
+      total: charge.amount / 100,
+      orders: await Promise.all(
+        lineItems.data.map<Promise<OrderItem>>(async (item) => {
+          const product = item.price
+            ? await getProduct(
+                typeof item.price.product === 'string' ? item.price.product : ''
+              )
+            : null;
+          if (!product) {
+            throw new Error('No product found for price ' + item.id);
+          }
+          return {
+            id: item.id,
+            product: product,
+            quantity: item.quantity ?? 0,
+            variants: {},
+            status: 'pending',
+            shippedDate: null,
+          };
+        })
+      ),
+    };
+  };
+
+  return chargeToOrder(charge);
+};
+
+export const getCharge = async (chargeId: string) => {
+  const charge = await stripeClient.charges.retrieve(chargeId);
+
+  return charge;
 };
 
 const getStripeProduct = async (productId: string) => {

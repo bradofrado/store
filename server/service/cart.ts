@@ -78,8 +78,14 @@ export const changeQuantityOfCartItem = async ({
 
 export const checkoutCart = async ({
   userId,
+  number,
+  invoiceSrc,
+  datePlaced,
 }: {
   userId: string;
+  number: string;
+  invoiceSrc: string;
+  datePlaced: Date;
 }): Promise<Order> => {
   const items = await getCartItems({ userId });
   if (items.length === 0) {
@@ -89,8 +95,8 @@ export const checkoutCart = async ({
   const order: Order = {
     id: '',
     //TODO: Get this from stripe?
-    number: '0',
-    invoiceSrc: '',
+    number,
+    invoiceSrc,
     orders: items.map((item) => ({
       id: '',
       product: item.product,
@@ -103,11 +109,10 @@ export const checkoutCart = async ({
       (acc, item) => acc + (item.product.price ?? 0) * item.quantity,
       0
     ),
-    userId,
-    datePlaced: new Date(),
+    datePlaced,
   };
 
-  const createdOrder = await createOrder({ db: prisma, order });
+  const createdOrder = await createOrder({ db: prisma, order, userId });
   await deleteCartItems({ db: prisma, userId });
 
   return createdOrder;

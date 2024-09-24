@@ -63,14 +63,16 @@ export const getOrder = async ({
 interface CreateOrderRequest {
   db: Db;
   order: Order;
+  userId: string;
 }
 export const createOrder = async ({
   db,
   order,
+  userId,
 }: CreateOrderRequest): Promise<Order> => {
   const prismaOrder = await db.order.create({
     data: {
-      userId: order.userId,
+      userId,
       items: {
         create: order.orders.map((order) => ({
           product: {
@@ -143,7 +145,6 @@ export const prismaToOrder = (
 ): Order => {
   return {
     id: prismaOrder.id,
-    userId: prismaOrder.userId,
     orders: prismaOrder.items.map(prismaToOrderItem),
     total: prismaOrder.total,
     number: prismaOrder.number,

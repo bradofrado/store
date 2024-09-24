@@ -22,7 +22,7 @@ export const ProductCard: React.FunctionComponent<Product> = (product) => {
             {product.name}
           </a>
         </h3>
-        <p className='text-sm text-gray-500'>{product.description}</p>
+        <p className='text-sm text-gray-500'>{product.options}</p>
         <div className='flex flex-1 flex-col justify-end'>
           <p className='text-sm italic text-gray-500'>{product.options}</p>
           <p className='text-base font-medium text-gray-900'>
