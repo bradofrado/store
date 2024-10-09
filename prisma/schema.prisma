@@ -26,8 +26,28 @@ model Product {
     orderItems  OrderItem[]
     variants    Json
     details     String[]
+    collections CollectionProduct[]
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
+}
+
+model Collection {
+    id        String   @id @default(cuid())
+    name      String
+    products  CollectionProduct[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    imageSrc  String
+    slug      String @unique
+}
+
+model CollectionProduct {
+    collectionId String
+    collection   Collection @relation(fields: [collectionId], references: [id])
+    productId    String
+    product      Product    @relation(fields: [productId], references: [id])
+
+    @@id([collectionId, productId])
 }
 
 model Price {

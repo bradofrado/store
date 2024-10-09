@@ -1,71 +1,11 @@
-'use client';
+import { getPopularCollections } from '@/server/service/collection';
+import { getCollectionUrl } from '../utils';
+import { getPopularProducts } from '@/server/service/product';
+import { ProductCard } from '@/components/product-card';
 
-const categories = [
-  {
-    name: 'New Arrivals',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-01.jpg',
-  },
-  {
-    name: 'Productivity',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-02.jpg',
-  },
-  {
-    name: 'Workspace',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-04.jpg',
-  },
-  {
-    name: 'Accessories',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-05.jpg',
-  },
-  {
-    name: 'Sale',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-03.jpg',
-  },
-];
-const collections = [
-  {
-    name: 'Handcrafted Collection',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-collection-01.jpg',
-    imageAlt:
-      'Brown leather key ring with brass metal loops and rivets on wood table.',
-    description:
-      'Keep your phone, keys, and wallet together, so you can lose everything at once.',
-  },
-  {
-    name: 'Organized Desk Collection',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-collection-02.jpg',
-    imageAlt:
-      'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
-    description:
-      'The rest of the house will still be a mess, but your desk will look great.',
-  },
-  {
-    name: 'Focus Collection',
-    href: '/products',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-collection-03.jpg',
-    imageAlt:
-      'Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.',
-    description:
-      'Be more productive than enterprise project managers with a single piece of paper.',
-  },
-];
-
-export default function Example() {
+export default async function MainPage() {
+  const categories = await getPopularCollections();
+  const products = await getPopularProducts();
   return (
     <>
       {/* Hero section */}
@@ -93,7 +33,7 @@ export default function Example() {
             stock.
           </p>
           <a
-            href='/products'
+            href='/collections/new-arrivals'
             className='mt-8 inline-block rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100'
           >
             Shop New Arrivals
@@ -111,13 +51,13 @@ export default function Example() {
               id='category-heading'
               className='text-2xl font-bold tracking-tight text-gray-900'
             >
-              Shop by Category
+              Popular Collections
             </h2>
             <a
-              href='/products'
+              href='/collections'
               className='hidden text-sm font-semibold text-primary hover:text-primary-lighter sm:block'
             >
-              Browse all categories
+              Browse all collections
               <span aria-hidden='true'> &rarr;</span>
             </a>
           </div>
@@ -129,7 +69,7 @@ export default function Example() {
                   {categories.map((category) => (
                     <a
                       key={category.name}
-                      href={category.href}
+                      href={getCollectionUrl(category.slug)}
                       className='relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto'
                     >
                       <span aria-hidden='true' className='absolute inset-0'>
@@ -155,7 +95,7 @@ export default function Example() {
 
           <div className='mt-6 px-4 sm:hidden'>
             <a
-              href='/products'
+              href='/collections'
               className='block text-sm font-semibold text-primary hover:text-primary-lighter'
             >
               Browse all categories
@@ -193,7 +133,7 @@ export default function Example() {
                   least you have a really nice desk setup.
                 </p>
                 <a
-                  href='/products'
+                  href='/collections'
                   className='mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                 >
                   Shop Workspace
@@ -212,7 +152,7 @@ export default function Example() {
             id='collection-heading'
             className='text-2xl font-bold tracking-tight text-gray-900'
           >
-            Shop by Collection
+            Our Best Selling Bands
           </h2>
           <p className='mt-4 text-base text-gray-500'>
             Each season, we collaborate with world-class designers to create a
@@ -220,29 +160,8 @@ export default function Example() {
           </p>
 
           <div className='mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0'>
-            {collections.map((collection) => (
-              <a
-                key={collection.name}
-                href={collection.href}
-                className='group block'
-              >
-                <div
-                  aria-hidden='true'
-                  className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg lg:aspect-h-6 lg:aspect-w-5 group-hover:opacity-75'
-                >
-                  <img
-                    alt={collection.imageAlt}
-                    src={collection.imageSrc}
-                    className='h-full w-full object-cover object-center'
-                  />
-                </div>
-                <h3 className='mt-4 text-base font-semibold text-gray-900'>
-                  {collection.name}
-                </h3>
-                <p className='mt-2 text-sm text-gray-500'>
-                  {collection.description}
-                </p>
-              </a>
+            {products.map((product) => (
+              <ProductCard key={product.id} {...product} />
             ))}
           </div>
         </section>
@@ -275,7 +194,7 @@ export default function Example() {
                   system. Just the undeniable urge to fill empty circles.
                 </p>
                 <a
-                  href='/products'
+                  href='/collections'
                   className='mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                 >
                   Shop Focus

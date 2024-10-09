@@ -6,3 +6,6 @@ export const getProductUrl = (
   variants?: VariantSelection
 ): string =>
   `/products/${id}${variants !== undefined ? `?variant=${encodeState(variants)}` : ''}`;
+
+export const getCollectionUrl = (slug: string): string =>
+  `/collections/${slug}`;

@@ -15,6 +15,13 @@ export const getProducts = async (): Promise<Product[]> => {
   return products;
 };
 
+export const getPopularProducts = async (): Promise<Product[]> => {
+  const products = await getProducts();
+  const popular = products.slice(0, 20);
+
+  return popular;
+};
+
 export const getProduct = async (
   productId: string
 ): Promise<Product | null> => {

@@ -1,5 +1,5 @@
 import { Product } from '@/types/product';
-import { addProductToCart } from '../../actions';
+import { addProductToCart } from '../../../actions';
 import { ProductItemView } from './components/product-page';
 import { getProduct } from '@/server/service/product';
 import { notFound } from 'next/navigation';
