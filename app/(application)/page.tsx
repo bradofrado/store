@@ -5,31 +5,31 @@ const categories = [
     name: 'New Arrivals',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-01.jpg',
   },
   {
     name: 'Productivity',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-02.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-02.jpg',
   },
   {
     name: 'Workspace',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-04.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-04.jpg',
   },
   {
     name: 'Accessories',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-05.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-05.jpg',
   },
   {
     name: 'Sale',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-category-03.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-03.jpg',
   },
 ];
 const collections = [
@@ -37,7 +37,7 @@ const collections = [
     name: 'Handcrafted Collection',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-collection-01.jpg',
     imageAlt:
       'Brown leather key ring with brass metal loops and rivets on wood table.',
     description:
@@ -47,7 +47,7 @@ const collections = [
     name: 'Organized Desk Collection',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-collection-02.jpg',
     imageAlt:
       'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
     description:
@@ -57,7 +57,7 @@ const collections = [
     name: 'Focus Collection',
     href: '/products',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-03.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-collection-03.jpg',
     imageAlt:
       'Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.',
     description:
@@ -74,7 +74,7 @@ export default function Example() {
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src='https://tailwindui.com/img/ecommerce-images/home-page-01-hero-full-width.jpg'
+            src='https://tailwindui.com/plus/img/ecommerce-images/home-page-01-hero-full-width.jpg'
             className='h-full w-full object-cover object-center'
           />
         </div>
@@ -173,7 +173,7 @@ export default function Example() {
             <div className='absolute inset-0'>
               <img
                 alt=''
-                src='https://tailwindui.com/img/ecommerce-images/home-page-01-feature-section-01.jpg'
+                src='https://tailwindui.com/plus/img/ecommerce-images/home-page-01-feature-section-01.jpg'
                 className='h-full w-full object-cover object-center'
               />
             </div>
@@ -256,7 +256,7 @@ export default function Example() {
             <div className='absolute inset-0'>
               <img
                 alt=''
-                src='https://tailwindui.com/img/ecommerce-images/home-page-01-feature-section-02.jpg'
+                src='https://tailwindui.com/plus/img/ecommerce-images/home-page-01-feature-section-02.jpg'
                 className='h-full w-full object-cover object-center'
               />
             </div>

@@ -17,7 +17,7 @@ const orders = [
         color: 'Brass',
         size: '3" x 3" x 3"',
         imageSrc:
-          'https://tailwindui.com/img/ecommerce-images/order-history-page-07-product-01.jpg',
+          'https://tailwindui.com/plus/img/ecommerce-images/order-history-page-07-product-01.jpg',
         imageAlt:
           'Brass puzzle in the shape of a jack with overlapping rounded posts.',
       },

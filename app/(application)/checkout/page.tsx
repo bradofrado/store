@@ -55,7 +55,7 @@ const navigation = {
           name: 'New Arrivals',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-category-01.jpg',
           imageAlt:
             'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
@@ -63,7 +63,7 @@ const navigation = {
           name: 'Basic Tees',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-category-02.jpg',
           imageAlt:
             'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
@@ -71,7 +71,7 @@ const navigation = {
           name: 'Accessories',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-category-03.jpg',
           imageAlt:
             'Model wearing minimalist watch with black wristband and white watch face.',
         },
@@ -79,7 +79,7 @@ const navigation = {
           name: 'Carry',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-category-04.jpg',
           imageAlt:
             'Model opening tan leather long wallet with credit card pockets and cash pouch.',
         },
@@ -92,7 +92,7 @@ const navigation = {
           name: 'New Arrivals',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
           imageAlt:
             'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
         },
@@ -100,14 +100,14 @@ const navigation = {
           name: 'Basic Tees',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.',
         },
         {
           name: 'Accessories',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
           imageAlt:
             'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
@@ -115,7 +115,7 @@ const navigation = {
           name: 'Carry',
           href: '#',
           imageSrc:
-            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
+            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
           imageAlt:
             'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
         },
@@ -136,7 +136,7 @@ const products = [
     color: 'Black',
     size: 'Large',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/checkout-page-02-product-01.jpg',
     imageAlt: "Front of men's Basic Tee in black.",
   },
   // More products...

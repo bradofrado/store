@@ -10,7 +10,7 @@ const relatedProducts = [
     name: 'Billfold Wallet',
     href: '#',
     imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-related-product-01.jpg',
+      'https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-01-related-product-01.jpg',
     imageAlt: 'Front of Billfold Wallet in natural leather.',
     price: '$118',
     color: 'Natural',
