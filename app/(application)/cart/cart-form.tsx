@@ -57,7 +57,7 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
       <div className='mt-4'>
         <p>
           You cart is empty.{' '}
-          <a href='/products' className='text-blue-400'>
+          <a href='/collections' className='text-blue-400'>
             Explore
           </a>{' '}
           some products to see what you like!
