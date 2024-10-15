@@ -11,6 +11,7 @@ import { Product, productVariants, VariantSelection } from '@/types/product';
 import { capitalizeFirstLetter, formatDollarAmount } from '@/utils/common';
 import { ProductCard } from '@/components/product-card';
 import { useQueryState } from '@/hooks/query-state';
+import { PhotoCarousel } from '@/components/photo-carousel';
 
 const colors = [
   { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
@@ -94,6 +95,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   });
 
   const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   const onChange = (variantName: string) => (value: string) => {
     const copy = { ...variant };
@@ -156,24 +158,27 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
         </div>
 
         {/* Image gallery */}
-        <div className='mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0'>
+        <div className='flex flex-col items-center mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0'>
           <h2 className='sr-only'>Images</h2>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8'>
-            {product.images.map((image) => (
-              <img
-                key={image.id}
-                alt={image.imageAlt}
-                src={image.imageSrc}
-                className={classNames(
-                  image.primary
-                    ? 'lg:col-span-2 lg:row-span-2'
-                    : 'hidden lg:block',
-                  'rounded-lg'
-                )}
-              />
-            ))}
+          <div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 lg:gap-8'>
+            <img
+              key={product.id}
+              alt={product.imageAlt}
+              src={product.images[selectedImage].imageSrc}
+              className={classNames(
+                'lg:col-span-2 lg:row-span-2',
+                'rounded-lg'
+              )}
+            />
           </div>
+          {product.images.length > 1 ? (
+            <PhotoCarousel
+              selectedImage={selectedImage}
+              onSelect={setSelectedImage}
+              images={product.images}
+            />
+          ) : null}
         </div>
 
         <div className='mt-8 lg:col-span-5'>
