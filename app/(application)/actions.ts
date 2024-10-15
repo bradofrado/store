@@ -7,8 +7,10 @@ import {
   getCartItems,
   removeCartItem as removeCartItemService,
 } from '@/server/service/cart';
+import { deleteImage, uploadImage } from '@/server/service/image';
 import { createCheckoutLink } from '@/server/service/stripe';
 import { CartItem } from '@/types/cart';
+import { Image } from '@/types/image';
 import { Product, VariantSelection } from '@/types/product';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
@@ -55,4 +57,25 @@ export const getCheckoutLink = async () => {
   const checkoutUrl = await createCheckoutLink({ userId });
 
   return checkoutUrl;
+};
+
+export const changeProductImage = async (
+  productId: string,
+  image: Image,
+  formData: FormData
+): Promise<void> => {
+  const file = formData.get('image') as File;
+  await uploadImage(productId, image, file);
+};
+
+export const uploadNewProductImage = async (
+  productId: string,
+  formData: FormData
+): Promise<void> => {
+  const file = formData.get('image') as File;
+  await uploadImage(productId, null, file);
+};
+
+export const deleteProductImage = async (imageId: string): Promise<void> => {
+  await deleteImage(imageId);
 };

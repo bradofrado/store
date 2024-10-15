@@ -2,7 +2,14 @@ import { getProductUrl } from '@/app/utils';
 import { Product } from '@/types/product';
 import { formatDollarAmount } from '@/utils/common';
 
-export const ProductCard: React.FunctionComponent<Product> = (product) => {
+export interface ProductCardProps {
+  product: Product;
+  onClick?: () => void;
+}
+export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
+  product,
+  onClick,
+}) => {
   return (
     <div
       key={product.id}
@@ -17,10 +24,17 @@ export const ProductCard: React.FunctionComponent<Product> = (product) => {
       </div>
       <div className='flex flex-1 flex-col space-y-2 p-4'>
         <h3 className='text-sm font-medium text-gray-900'>
-          <a href={getProductUrl(product.id)}>
-            <span aria-hidden='true' className='absolute inset-0' />
-            {product.name}
-          </a>
+          {onClick ? (
+            <button onClick={onClick} type='button'>
+              <span aria-hidden='true' className='absolute inset-0' />
+              {product.name}
+            </button>
+          ) : (
+            <a href={getProductUrl(product.id)}>
+              <span aria-hidden='true' className='absolute inset-0' />
+              {product.name}
+            </a>
+          )}
         </h3>
         <p className='text-sm text-gray-500'>{product.options}</p>
         <div className='flex flex-1 flex-col justify-end'>
