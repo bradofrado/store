@@ -17,9 +17,24 @@ import {
   deleteProductImage,
   uploadNewProductImage,
 } from '@/app/(application)/actions';
+import { auth, clerkClient } from '@clerk/nextjs/server';
+import { notFound } from 'next/navigation';
+
+const allowedEmails = ['bradofrado@gmail.com'];
 
 export default async function ProductsTab() {
   const products = await getProducts();
+  const authed = auth();
+
+  if (!authed.userId) {
+    notFound();
+  }
+
+  const user = await clerkClient.users.getUser(authed.userId);
+  if (!allowedEmails.includes(user.emailAddresses[0]?.emailAddress)) {
+    notFound();
+  }
+
   return (
     <form>
       <div className='space-y-12'>
