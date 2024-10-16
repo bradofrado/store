@@ -148,7 +148,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
               <div className='ml-4 flex'>
                 <a
                   href='#'
-                  className='text-sm font-medium text-indigo-600 hover:text-indigo-500'
+                  className='text-sm font-medium text-primary hover:text-primary-lighter'
                 >
                   See all {reviews.totalCount} reviews
                 </a>

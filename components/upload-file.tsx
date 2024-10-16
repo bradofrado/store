@@ -22,7 +22,7 @@ export const UploadFile: React.FunctionComponent<UploadFileProps> = ({
         <div className='mt-4 flex text-sm leading-6 text-gray-600'>
           <label
             htmlFor='file-upload'
-            className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
+            className='relative cursor-pointer rounded-md bg-white font-semibold text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary-lighter'
           >
             <span>Upload a file</span>
             <input

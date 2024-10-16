@@ -39,8 +39,8 @@ export default function AccountPage({
                     href={item.href}
                     className={getClass(
                       item.current
-                        ? 'bg-gray-50 text-indigo-600'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                        ? 'bg-gray-50 text-primary'
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-primary',
                       'group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm font-semibold leading-6'
                     )}
                   >
@@ -48,8 +48,8 @@ export default function AccountPage({
                       aria-hidden='true'
                       className={getClass(
                         item.current
-                          ? 'text-indigo-600'
-                          : 'text-gray-400 group-hover:text-indigo-600',
+                          ? 'text-primary'
+                          : 'text-gray-400 group-hover:text-primary',
                         'h-6 w-6 shrink-0'
                       )}
                     />

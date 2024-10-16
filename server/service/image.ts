@@ -17,7 +17,7 @@ export const uploadImage = async (
     const imageWithBlob: Image = {
       id: '',
       imageSrc: blob.url,
-      imageAlt: '',
+      imageAlt: blob.pathname,
       primary: false,
     };
     const imageWithId = await createImage({

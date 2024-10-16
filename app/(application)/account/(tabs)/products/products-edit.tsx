@@ -4,7 +4,18 @@ import {
   deleteProductImage,
   uploadNewProductImage,
 } from '@/app/(application)/actions';
-import { Button } from '@/components/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/alert-dialog';
+import { Button, ButtonProps } from '@/components/button';
 import {
   Drawer,
   DrawerBody,
@@ -100,7 +111,7 @@ const EditProductDrawer: React.FunctionComponent<EditProductDrawerProps> = ({
         </DrawerHeader>
         <DrawerBody>
           <Label>Images</Label>
-          <div className='mt-2 flex flex-col gap-2'>
+          <div className='mt-2 flex flex-col gap-2 mb-4'>
             {product.images.map((image) =>
               !image.primary ? (
                 <EditImage
@@ -158,10 +169,47 @@ const EditImage: React.FunctionComponent<EditImageProps> = ({
             />
           </div>
         </Button>
-        <Button variant='outline' onClick={onDelete}>
+        <ConfirmButton
+          variant='outline'
+          onConfirm={onDelete}
+          title='Delete Image'
+          description='Are you sure you want to delete this image off the product? This action cannot be reversed.'
+        >
           Delete
-        </Button>
+        </ConfirmButton>
       </div>
     </div>
+  );
+};
+
+interface ConfirmButtonProps extends ButtonProps {
+  onConfirm: () => void;
+  onCancel?: () => void;
+  title: string;
+  description: string;
+}
+const ConfirmButton: React.FunctionComponent<ConfirmButtonProps> = ({
+  onCancel,
+  onConfirm,
+  title,
+  description,
+  ...props
+}) => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button {...props} />
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
