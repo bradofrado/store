@@ -1,39 +1,14 @@
-import { Button } from '@/components/button';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/drawer';
-import { ProductCard } from '@/components/product-card';
-import { UploadFile } from '@/components/upload-file';
 import { getProducts } from '@/server/service/product';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { ProductsEdit } from './products-edit';
 import {
   changeProductImage,
   deleteProductImage,
   uploadNewProductImage,
 } from '@/app/(application)/actions';
-import { auth, clerkClient } from '@clerk/nextjs/server';
-import { notFound } from 'next/navigation';
+import { protectedAdminPage } from '@/utils/protected-admin';
 
-const allowedEmails = ['bradofrado@gmail.com'];
-
-export default async function ProductsTab() {
+async function ProductsTab() {
   const products = await getProducts();
-  const authed = auth();
-
-  if (!authed.userId) {
-    notFound();
-  }
-
-  const user = await clerkClient.users.getUser(authed.userId);
-  if (!allowedEmails.includes(user.emailAddresses[0]?.emailAddress)) {
-    notFound();
-  }
 
   return (
     <form>
@@ -58,3 +33,5 @@ export default async function ProductsTab() {
     </form>
   );
 }
+
+export default protectedAdminPage(ProductsTab);
