@@ -14,6 +14,13 @@ import { useQueryState } from '@/hooks/query-state';
 import { PhotoCarousel } from '@/components/photo-carousel';
 import { VariantSelection } from '@/types/variant';
 import { useChange } from '@/hooks/change';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/select';
 
 const colors = [
   { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
@@ -205,20 +212,21 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
             <ColorPicker value={selectedColor} onChange={setSelectedColor} />
 
             <div className='divide-y'>
-              {Object.entries(variant).map(([key, value]) => (
-                <VariantPicker
-                  key={key}
-                  name={capitalizeFirstLetter(key)}
-                  variants={productVariants[
-                    key as keyof typeof productVariants
-                  ].map((variant) => ({
-                    name: variant,
-                    inStock: product.variants[key].includes(variant),
-                  }))}
-                  value={value}
-                  onChange={onChange(key)}
-                />
-              ))}
+              {productVariants.map(({ name, values, type }) =>
+                product.variants[name] ? (
+                  <VariantPicker
+                    key={name}
+                    type={type}
+                    name={capitalizeFirstLetter(name)}
+                    variants={values.map((variant) => ({
+                      name: variant,
+                      inStock: product.variants[name].includes(variant),
+                    }))}
+                    value={variant[name]}
+                    onChange={onChange(name)}
+                  />
+                ) : null
+              )}
             </div>
 
             <button
@@ -365,12 +373,14 @@ interface VariantPickerProps {
   variants: { name: string; inStock: boolean }[];
   value: string;
   onChange: (value: string) => void;
+  type: 'button' | 'select';
 }
 const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
   name,
   variants,
   value,
   onChange,
+  type,
 }) => {
   return (
     <div className='py-4'>
@@ -384,29 +394,48 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
         </a> */}
       </div>
 
-      <fieldset aria-label={`Choose a ${name}`} className='mt-2'>
-        <RadioGroup
-          value={value}
-          onChange={onChange}
-          className='grid grid-cols-3 gap-3 sm:grid-cols-6'
-        >
-          {variants.map((variant) => (
-            <Radio
-              key={variant.name}
-              value={variant.name}
-              disabled={!variant.inStock}
-              className={classNames(
-                variant.inStock
-                  ? 'cursor-pointer focus:outline-none'
-                  : 'cursor-not-allowed opacity-25',
-                'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-primary data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-primary-lighter data-[focus]:ring-offset-2 data-[checked]:hover:bg-primary-darker sm:flex-1'
-              )}
-            >
-              {variant.name}
-            </Radio>
-          ))}
-        </RadioGroup>
-      </fieldset>
+      {type === 'button' ? (
+        <fieldset aria-label={`Choose a ${name}`} className='mt-2'>
+          <RadioGroup
+            value={value}
+            onChange={onChange}
+            className='grid grid-cols-3 gap-3 sm:grid-cols-6'
+          >
+            {variants.map((variant) => (
+              <Radio
+                key={variant.name}
+                value={variant.name}
+                disabled={!variant.inStock}
+                className={classNames(
+                  variant.inStock
+                    ? 'cursor-pointer focus:outline-none'
+                    : 'cursor-not-allowed opacity-25',
+                  'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-primary data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-primary-lighter data-[focus]:ring-offset-2 data-[checked]:hover:bg-primary-darker sm:flex-1'
+                )}
+              >
+                {variant.name}
+              </Radio>
+            ))}
+          </RadioGroup>
+        </fieldset>
+      ) : (
+        <Select onValueChange={onChange}>
+          <SelectTrigger className='mt-2'>
+            <SelectValue placeholder={`Select ${name}`} />
+          </SelectTrigger>
+          <SelectContent>
+            {variants.map((variant) => (
+              <SelectItem
+                key={variant.name}
+                value={variant.name}
+                disabled={!variant.inStock}
+              >
+                {variant.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
     </div>
   );
 };

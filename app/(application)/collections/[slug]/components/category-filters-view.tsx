@@ -121,7 +121,7 @@ export const CategoryFiltersView: React.FunctionComponent<{
                   ))}
                 </ul>
 
-                {Object.entries(productVariants).map(([section, values]) => (
+                {productVariants.map(({ name: section, values }) => (
                   <Disclosure
                     key={section}
                     as='div'
@@ -256,7 +256,7 @@ export const CategoryFiltersView: React.FunctionComponent<{
                   ))}
                 </ul>
 
-                {Object.entries(productVariants).map(([section, options]) => (
+                {productVariants.map(({ name: section, values: options }) => (
                   <Disclosure
                     key={section}
                     as='div'
