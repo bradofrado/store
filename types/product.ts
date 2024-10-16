@@ -1,9 +1,6 @@
 import { z } from 'zod';
 import { imageSchema } from './image';
 
-export const variantSelectionSchema = z.record(z.string());
-export type VariantSelection = z.infer<typeof variantSelectionSchema>;
-
 export const productVariantSchema = z.record(z.array(z.string()));
 
 export const productSchema = z.object({
@@ -71,3 +68,9 @@ export const productVariants = {
     'Antler',
   ],
 };
+// size: 5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,13.5,14,14.5,15
+// metal: Tungsten,Titanium,Cobalt,Black Ceramic,White Ceramic,Zirconium
+// style: Flat,Dome,Bevel
+// finish: Satin,Matte,Hammer,Polish
+// width: 6mm,8mm
+// addon: Dino Bone,Ocean Blue Opal,Ice Opal,Galaxy Opal,Fire Opal,Purple Opal,Emerald Opal,Pink Opal,Gold Leaf,Silver Leaf,Crushed Turquoise,Antler

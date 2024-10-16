@@ -1,5 +1,5 @@
+import { VariantSelection } from '@/types/variant';
 import { encodeState } from '@/utils/common';
-import { VariantSelection } from '@/types/product';
 
 export const getProductUrl = (
   id: string,

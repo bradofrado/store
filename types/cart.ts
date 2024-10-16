@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { productSchema, variantSelectionSchema } from './product';
+import { productSchema } from './product';
+import { variantSelectionSchema } from './variant';
 
 export const cartItemSchema = z.object({
   id: z.string(),

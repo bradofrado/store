@@ -19,6 +19,7 @@ export const uploadImage = async (
       imageSrc: blob.url,
       imageAlt: blob.pathname,
       primary: false,
+      variant: null,
     };
     const imageWithId = await createImage({
       db: prisma,

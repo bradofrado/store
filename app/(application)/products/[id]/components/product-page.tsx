@@ -1,17 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Radio, RadioGroup } from '@headlessui/react';
 import {
   CurrencyDollarIcon,
   GlobeAmericasIcon,
 } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/20/solid';
-import { Product, productVariants, VariantSelection } from '@/types/product';
+import { Product, productVariants } from '@/types/product';
 import { capitalizeFirstLetter, formatDollarAmount } from '@/utils/common';
 import { ProductCard } from '@/components/product-card';
 import { useQueryState } from '@/hooks/query-state';
 import { PhotoCarousel } from '@/components/photo-carousel';
+import { VariantSelection } from '@/types/variant';
+import { useChange } from '@/hooks/change';
 
 const colors = [
   { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
@@ -93,9 +95,25 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
       {}
     ),
   });
+  useChange(
+    variant,
+    (newVariant) => {
+      const newSelectedImage = product.images.findIndex((image) =>
+        Object.entries(image.variant || {}).every(
+          ([key, value]) => image.variant?.[key] === newVariant[key]
+        )
+      );
+      if (newSelectedImage !== -1) {
+        setSelectedImage(newSelectedImage);
+      }
+    },
+    [product.images]
+  );
 
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedImage, setSelectedImage] = useState(0);
+
+  useEffect(() => {});
 
   const onChange = (variantName: string) => (value: string) => {
     const copy = { ...variant };

@@ -66,6 +66,7 @@ model Image {
     primary   Boolean
     productId String
     product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    variant   Json?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

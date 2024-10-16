@@ -1,5 +1,7 @@
 import { Db, Prisma } from '@/prisma';
 import { Image } from '@/types/image';
+import { variantSelectionSchema } from '@/types/variant';
+import { z } from 'zod';
 
 const ImagePayload = {} satisfies Prisma.ImageFindManyArgs;
 
@@ -32,6 +34,7 @@ export const createImage = async ({
           id: productId,
         },
       },
+      variant: image.variant ?? undefined,
     },
   });
 
@@ -54,6 +57,7 @@ export const updateImage = async ({
       imageSrc: image.imageSrc,
       imageAlt: image.imageAlt,
       primary: image.primary,
+      variant: image.variant ?? undefined,
     },
   });
 
@@ -83,5 +87,6 @@ export const prismaToImage = (
     imageSrc: prismaImage.imageSrc,
     imageAlt: prismaImage.imageAlt,
     primary: prismaImage.primary,
+    variant: z.nullable(variantSelectionSchema).parse(prismaImage.variant),
   };
 };

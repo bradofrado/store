@@ -193,6 +193,7 @@ export const stripeToProduct = async (
       imageSrc: image,
       imageAlt: product.name,
       primary: i === 0,
+      variant: null,
     })),
     imageSrc: product.images[0],
     imageAlt: product.name,

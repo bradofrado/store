@@ -13,6 +13,10 @@ export default async function ProductItemPage({
   if (!product) {
     notFound();
   }
+  product.images = product.images.map((image) => ({
+    ...image,
+    variant: { size: '6.5', width: '8mm' },
+  }));
   return (
     <ProductItemView addProductToCart={addProductToCart} product={product} />
   );

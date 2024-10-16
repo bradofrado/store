@@ -11,7 +11,8 @@ import { deleteImage, uploadImage } from '@/server/service/image';
 import { createCheckoutLink } from '@/server/service/stripe';
 import { CartItem } from '@/types/cart';
 import { Image } from '@/types/image';
-import { Product, VariantSelection } from '@/types/product';
+import { Product } from '@/types/product';
+import { VariantSelection } from '@/types/variant';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 

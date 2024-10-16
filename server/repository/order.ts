@@ -6,8 +6,7 @@ import {
   orderStatusSchema,
 } from '@/types/order';
 import { prismaToProduct, productPayload } from './product';
-import { z } from 'zod';
-import { variantSelectionSchema } from '@/types/product';
+import { variantSelectionSchema } from '@/types/variant';
 
 const orderItemPayload = {
   include: {

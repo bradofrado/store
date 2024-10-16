@@ -2,7 +2,7 @@ import { Db, Prisma } from '@/prisma';
 import { CartItem } from '@/types/cart';
 import { prismaToProduct, productPayload } from './product';
 import { z } from 'zod';
-import { variantSelectionSchema } from '@/types/product';
+import { variantSelectionSchema } from '@/types/variant';
 
 const cartPayload = {
   include: {
