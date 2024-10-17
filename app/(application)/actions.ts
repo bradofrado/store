@@ -7,7 +7,11 @@ import {
   getCartItems,
   removeCartItem as removeCartItemService,
 } from '@/server/service/cart';
-import { deleteImage, uploadImage } from '@/server/service/image';
+import {
+  deleteImage,
+  selectImageUrl,
+  uploadImage,
+} from '@/server/service/image';
 import { createCheckoutLink } from '@/server/service/stripe';
 import { CartItem } from '@/types/cart';
 import { Image } from '@/types/image';
@@ -60,21 +64,34 @@ export const getCheckoutLink = async () => {
   return checkoutUrl;
 };
 
-export const changeProductImage = async (
+export const selectProductImage = async (
   productId: string,
-  image: Image,
-  formData: FormData
+  image: Image | null,
+  imageUrl: string
 ): Promise<void> => {
-  const file = formData.get('image') as File;
-  await uploadImage(productId, image, file);
+  const newImage: Image = image
+    ? {
+        ...image,
+        imageSrc: imageUrl,
+      }
+    : {
+        id: '',
+        imageSrc: imageUrl,
+        imageAlt: '',
+        primary: false,
+        variant: null,
+      };
+
+  await selectImageUrl(productId, newImage);
 };
 
 export const uploadNewProductImage = async (
   productId: string,
+  image: Image | null,
   formData: FormData
 ): Promise<void> => {
   const file = formData.get('image') as File;
-  await uploadImage(productId, null, file);
+  await uploadImage(productId, image, file);
 };
 
 export const deleteProductImage = async (imageId: string): Promise<void> => {

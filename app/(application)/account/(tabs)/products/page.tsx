@@ -1,15 +1,16 @@
 import { getProducts } from '@/server/service/product';
 import { ProductsEdit } from './products-edit';
 import {
-  changeProductImage,
+  selectProductImage,
   deleteProductImage,
   uploadNewProductImage,
 } from '@/app/(application)/actions';
 import { protectedAdminPage } from '@/utils/protected-admin';
+import { listImages } from '@/server/repository/blob';
 
 async function ProductsTab() {
   const products = await getProducts();
-
+  const uploadedImages = await listImages();
   return (
     <form>
       <div className='space-y-12'>
@@ -22,8 +23,9 @@ async function ProductsTab() {
           </p>
           <div className='mt-1'>
             <ProductsEdit
+              uploadedImages={uploadedImages.blobs.map((blob) => blob.url)}
               products={products}
-              changePhoto={changeProductImage}
+              selectPhoto={selectProductImage}
               uploadNewPhoto={uploadNewProductImage}
               deletePhoto={deleteProductImage}
             />

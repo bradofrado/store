@@ -1,8 +1,8 @@
 'use client';
 import {
-  changeProductImage,
   deleteProductImage,
   uploadNewProductImage,
+  selectProductImage,
 } from '@/app/(application)/actions';
 import {
   AlertDialog,
@@ -16,6 +16,18 @@ import {
   AlertDialogTrigger,
 } from '@/components/alert-dialog';
 import { Button, ButtonProps } from '@/components/button';
+import { Card } from '@/components/card';
+import { ConfirmButton } from '@/components/confirm-button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/dialog';
 import {
   Drawer,
   DrawerBody,
@@ -31,18 +43,21 @@ import { useReload } from '@/hooks/reload';
 import { Image } from '@/types/image';
 import { Product } from '@/types/product';
 import { useRouter } from 'next/navigation';
+import { Input } from 'postcss';
 import { useState } from 'react';
 
 interface ProductsEditProps {
   products: Product[];
+  uploadedImages: string[];
   uploadNewPhoto: typeof uploadNewProductImage;
-  changePhoto: typeof changeProductImage;
+  selectPhoto: typeof selectProductImage;
   deletePhoto: typeof deleteProductImage;
 }
 export const ProductsEdit: React.FunctionComponent<ProductsEditProps> = ({
   products,
+  uploadedImages,
   uploadNewPhoto,
-  changePhoto,
+  selectPhoto,
   deletePhoto,
 }) => {
   const router = useRouter();
@@ -66,11 +81,12 @@ export const ProductsEdit: React.FunctionComponent<ProductsEditProps> = ({
       </div>
       {openProduct > -1 ? (
         <EditProductDrawer
+          uploadedImages={uploadedImages}
           product={products[openProduct]}
           open={openProduct !== undefined}
           setOpen={(open) => setOpenProduct(open ? 0 : -1)}
           uploadNewPhoto={reload(uploadNewPhoto)}
-          changePhoto={reload(changePhoto)}
+          selectPhoto={reload(selectPhoto)}
           deletePhoto={deleteThing}
         />
       ) : null}
@@ -79,11 +95,12 @@ export const ProductsEdit: React.FunctionComponent<ProductsEditProps> = ({
 };
 
 interface EditProductDrawerProps {
+  uploadedImages: string[];
   open: boolean;
   setOpen: (open: boolean) => void;
   product: Product;
   uploadNewPhoto: typeof uploadNewProductImage;
-  changePhoto: typeof changeProductImage;
+  selectPhoto: typeof selectProductImage;
   deletePhoto: typeof deleteProductImage;
 }
 const EditProductDrawer: React.FunctionComponent<EditProductDrawerProps> = ({
@@ -91,8 +108,9 @@ const EditProductDrawer: React.FunctionComponent<EditProductDrawerProps> = ({
   setOpen,
   product,
   uploadNewPhoto,
-  changePhoto,
+  selectPhoto,
   deletePhoto,
+  uploadedImages,
 }) => {
   const constructFormData = (file: File): FormData => {
     const formData = new FormData();
@@ -117,20 +135,27 @@ const EditProductDrawer: React.FunctionComponent<EditProductDrawerProps> = ({
                 <EditImage
                   key={image.id}
                   image={image}
-                  onChange={(file) =>
-                    changePhoto(product.id, image, constructFormData(file))
+                  onNewImage={(file) =>
+                    uploadNewPhoto(product.id, image, constructFormData(file))
                   }
+                  onChange={async (imageUrl) => {
+                    await selectPhoto(product.id, image, imageUrl);
+                  }}
                   onDelete={() => deletePhoto(image.id)}
+                  uploadedImages={uploadedImages}
                 />
               ) : null
             )}
           </div>
-          <p className='text-sm text-gray-800'>Add a new image</p>
-          <UploadFile
-            onChange={(file) =>
-              uploadNewPhoto(product.id, constructFormData(file))
+          <UploadImageDialog
+            uploadedImages={uploadedImages}
+            uploadImage={(file) =>
+              uploadNewPhoto(product.id, null, constructFormData(file))
             }
-          />
+            selectImage={(imageUrl) => selectPhoto(product.id, null, imageUrl)}
+          >
+            Add Image
+          </UploadImageDialog>
         </DrawerBody>
       </DrawerContent>
     </Drawer>
@@ -139,36 +164,31 @@ const EditProductDrawer: React.FunctionComponent<EditProductDrawerProps> = ({
 
 interface EditImageProps {
   image: Image;
-  onChange: (file: File) => void;
+  onNewImage: (file: File) => Promise<void>;
+  onChange: (imageUrl: string) => Promise<void>;
   onDelete: () => void;
+  uploadedImages: string[];
 }
 const EditImage: React.FunctionComponent<EditImageProps> = ({
   image,
+  onNewImage,
   onChange,
   onDelete,
+  uploadedImages,
 }) => {
-  const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
-    const file = event.target.files[0];
-    onChange(file);
-  };
   return (
     <div className='flex gap-4 items-center justify-between'>
       <div className='h-14 w-14'>
         <img className='object-cover h-full w-full' src={image.imageSrc} />
       </div>
       <div className='flex gap-2'>
-        <Button>
-          <div>
-            <label htmlFor='file-upload'>Change</label>
-            <input
-              id='file-upload'
-              type='file'
-              className='sr-only'
-              onChange={onSelectImage}
-            />
-          </div>
-        </Button>
+        <UploadImageDialog
+          uploadedImages={uploadedImages}
+          uploadImage={onNewImage}
+          selectImage={onChange}
+        >
+          Change
+        </UploadImageDialog>
         <ConfirmButton
           variant='outline'
           onConfirm={onDelete}
@@ -182,34 +202,60 @@ const EditImage: React.FunctionComponent<EditImageProps> = ({
   );
 };
 
-interface ConfirmButtonProps extends ButtonProps {
-  onConfirm: () => void;
-  onCancel?: () => void;
-  title: string;
-  description: string;
+interface UploadImageDialogProps {
+  uploadedImages: string[];
+  uploadImage: (file: File) => Promise<void>;
+  selectImage: (imageUrl: string) => Promise<void>;
+  children: React.ReactNode;
 }
-const ConfirmButton: React.FunctionComponent<ConfirmButtonProps> = ({
-  onCancel,
-  onConfirm,
-  title,
-  description,
-  ...props
+const UploadImageDialog: React.FunctionComponent<UploadImageDialogProps> = ({
+  uploadedImages,
+  uploadImage,
+  selectImage,
+  children,
 }) => {
+  const [open, setOpen] = useState(false);
+  const onUpload = async (file: File): Promise<void> => {
+    await uploadImage(file);
+    setOpen(false);
+  };
+  const onSelect = async (imageUrl: string): Promise<void> => {
+    await selectImage(imageUrl);
+    setOpen(false);
+  };
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button {...props} />
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>{children}</Button>
+      </DialogTrigger>
+      <DialogContent className='sm:max-w-md'>
+        <DialogHeader>
+          <DialogTitle>Select or Upload</DialogTitle>
+          <DialogDescription>
+            Select an already uploaded image or upload a new one from your
+            computer.
+          </DialogDescription>
+        </DialogHeader>
+        <div className=''>
+          <div className="grid grid-cols-6 gap-2 max-h-[calc(3*(theme('spacing.14')+theme('spacing.2')))] overflow-auto">
+            {uploadedImages.map((image) => (
+              <Card
+                key={image}
+                className='h-14 w-14 overflow-hidden hover:bg-gray-50 hover:border-gray-300 hover:cursor-pointer'
+                onClick={() => onSelect(image)}
+              >
+                <img className='object-cover h-full w-full' src={image} />
+              </Card>
+            ))}
+          </div>
+          <div className='flex items-center justify-between my-4'>
+            <div className='flex-grow h-px bg-gray-300'></div>
+            <span className='mx-4 text-gray-500'>or</span>
+            <div className='flex-grow h-px bg-gray-300'></div>
+          </div>
+          <UploadFile onChange={onUpload} />
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
