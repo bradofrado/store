@@ -23,6 +23,7 @@ import {
 } from '@/components/select';
 import { Reviews } from './reviews';
 import { ReviewsTotal } from './reviews-total';
+import { useReload } from '@/hooks/reload';
 
 const colors = [
   { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
@@ -63,6 +64,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   addProductToCart,
   relatedProducts,
 }) => {
+  const reload = useReload();
   const [variant, setVariant] = useQueryState<VariantSelection>({
     key: 'variant',
     defaultValue: Object.entries(product.variants).reduce(
@@ -87,6 +89,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
 
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {});
 
@@ -96,9 +99,11 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
     setVariant(copy);
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    addProductToCart(product, variant);
+    setLoading(true);
+    await reload(addProductToCart)(product, variant);
+    setLoading(false);
   };
 
   return (
@@ -168,7 +173,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
               type='submit'
               className='mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary-darker focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2'
             >
-              Add to cart
+              {loading ? 'Adding to cart...' : 'Add to cart'}
             </button>
           </form>
 
