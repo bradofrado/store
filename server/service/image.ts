@@ -7,36 +7,6 @@ import {
 } from '../repository/image';
 import { prisma } from '@/prisma';
 
-export const uploadImage = async (
-  productId: string,
-  image: Image | null,
-  file: File
-): Promise<Image> => {
-  const blob = await uploadImageRepo(file);
-  if (!image) {
-    const imageWithBlob: Image = {
-      id: '',
-      imageSrc: blob.url,
-      imageAlt: blob.pathname,
-      primary: false,
-      variant: null,
-    };
-    const imageWithId = await createImage({
-      db: prisma,
-      image: imageWithBlob,
-      productId,
-    });
-
-    return imageWithId;
-  }
-
-  const imageWithBlob: Image = {
-    ...image,
-    imageSrc: blob.url,
-  };
-  return updateImageRepo({ db: prisma, image: imageWithBlob });
-};
-
 export const selectImageUrl = async (
   productId: string,
   image: Image

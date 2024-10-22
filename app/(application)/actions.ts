@@ -1,5 +1,6 @@
 'use server';
 
+import { uploadImage as uploadImageRepo } from '@/server/repository/blob';
 import {
   addItemToCart,
   changeQuantityOfCartItem,
@@ -8,10 +9,10 @@ import {
   removeCartItem as removeCartItemService,
 } from '@/server/service/cart';
 import {
-  deleteImage,
-  selectImageUrl,
-  uploadImage,
-} from '@/server/service/image';
+  updateCollection,
+  updateCollectionProducts,
+} from '@/server/service/collection';
+import { deleteImage, selectImageUrl } from '@/server/service/image';
 import { createCheckoutLink } from '@/server/service/stripe';
 import { CartItem } from '@/types/cart';
 import { Image } from '@/types/image';
@@ -85,15 +86,17 @@ export const selectProductImage = async (
   await selectImageUrl(productId, newImage);
 };
 
-export const uploadNewProductImage = async (
-  productId: string,
-  image: Image | null,
-  formData: FormData
-): Promise<void> => {
+export const uploadImage = async (formData: FormData): Promise<string> => {
   const file = formData.get('image') as File;
-  await uploadImage(productId, image, file);
+  const blob = await uploadImageRepo(file);
+
+  return blob.url;
 };
 
 export const deleteProductImage = async (imageId: string): Promise<void> => {
   await deleteImage(imageId);
 };
+
+export const updateCollectionItem = updateCollection;
+
+export const selectProducts = updateCollectionProducts;

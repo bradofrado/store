@@ -8,7 +8,7 @@ export const accountTabs = [
   //   { name: 'Billing', href: '#', icon: CreditCardIcon, current: false },
   //   { name: 'Team members', href: '#', icon: UsersIcon, current: false },
   {
-    name: 'Products',
+    name: 'Edit Products',
     href: '/account/products',
     icon: RectangleStackIcon,
     current: true,

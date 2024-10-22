@@ -48,6 +48,56 @@ export const getCollectionNames = async ({
   }));
 };
 
+export const updateCollection = ({
+  collection,
+  db,
+}: {
+  db: Db;
+  collection: CollectionName;
+}): Promise<CollectionName> => {
+  return db.collection.update({
+    where: {
+      id: collection.id,
+    },
+    data: {
+      slug: collection.slug,
+      name: collection.name,
+      imageSrc: collection.imageSrc,
+    },
+  });
+};
+
+export const updateCollectionProducts = async ({
+  db,
+  collectionId,
+  productIds,
+}: {
+  db: Db;
+  collectionId: string;
+  productIds: string[];
+}): Promise<Collection> => {
+  const newCollection = await db.collection.update({
+    where: {
+      id: collectionId,
+    },
+    data: {
+      products: {
+        deleteMany: {},
+        create: productIds.map((productId) => ({
+          product: {
+            connect: {
+              id: productId,
+            },
+          },
+        })),
+      },
+    },
+    ...collectionPayload,
+  });
+
+  return prismaToCollection(newCollection);
+};
+
 interface GetCollectionRequest {
   db: Db;
   slug: string;
@@ -83,42 +133,3 @@ export const prismaToCollection = (
     ),
   };
 };
-
-const collections = [
-  {
-    name: 'Shop All Rings',
-    slug: 'all',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-01.jpg',
-  },
-  {
-    name: 'New Arrivals',
-    slug: 'new-arrivals',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-01.jpg',
-  },
-  {
-    name: 'Productivity',
-    slug: 'productivity',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-02.jpg',
-  },
-  {
-    name: 'Workspace',
-    slug: 'workspace',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-04.jpg',
-  },
-  {
-    name: 'Accessories',
-    slug: 'accessories',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-05.jpg',
-  },
-  {
-    name: 'Sale',
-    slug: 'sale',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-03.jpg',
-  },
-];

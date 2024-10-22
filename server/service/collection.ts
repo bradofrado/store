@@ -2,6 +2,8 @@ import { prisma } from '@/prisma';
 import {
   getCollectionBySlug as getCollectionBySlugRepo,
   getCollectionNames as getCollectionNamesRepo,
+  updateCollection as updateCollectionRepo,
+  updateCollectionProducts as updateCollectionProductsRepo,
 } from '../repository/collection';
 import { Collection, CollectionName } from '@/types/collection';
 import { getProducts } from './product';
@@ -24,6 +26,23 @@ export const getCollectionBySlug = async (
 
 export const getCollectionNames = async (): Promise<CollectionName[]> => {
   return getCollectionNamesRepo({ db: prisma });
+};
+
+export const updateCollection = async (
+  collection: CollectionName
+): Promise<CollectionName> => {
+  return await updateCollectionRepo({ db: prisma, collection });
+};
+
+export const updateCollectionProducts = async (
+  collectionId: string,
+  productIds: string[]
+): Promise<Collection> => {
+  return await updateCollectionProductsRepo({
+    db: prisma,
+    collectionId,
+    productIds,
+  });
 };
 
 export const searchProductsInCollection = async (
