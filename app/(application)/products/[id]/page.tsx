@@ -1,7 +1,11 @@
 import { Product } from '@/types/product';
 import { addProductToCart } from '../../actions';
 import { ProductItemView } from './components/product-page';
-import { getProduct } from '@/server/service/product';
+import {
+  getPopularProducts,
+  getProduct,
+  getProductByName,
+} from '@/server/service/product';
 import { notFound } from 'next/navigation';
 
 export default async function ProductItemPage({
@@ -9,7 +13,11 @@ export default async function ProductItemPage({
 }: {
   params: { id: string };
 }) {
-  const product = await getProduct(id);
+  const product =
+    id === 'build-your-own-band'
+      ? await getProductByName('Build Your Own Band')
+      : await getProduct(id);
+  const relatedProducts = await getPopularProducts();
   if (!product) {
     notFound();
   }
@@ -18,6 +26,10 @@ export default async function ProductItemPage({
     variant: { size: '6.5', width: '8mm' },
   }));
   return (
-    <ProductItemView addProductToCart={addProductToCart} product={product} />
+    <ProductItemView
+      addProductToCart={addProductToCart}
+      product={product}
+      relatedProducts={relatedProducts}
+    />
   );
 }

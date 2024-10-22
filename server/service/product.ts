@@ -2,6 +2,7 @@ import { Product } from '@/types/product';
 import {
   getProducts as getProductsRepo,
   getProduct as getProductRepo,
+  getProductByName as getProductByNameRepo,
 } from '../repository/product';
 import {
   searchProducts as searchProductsStripe,
@@ -26,6 +27,14 @@ export const getProduct = async (
   productId: string
 ): Promise<Product | null> => {
   const product = await getProductRepo({ id: productId, db: prisma });
+
+  return product;
+};
+
+export const getProductByName = async (
+  name: string
+): Promise<Product | null> => {
+  const product = await getProductByNameRepo({ name, db: prisma });
 
   return product;
 };

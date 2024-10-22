@@ -14,7 +14,7 @@ export default async function MainPage() {
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src='https://tailwindui.com/plus/img/ecommerce-images/home-page-01-hero-full-width.jpg'
+            src='/marketing-content.jpeg'
             className='h-full w-full object-cover object-center'
           />
         </div>
@@ -113,7 +113,7 @@ export default async function MainPage() {
             <div className='absolute inset-0'>
               <img
                 alt=''
-                src='https://tailwindui.com/plus/img/ecommerce-images/home-page-01-feature-section-01.jpg'
+                src='/marketing-content-2.jpeg'
                 className='h-full w-full object-cover object-center'
               />
             </div>
@@ -123,20 +123,21 @@ export default async function MainPage() {
                   id='social-impact-heading'
                   className='text-3xl font-bold tracking-tight text-white sm:text-4xl'
                 >
-                  <span className='block sm:inline'>Level up</span>
-                  <span className='block sm:inline'>your desk</span>
+                  <span className='block sm:inline'>Say No to </span>
+                  <span className='block sm:inline'>Boring Wedding Bands</span>
                 </h2>
                 <p className='mt-3 text-xl text-white'>
-                  Make your desk beautiful and organized. Post a picture to
-                  social media and watch it get more likes than life-changing
-                  announcements. Reflect on the shallow nature of existence. At
-                  least you have a really nice desk setup.
+                  We set the bar on creating the most distinguished bands the
+                  world has to offer. Whether you are fascinated with history,
+                  your country, your love for whiskey, or things beyond this
+                  planet, your band should tell a story about what's important
+                  to you.
                 </p>
                 <a
                   href='/collections'
                   className='mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                 >
-                  Shop Workspace
+                  Browse Collections
                 </a>
               </div>
             </div>
@@ -175,7 +176,7 @@ export default async function MainPage() {
             <div className='absolute inset-0'>
               <img
                 alt=''
-                src='https://tailwindui.com/plus/img/ecommerce-images/home-page-01-feature-section-02.jpg'
+                src='/marketing-content-3.jpeg'
                 className='h-full w-full object-cover object-center'
               />
             </div>
@@ -185,19 +186,18 @@ export default async function MainPage() {
                   id='comfort-heading'
                   className='text-3xl font-bold tracking-tight text-white sm:text-4xl'
                 >
-                  Simple productivity
+                  OVER 500,000 HAPPY COUPLES
                 </h2>
                 <p className='mt-3 text-xl text-white'>
-                  Endless tasks, limited hours, a single piece of paper. Not
-                  really a haiku, but we're doing our best here. No kanban
-                  boards, burndown charts, or tangled flowcharts with our Focus
-                  system. Just the undeniable urge to fill empty circles.
+                  Since 2016 we've helped couples find a unique wedding band
+                  that matches their personality. Some guys even claim to love
+                  their wedding band almost as much as their partner.
                 </p>
                 <a
-                  href='/collections'
+                  href='/collections/productivity'
                   className='mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                 >
-                  Shop Focus
+                  Shop Gold
                 </a>
               </div>
             </div>

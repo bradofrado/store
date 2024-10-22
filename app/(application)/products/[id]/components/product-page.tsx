@@ -21,6 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/select';
+import { Reviews } from './reviews';
+import { ReviewsTotal } from './reviews-total';
 
 const colors = [
   { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
@@ -43,42 +45,6 @@ const policies = [
     description: "Don't look at other tees",
   },
 ];
-const reviews = {
-  average: 3.9,
-  totalCount: 512,
-  featured: [
-    {
-      id: 1,
-      title: "Can't say enough good things",
-      rating: 5,
-      content: `
-        <p>I was really pleased with the overall shopping experience. My order even included a little personal, handwritten note, which delighted me!</p>
-        <p>The product quality is amazing, it looks and feel even better than I had anticipated. Brilliant stuff! I would gladly recommend this store to my friends. And, now that I think of it... I actually have, many times!</p>
-      `,
-      author: 'Risako M',
-      date: 'May 16, 2021',
-      datetime: '2021-01-06',
-    },
-    // More reviews...
-  ],
-};
-const relatedProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Basic Tee',
-    imageSrc:
-      'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-02.jpg',
-    imageAlt: "Front of men's Basic Tee in white.",
-    price: 35,
-    priceId: '1',
-    description: "Front of men's Basic Tee in white.",
-    options: 'Aspen White',
-    details: [],
-    images: [],
-    variants: {},
-  },
-  // More products...
-];
 
 function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(' ');
@@ -90,10 +56,12 @@ interface ProductItemViewProps {
     product: Product,
     variants: VariantSelection
   ) => Promise<void>;
+  relatedProducts: Product[];
 }
 export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   product,
   addProductToCart,
+  relatedProducts,
 }) => {
   const [variant, setVariant] = useQueryState<VariantSelection>({
     key: 'variant',
@@ -146,40 +114,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
             </p>
           </div>
           {/* Reviews */}
-          <div className='mt-4'>
-            <h2 className='sr-only'>Reviews</h2>
-            <div className='flex items-center'>
-              <p className='text-sm text-gray-700'>
-                {reviews.average}
-                <span className='sr-only'> out of 5 stars</span>
-              </p>
-              <div className='ml-1 flex items-center'>
-                {[0, 1, 2, 3, 4].map((rating) => (
-                  <StarIcon
-                    key={rating}
-                    aria-hidden='true'
-                    className={classNames(
-                      reviews.average > rating
-                        ? 'text-yellow-400'
-                        : 'text-gray-200',
-                      'h-5 w-5 flex-shrink-0'
-                    )}
-                  />
-                ))}
-              </div>
-              <div aria-hidden='true' className='ml-4 text-sm text-gray-300'>
-                ·
-              </div>
-              <div className='ml-4 flex'>
-                <a
-                  href='#'
-                  className='text-sm font-medium text-primary hover:text-primary-lighter'
-                >
-                  See all {reviews.totalCount} reviews
-                </a>
-              </div>
-            </div>
-          </div>
+          {/* <ReviewsTotal /> */}
         </div>
 
         {/* Image gallery */}
@@ -209,7 +144,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
         <div className='mt-8 lg:col-span-5'>
           <form onSubmit={onSubmit}>
             {/* Color picker */}
-            <ColorPicker value={selectedColor} onChange={setSelectedColor} />
+            {/* <ColorPicker value={selectedColor} onChange={setSelectedColor} /> */}
 
             <div className='divide-y'>
               {productVariants.map(({ name, values, type }) =>
@@ -293,64 +228,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
       </div>
 
       {/* Reviews */}
-      <section aria-labelledby='reviews-heading' className='mt-16 sm:mt-24'>
-        <h2 id='reviews-heading' className='text-lg font-medium text-gray-900'>
-          Recent reviews
-        </h2>
-
-        <div className='mt-6 space-y-10 divide-y divide-gray-200 border-b border-t border-gray-200 pb-10'>
-          {reviews.featured.map((review) => (
-            <div
-              key={review.id}
-              className='pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8'
-            >
-              <div className='lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
-                <div className='flex items-center xl:col-span-1'>
-                  <div className='flex items-center'>
-                    {[0, 1, 2, 3, 4].map((rating) => (
-                      <StarIcon
-                        key={rating}
-                        aria-hidden='true'
-                        className={classNames(
-                          review.rating > rating
-                            ? 'text-yellow-400'
-                            : 'text-gray-200',
-                          'h-5 w-5 flex-shrink-0'
-                        )}
-                      />
-                    ))}
-                  </div>
-                  <p className='ml-3 text-sm text-gray-700'>
-                    {review.rating}
-                    <span className='sr-only'> out of 5 stars</span>
-                  </p>
-                </div>
-
-                <div className='mt-4 lg:mt-6 xl:col-span-2 xl:mt-0'>
-                  <h3 className='text-sm font-medium text-gray-900'>
-                    {review.title}
-                  </h3>
-
-                  <div
-                    dangerouslySetInnerHTML={{ __html: review.content }}
-                    className='mt-3 space-y-6 text-sm text-gray-500'
-                  />
-                </div>
-              </div>
-
-              <div className='mt-6 flex items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3'>
-                <p className='font-medium text-gray-900'>{review.author}</p>
-                <time
-                  dateTime={review.datetime}
-                  className='ml-4 border-l border-gray-200 pl-4 text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
-                >
-                  {review.date}
-                </time>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* <Reviews /> */}
 
       {/* Related products */}
       <section aria-labelledby='related-heading' className='mt-16 sm:mt-24'>

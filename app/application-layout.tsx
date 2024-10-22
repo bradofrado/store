@@ -155,7 +155,10 @@ const navigation = {
       ],
     },
   ],
-  pages: [{ name: 'Orders', href: '/orders' }],
+  pages: [
+    { name: 'Build Your Own', href: '/products/build-your-own-band' },
+    { name: 'Orders', href: '/orders' },
+  ],
 };
 const footerNavigation = {
   shop: [

@@ -43,6 +43,26 @@ export const getProduct = async ({
   return prismaToProduct(product);
 };
 
+export const getProductByName = async ({
+  db,
+  name,
+}: {
+  db: Db;
+  name: string;
+}): Promise<Product | null> => {
+  const product = await db.product.findFirst({
+    where: {
+      name,
+    },
+    ...productPayload,
+  });
+  if (!product) {
+    return null;
+  }
+
+  return prismaToProduct(product);
+};
+
 interface CreateProductRequest {
   db: Db;
   product: Product;
