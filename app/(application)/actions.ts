@@ -9,6 +9,8 @@ import {
   removeCartItem as removeCartItemService,
 } from '@/server/service/cart';
 import {
+  createCollection,
+  deleteCollection,
   updateCollection,
   updateCollectionProducts,
 } from '@/server/service/collection';
@@ -100,3 +102,7 @@ export const deleteProductImage = async (imageId: string): Promise<void> => {
 export const updateCollectionItem = updateCollection;
 
 export const selectProducts = updateCollectionProducts;
+
+export const createCollectionItem = createCollection;
+
+export const deleteCollectionItem = deleteCollection;

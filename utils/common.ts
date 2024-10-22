@@ -300,10 +300,7 @@ export const close = (a: number, b: number, threshold: number): boolean => {
 };
 
 export const wordToKebabCase = (str: string): string => {
-  return str
-    .split(' ')
-    .map((word) => `${word[0].toLowerCase()}${word.substring(1)}`)
-    .join('-');
+  return str.toLowerCase().replace(/\s+/g, '-');
 };
 
 export const camelToKebab = (camelCase: string): string => {

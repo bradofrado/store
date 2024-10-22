@@ -1,4 +1,6 @@
 import {
+  createCollectionItem,
+  deleteCollectionItem,
   deleteProductImage,
   selectProductImage,
   selectProducts,
@@ -14,6 +16,7 @@ import {
 import { listImages } from '@/server/repository/blob';
 import Link from 'next/link';
 import { getProducts } from '@/server/service/product';
+import { CollectionsCreate } from './collections-create';
 
 interface CollectionsEditProps {
   editCollectionId?: string;
@@ -26,6 +29,7 @@ export const CollectionsEdit: React.FunctionComponent<
     : undefined;
   const collections = await getCollectionNames();
   const uploadedImages = await listImages();
+  const uploadedImagesMapped = uploadedImages.blobs.map((blob) => blob.url);
   const products = await getProducts();
   return (
     <>
@@ -52,15 +56,21 @@ export const CollectionsEdit: React.FunctionComponent<
             </span>
           </Link>
         ))}
+        <CollectionsCreate
+          createCollection={createCollectionItem}
+          uploadImage={uploadImage}
+          uploadedImages={uploadedImagesMapped}
+        />
       </div>
       {collection ? (
         <EditCollectionDrawer
-          uploadedImages={uploadedImages.blobs.map((blob) => blob.url)}
+          uploadedImages={uploadedImagesMapped}
           collection={collection}
           products={products}
           updateCollection={updateCollectionItem}
           uploadImage={uploadImage}
           selectProducts={selectProducts}
+          deleteCollection={deleteCollectionItem}
         />
       ) : null}
     </>

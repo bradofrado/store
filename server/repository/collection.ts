@@ -48,6 +48,22 @@ export const getCollectionNames = async ({
   }));
 };
 
+export const createCollection = ({
+  collection,
+  db,
+}: {
+  db: Db;
+  collection: CollectionName;
+}): Promise<CollectionName> => {
+  return db.collection.create({
+    data: {
+      slug: collection.slug,
+      name: collection.name,
+      imageSrc: collection.imageSrc,
+    },
+  });
+};
+
 export const updateCollection = ({
   collection,
   db,
@@ -96,6 +112,20 @@ export const updateCollectionProducts = async ({
   });
 
   return prismaToCollection(newCollection);
+};
+
+export const deleteCollection = async ({
+  db,
+  id,
+}: {
+  db: Db;
+  id: string;
+}): Promise<void> => {
+  await db.collection.delete({
+    where: {
+      id,
+    },
+  });
 };
 
 interface GetCollectionRequest {

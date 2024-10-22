@@ -1,5 +1,6 @@
 'use client';
 import {
+  deleteCollectionItem,
   selectProducts,
   updateCollectionItem,
   uploadImage,
@@ -34,6 +35,8 @@ import {
 import { Card } from '@/components/card';
 import { Product } from '@/types/product';
 import { CheckIcon } from '@heroicons/react/24/outline';
+import { wordToKebabCase } from '@/utils/common';
+import { ConfirmButton } from '@/components/confirm-button';
 
 interface EditCollectionDrawerProps {
   uploadedImages: string[];
@@ -42,6 +45,7 @@ interface EditCollectionDrawerProps {
   updateCollection: typeof updateCollectionItem;
   uploadImage: typeof uploadImage;
   selectProducts: typeof selectProducts;
+  deleteCollection: typeof deleteCollectionItem;
 }
 export const EditCollectionDrawer: React.FunctionComponent<
   EditCollectionDrawerProps
@@ -52,6 +56,7 @@ export const EditCollectionDrawer: React.FunctionComponent<
   uploadImage,
   updateCollection,
   uploadedImages,
+  deleteCollection,
 }) => {
   const [name, setName] = useState(collection.name);
   const [slug, setSlug] = useState(collection.slug);
@@ -67,6 +72,10 @@ export const EditCollectionDrawer: React.FunctionComponent<
       slug,
       imageSrc: imageUrl,
     });
+  };
+
+  const onDelete = async () => {
+    await reload(deleteCollection)(collection.id);
   };
   return (
     <Drawer
@@ -91,7 +100,10 @@ export const EditCollectionDrawer: React.FunctionComponent<
             </div>
             <div>
               <Label>Slug</Label>
-              <Input value={slug} onChange={setSlug} />
+              <Input
+                value={slug}
+                onChange={(slug) => setSlug(wordToKebabCase(slug))}
+              />
             </div>
             <div>
               <Label>Image</Label>
@@ -113,6 +125,14 @@ export const EditCollectionDrawer: React.FunctionComponent<
           </div>
         </DrawerBody>
         <DrawerFooter>
+          <ConfirmButton
+            variant='outline'
+            onConfirm={onDelete}
+            title='Confirm Delete Collection'
+            description='Are you sure you want to delete this collection?'
+          >
+            Delete
+          </ConfirmButton>
           {imageUrl !== collection.imageSrc ||
           name !== collection.name ||
           slug !== collection.slug ? (
