@@ -62,7 +62,6 @@ export const EditCollectionDrawer: React.FunctionComponent<
   const [slug, setSlug] = useState(collection.slug);
   const [imageUrl, setImageUrl] = useState(collection.imageSrc);
 
-  const router = useRouter();
   const reload = useReload();
 
   const onSave = async () => {
@@ -78,69 +77,61 @@ export const EditCollectionDrawer: React.FunctionComponent<
     await reload(deleteCollection)(collection.id);
   };
   return (
-    <Drawer
-      direction='right'
-      open={true}
-      onOpenChange={(open) =>
-        router.push(new URL(window.location.href).pathname)
-      }
-    >
-      <DrawerContent className='h-screen top-0 right-0 left-auto !mt-0 w-[500px] rounded-none'>
-        <DrawerHeader>
-          <DrawerTitle>Update a Collection</DrawerTitle>
-          <DrawerDescription>
-            Update the name, image, and products belonging to this collection.
-          </DrawerDescription>
-        </DrawerHeader>
-        <DrawerBody>
-          <div className='flex flex-col gap-4'>
-            <div>
-              <Label>Name</Label>
-              <Input value={name} onChange={setName} />
-            </div>
-            <div>
-              <Label>Slug</Label>
-              <Input
-                value={slug}
-                onChange={(slug) => setSlug(wordToKebabCase(slug))}
-              />
-            </div>
-            <div>
-              <Label>Image</Label>
-              <EditImage
-                image={imageUrl}
-                uploadedImages={uploadedImages}
-                onChange={setImageUrl}
-                onUpload={uploadImage}
-              />
-            </div>
-            <div>
-              <Label>Products</Label>
-              <EditProducts
-                value={collection.products.map((product) => product.id)}
-                products={products}
-                onChange={(products) => selectProducts(collection.id, products)}
-              />
-            </div>
+    <>
+      <DrawerHeader>
+        <DrawerTitle>Update a Collection</DrawerTitle>
+        <DrawerDescription>
+          Update the name, image, and products belonging to this collection.
+        </DrawerDescription>
+      </DrawerHeader>
+      <DrawerBody>
+        <div className='flex flex-col gap-4'>
+          <div>
+            <Label>Name</Label>
+            <Input value={name} onChange={setName} />
           </div>
-        </DrawerBody>
-        <DrawerFooter>
-          <ConfirmButton
-            variant='outline'
-            onConfirm={onDelete}
-            title='Confirm Delete Collection'
-            description='Are you sure you want to delete this collection?'
-          >
-            Delete
-          </ConfirmButton>
-          {imageUrl !== collection.imageSrc ||
-          name !== collection.name ||
-          slug !== collection.slug ? (
-            <Button onClick={onSave}>Save</Button>
-          ) : null}
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+          <div>
+            <Label>Slug</Label>
+            <Input
+              value={slug}
+              onChange={(slug) => setSlug(wordToKebabCase(slug))}
+            />
+          </div>
+          <div>
+            <Label>Image</Label>
+            <EditImage
+              image={imageUrl}
+              uploadedImages={uploadedImages}
+              onChange={setImageUrl}
+              onUpload={uploadImage}
+            />
+          </div>
+          <div>
+            <Label>Products</Label>
+            <EditProducts
+              value={collection.products.map((product) => product.id)}
+              products={products}
+              onChange={(products) => selectProducts(collection.id, products)}
+            />
+          </div>
+        </div>
+      </DrawerBody>
+      <DrawerFooter>
+        <ConfirmButton
+          variant='outline'
+          onConfirm={onDelete}
+          title='Confirm Delete Collection'
+          description='Are you sure you want to delete this collection?'
+        >
+          Delete
+        </ConfirmButton>
+        {imageUrl !== collection.imageSrc ||
+        name !== collection.name ||
+        slug !== collection.slug ? (
+          <Button onClick={onSave}>Save</Button>
+        ) : null}
+      </DrawerFooter>
+    </>
   );
 };
 

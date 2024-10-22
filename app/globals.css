@@ -5,3 +5,7 @@
 :focus-visible {
   outline: none;
 }
+
+:root {
+  --muted: 240 4.8% 95.9%;
+}

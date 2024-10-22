@@ -9,14 +9,15 @@ import { protectedAdminPage } from '@/utils/protected-admin';
 import { listImages } from '@/server/repository/blob';
 import { getCollectionNames } from '@/server/service/collection';
 import { CollectionsEdit } from './collections-edit';
+import { Suspense } from 'react';
+import { SkeletonCard } from '@/components/skeleton';
 
-async function ProductsTab({
+function ProductsTab({
   searchParams,
 }: {
   searchParams?: { 'edit-collection'?: string };
 }) {
-  const products = await getProducts();
-  const uploadedImages = await listImages();
+  const editCollectionId = searchParams?.['edit-collection'];
   return (
     <form>
       <div className='space-y-12'>
@@ -28,9 +29,7 @@ async function ProductsTab({
             Put products into collections. Update that information here.
           </p>
           <div className='mt-1'>
-            <CollectionsEdit
-              editCollectionId={searchParams?.['edit-collection']}
-            />
+            <CollectionsEdit editCollectionId={editCollectionId} />
           </div>
         </div>
         <div className='border-b border-gray-900/10 pb-12'>
@@ -41,18 +40,28 @@ async function ProductsTab({
             Update product information here.
           </p>
           <div className='mt-1'>
-            <ProductsEdit
-              uploadedImages={uploadedImages.blobs.map((blob) => blob.url)}
-              products={products}
-              selectPhoto={selectProductImage}
-              uploadImage={uploadImage}
-              deletePhoto={deleteProductImage}
-            />
+            <Suspense fallback={<SkeletonCard />}>
+              <ProductsEditContent />
+            </Suspense>
           </div>
         </div>
       </div>
     </form>
   );
 }
+
+const ProductsEditContent = async () => {
+  const products = await getProducts();
+  const uploadedImages = await listImages();
+  return (
+    <ProductsEdit
+      uploadedImages={uploadedImages.blobs.map((blob) => blob.url)}
+      products={products}
+      selectPhoto={selectProductImage}
+      uploadImage={uploadImage}
+      deletePhoto={deleteProductImage}
+    />
+  );
+};
 
 export default protectedAdminPage(ProductsTab);

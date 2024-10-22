@@ -22,6 +22,7 @@ const config: Config = {
           DEFAULT: '#111827',
           darker: '#030712',
         },
+        muted: 'hsl(var(--muted))',
       },
     },
   },
