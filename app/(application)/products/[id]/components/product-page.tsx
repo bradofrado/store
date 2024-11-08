@@ -171,7 +171,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
 
             <button
               type='submit'
-              className='mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary-darker focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2'
+              className='mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/75 focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2'
             >
               {loading ? 'Adding to cart...' : 'Add to cart'}
             </button>
@@ -293,7 +293,7 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
                   variant.inStock
                     ? 'cursor-pointer focus:outline-none'
                     : 'cursor-not-allowed opacity-25',
-                  'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-primary data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-primary-lighter data-[focus]:ring-offset-2 data-[checked]:hover:bg-primary-darker sm:flex-1'
+                  'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-primary data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-primary-lighter data-[focus]:ring-offset-2 data-[checked]:hover:bg-primary-lighter sm:flex-1'
                 )}
               >
                 {variant.name}

@@ -169,8 +169,8 @@ const footerNavigation = {
     { name: 'Accessories', href: '/products' },
   ],
   company: [
-    { name: 'Terms & Conditions', href: '/products' },
-    { name: 'Privacy', href: '/products' },
+    { name: 'Terms & Conditions', href: '/terms' },
+    { name: 'Privacy', href: '/privacy' },
   ],
   account: [
     { name: 'Manage Account', href: '/account' },
@@ -344,7 +344,7 @@ export const ApplicationLayout: React.FunctionComponent<{
       </Dialog>
 
       <header className='relative bg-white z-10'>
-        <p className='flex h-10 items-center justify-center bg-gray-900 px-4 text-sm font-medium text-white sm:px-6 lg:px-8'>
+        <p className='flex h-10 items-center justify-center bg-primary px-4 text-sm font-medium text-white sm:px-6 lg:px-8'>
           Get free delivery on orders over $100
         </p>
 
@@ -536,7 +536,7 @@ export const ApplicationLayout: React.FunctionComponent<{
 
       {children}
 
-      <footer aria-labelledby='footer-heading' className='bg-gray-900'>
+      <footer aria-labelledby='footer-heading' className='bg-secondary'>
         <h2 id='footer-heading' className='sr-only'>
           Footer
         </h2>
@@ -545,13 +545,13 @@ export const ApplicationLayout: React.FunctionComponent<{
             <div className='grid grid-cols-2 gap-8 xl:col-span-2'>
               <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
                 <div>
-                  <h3 className='text-sm font-medium text-white'>Shop</h3>
+                  <h3 className='text-sm font-medium text-primary'>Shop</h3>
                   <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.shop.map((item) => (
                       <li key={item.name} className='text-sm'>
                         <a
                           href={item.href}
-                          className='text-gray-300 hover:text-white'
+                          className='text-gray-600 hover:text-gray-500'
                         >
                           {item.name}
                         </a>
@@ -560,13 +560,13 @@ export const ApplicationLayout: React.FunctionComponent<{
                   </ul>
                 </div>
                 <div>
-                  <h3 className='text-sm font-medium text-white'>Company</h3>
+                  <h3 className='text-sm font-medium text-primary'>Company</h3>
                   <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.company.map((item) => (
                       <li key={item.name} className='text-sm'>
                         <a
                           href={item.href}
-                          className='text-gray-300 hover:text-white'
+                          className='text-gray-600 hover:text-gray-500'
                         >
                           {item.name}
                         </a>
@@ -577,13 +577,13 @@ export const ApplicationLayout: React.FunctionComponent<{
               </div>
               <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
                 <div>
-                  <h3 className='text-sm font-medium text-white'>Account</h3>
+                  <h3 className='text-sm font-medium text-primary'>Account</h3>
                   <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.account.map((item) => (
                       <li key={item.name} className='text-sm'>
                         <a
                           href={item.href}
-                          className='text-gray-300 hover:text-white'
+                          className='text-gray-600 hover:text-gray-500'
                         >
                           {item.name}
                         </a>
@@ -592,13 +592,13 @@ export const ApplicationLayout: React.FunctionComponent<{
                   </ul>
                 </div>
                 <div>
-                  <h3 className='text-sm font-medium text-white'>Connect</h3>
+                  <h3 className='text-sm font-medium text-primary'>Connect</h3>
                   <ul role='list' className='mt-6 space-y-6'>
                     {footerNavigation.connect.map((item) => (
                       <li key={item.name} className='text-sm'>
                         <a
                           href={item.href}
-                          className='text-gray-300 hover:text-white'
+                          className='text-gray-600 hover:text-gray-500'
                         >
                           {item.name}
                         </a>
@@ -609,7 +609,7 @@ export const ApplicationLayout: React.FunctionComponent<{
               </div>
             </div>
             <div className='mt-12 md:mt-16 xl:mt-0'>
-              <div className='text-white'>Venus Rings</div>
+              <div className='text-primary'>Venus Rings</div>
               <div className='flex gap-4 mt-2'>
                 <SocialLinks />
               </div>
@@ -617,7 +617,7 @@ export const ApplicationLayout: React.FunctionComponent<{
           </div>
 
           <div className='border-t border-gray-800 py-10'>
-            <p className='text-sm text-gray-400'>
+            <p className='text-sm text-primary'>
               Copyright &copy; 2024 Venus Rings.
             </p>
           </div>
@@ -662,7 +662,7 @@ function SocialLinks() {
         href='https://facebook.com'
         target='_blank'
         aria-label='Visit us on Facebook'
-        className='text-white data-[hover]:text-white/75'
+        className='text-primary data-[hover]:text-primary/75'
       >
         <SocialIconFacebook className='size-4' />
       </Link>
@@ -670,7 +670,7 @@ function SocialLinks() {
         href='https://x.com'
         target='_blank'
         aria-label='Visit us on X'
-        className='text-white data-[hover]:text-white/75'
+        className='text-primary data-[hover]:text-primary/75'
       >
         <SocialIconX className='size-4' />
       </Link>
@@ -678,7 +678,7 @@ function SocialLinks() {
         href='https://linkedin.com'
         target='_blank'
         aria-label='Visit us on LinkedIn'
-        className='text-white data-[hover]:text-white/75'
+        className='text-primary data-[hover]:text-primary/75'
       >
         <SocialIconLinkedIn className='size-4' />
       </Link>

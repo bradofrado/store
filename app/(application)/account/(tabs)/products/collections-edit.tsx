@@ -31,7 +31,7 @@ export const CollectionsEdit: React.FunctionComponent<CollectionsEditProps> = ({
         <CollectionsList />
       </Suspense>
       <CollectionsDrawerContainer open={editCollectionId !== undefined}>
-        <Suspense fallback={<SkeletonCard />}>
+        <Suspense key={editCollectionId} fallback={<SkeletonCard />}>
           <EditCollectionDrawerContent editCollectionId={editCollectionId} />
         </Suspense>
       </CollectionsDrawerContainer>

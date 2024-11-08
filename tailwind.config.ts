@@ -18,9 +18,12 @@ const config: Config = {
       },
       colors: {
         primary: {
-          lighter: '#1f2937',
-          DEFAULT: '#111827',
+          lighter: '#55565a',
+          DEFAULT: '#555659',
           darker: '#030712',
+        },
+        secondary: {
+          DEFAULT: '#f2f0ef',
         },
         muted: 'hsl(var(--muted))',
       },
