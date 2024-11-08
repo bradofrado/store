@@ -211,7 +211,7 @@ const EditProducts: React.FunctionComponent<EditProductsProps> = ({
           {products.map((product) => (
             <Card
               key={product.id}
-              className='relative overflow-hidden hover:bg-gray-50 hover:border-gray-300 hover:cursor-pointer'
+              className='h-20 relative overflow-hidden hover:bg-gray-50 hover:border-gray-300 hover:cursor-pointer'
               onClick={() => onSelect(product)}
             >
               {selectedProducts.includes(product.id) ? (
