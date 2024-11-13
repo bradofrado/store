@@ -1,7 +1,7 @@
 import { auth, clerkClient } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
 
-const adminEmails = ['bradofrado@gmail.com'];
+const adminEmails = ['bradofrado@gmail.com', 'venus@venusrings.store'];
 
 export const protectedAdminPage = <T>(
   Component: (props: T) => JSX.Element | void | Promise<JSX.Element | void>
