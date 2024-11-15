@@ -14,7 +14,7 @@ export default async function MainPage() {
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src='/marketing-content.jpeg'
+            src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_abal_1-VIYbZmwfGKxZA1i1mn7QRgzUUlfOLg.jpg"
             className='h-full w-full object-cover object-center'
           />
         </div>
@@ -113,7 +113,7 @@ export default async function MainPage() {
             <div className='absolute inset-0'>
               <img
                 alt=''
-                src='/marketing-content-2.jpeg'
+                src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Vision_XL_mossy_oak_obsession_camouflage_pattern_1-sxQNUao1W6uDck38z5UJxePUSAeedF.jpg"
                 className='h-full w-full object-cover object-center'
               />
             </div>
@@ -176,7 +176,7 @@ export default async function MainPage() {
             <div className='absolute inset-0'>
               <img
                 alt=''
-                src='/marketing-content-3.jpeg'
+                src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg"
                 className='h-full w-full object-cover object-center'
               />
             </div>
