@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { QueryStateProvider } from '@/hooks/query-state';
+import { Harmony } from './harmony';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
     <ClerkProvider>
       <QueryStateProvider>
         <html lang='en'>
-          <body className={montserrat.className}>{children}</body>
+          <body className={montserrat.className}>
+            {children}
+            <Harmony />
+          </body>
         </html>
       </QueryStateProvider>
     </ClerkProvider>
