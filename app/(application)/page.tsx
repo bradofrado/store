@@ -14,7 +14,7 @@ export default async function MainPage() {
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src='/marketing-content.jpeg'
+            src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg"
             className='h-full w-full object-cover object-center'
           />
         </div>
@@ -160,7 +160,7 @@ export default async function MainPage() {
             collection inspired by the natural world.
           </p>
 
-          <div className='mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0'>
+          <div className="mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0 gap-y-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
