@@ -32,7 +32,7 @@ export default async function MainPage({
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src='/marketing-content.jpeg'
+            src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Vision_XL_mossy_oak_obsession_camouflage_pattern_1-sxQNUao1W6uDck38z5UJxePUSAeedF.jpg"
             className='h-full w-full object-cover object-center'
           />
         </div>
@@ -47,16 +47,14 @@ export default async function MainPage({
               `text-4xl tracking-tight text-white lg:text-6xl font-light`,
               cooper.className
             )}
-          >
-            Handcrafted rings & wedding bands as unique as your story
-          </h1>
+          >Handcrafted rings as unique as your story</h1>
           <ul className='mt-8 text-lg text-white list-disc pl-8 font-light space-y-2.5'>
             <li>Hundreds of premium materials & designs</li>
-            <li>Handmade in Boston by a single master craftsman</li>
+            <li>Handmade in Utah by a single master craftsman</li>
             <li>Free rings sizers & Design Consultation with every purchase</li>
           </ul>
           <a
-            href='/collections/new-arrivals'
+            href="/collections"
             className='mt-12 inline-block rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100'
           >
             Explore Ring Designs
