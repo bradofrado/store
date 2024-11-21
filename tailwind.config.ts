@@ -27,6 +27,20 @@ const config: Config = {
         },
         muted: 'hsl(var(--muted))',
       },
+      keyframes: {
+        'fade-in': {
+          from: { opacity: '0', transform: 'translateY(-10px)' },
+          to: { opacity: '1', transform: 'none' },
+        },
+        'fade-up': {
+          from: { opacity: '0', transform: 'translateY(20px)' },
+          to: { opacity: '1', transform: 'none' },
+        },
+      },
+      animation: {
+        'fade-in': 'fade-in 1s var(--animation-delay,0ms) ease forwards',
+        'fade-up': 'fade-up 1s var(--animation-delay,0ms) ease forwards',
+      },
     },
   },
   plugins: [forms, typography, aspectRatio],

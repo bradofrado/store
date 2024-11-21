@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Montserrat } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { QueryStateProvider } from '@/hooks/query-state';
 import { Harmony } from './harmony';
 
-const montserrat = Montserrat({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Venus Rings',
@@ -21,7 +21,7 @@ export default function RootLayout({
     <ClerkProvider>
       <QueryStateProvider>
         <html lang='en'>
-          <body className={montserrat.className}>
+          <body className={inter.className}>
             {children}
             <Harmony />
           </body>

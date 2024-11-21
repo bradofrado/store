@@ -7,6 +7,11 @@ import {
   getProductByName,
 } from '@/server/service/product';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
+
+const getProductCache: typeof getProductByName = cache(getProductByName);
+const getPopularProductsCache: typeof getPopularProducts =
+  cache(getPopularProducts);
 
 export default async function ProductItemPage({
   params: { id },
@@ -15,9 +20,9 @@ export default async function ProductItemPage({
 }) {
   const product =
     id === 'build-your-own-band'
-      ? await getProductByName('Build Your Own Band')
+      ? await getProductCache('Build Your Own Band')
       : await getProduct(id);
-  const relatedProducts = await getPopularProducts();
+  const relatedProducts = await getPopularProductsCache();
   if (!product) {
     notFound();
   }

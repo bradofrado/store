@@ -18,7 +18,7 @@ export const getProducts = async (): Promise<Product[]> => {
 
 export const getPopularProducts = async (): Promise<Product[]> => {
   const products = await getProducts();
-  const popular = products.slice(0, 20);
+  const popular = products.slice(0, 8);
 
   return popular;
 };

@@ -30,8 +30,32 @@ import {
 } from '@clerk/nextjs';
 import { AvatarDropdown } from '@/components/avatar-dropdown';
 import Link from 'next/link';
+import { getCollectionNames } from '@/server/service/collection';
+import { getCollectionUrl } from './utils';
+import { CollectionName } from '@/types/collection';
 
-const navigation = {
+interface Navigation {
+  categories: {
+    id: string;
+    name: string;
+    featured: {
+      name: string;
+      href: string;
+      imageSrc: string;
+      imageAlt: string;
+    }[];
+    sections: {
+      id: string;
+      name: string;
+      items: { name: string; href: string }[];
+    }[];
+  }[];
+  pages: {
+    name: string;
+    href: string;
+  }[];
+}
+const navigation: Navigation = {
   categories: [
     {
       id: 'women',
@@ -187,9 +211,20 @@ const footerNavigation = {
 export const ApplicationLayout: React.FunctionComponent<{
   children: React.ReactNode;
   numCartItems: number;
-}> = ({ children, numCartItems }) => {
+  collections: CollectionName[];
+}> = ({ children, numCartItems, collections }) => {
   const auth = useAuth();
   const [open, setOpen] = useState(false);
+  const navigation: Navigation = {
+    categories: [],
+    pages: [
+      ...collections.map((collection) => ({
+        name: collection.name.replace('Collection', ''),
+        href: getCollectionUrl(collection.slug),
+      })),
+      { name: 'Build Your Own', href: '/products/build-your-own-band' },
+    ],
+  };
 
   return (
     <div className='bg-white'>

@@ -22,10 +22,11 @@ import {
   Squares2X2Icon,
 } from '@heroicons/react/20/solid';
 import { productVariants } from '@/types/product';
-import { capitalizeFirstLetter } from '@/utils/common';
+import { capitalizeFirstLetter, getClass } from '@/utils/common';
 import { useQueryState } from '@/hooks/query-state';
 import { Collection, CollectionName } from '@/types/collection';
 import { getCollectionUrl, getProductUrl } from '@/app/utils';
+import { cooper } from '@/app/fonts/fonts';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -176,7 +177,12 @@ export const CategoryFiltersView: React.FunctionComponent<{
 
         <main className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24'>
-            <h1 className='text-4xl font-bold tracking-tight text-gray-900'>
+            <h1
+              className={getClass(
+                `text-4xl tracking-tight lg:text-6xl font-light`,
+                cooper.className
+              )}
+            >
               {name}
             </h1>
 

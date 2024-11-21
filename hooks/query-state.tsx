@@ -122,6 +122,7 @@ export const QueryStateProvider: React.FC<{ children: React.ReactNode }> = ({
       const url = new URL(urlRef.current);
       const path = url.pathname + url.search + url.hash;
       router.push(path, { scroll: false });
+      //window.history.pushState(null, '', path);
     }
   }, [urlRef, forceRerender, router]);
 
