@@ -16,8 +16,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/carousel';
+import { SkeletonCard } from '@/components/skeleton';
 
-export default async function MainPage({
+export default function MainPage({
   searchParams,
 }: {
   searchParams?: { collection?: string };
@@ -88,7 +89,17 @@ export default async function MainPage({
           </div>
           <div className='mt-4 flow-root'>
             <CollectionList selectedCollection={collection} />
-            <Suspense key={collection}>
+            <Suspense
+              key={collection}
+              fallback={
+                <div className='flex gap-2'>
+                  <SkeletonCard />
+                  <SkeletonCard />
+                  <SkeletonCard />
+                  <SkeletonCard />
+                </div>
+              }
+            >
               <CollectionProductList collectionSlug={collection} />
             </Suspense>
           </div>
@@ -128,7 +139,59 @@ export default async function MainPage({
                   planet, your band should tell a story about what's important
                   to you.
                 </p>
-                <div className='flex mt-4'>
+                <div className='flex mt-4 gap-8'>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
+                    <a
+                      className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
+                      href='/'
+                    >
+                      <img
+                        src='/marketing-content-2.jpeg'
+                        className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
+                      />
+                    </a>
+                    <div className='flex flex-1 flex-col space-y-2 py-4'>
+                      <h3
+                        className={getClass(
+                          `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
+                          cooper.className
+                        )}
+                      >
+                        Start with the Material
+                      </h3>
+                      <p className='text-base text-white font-light'>
+                        Send us any material (or choose from the 1000's we
+                        have). We'll work with you to create the perfect design.
+                        Receive within 4 weeks (or faster)
+                      </p>
+                    </div>
+                  </div>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
+                    <a
+                      className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
+                      href='/'
+                    >
+                      <img
+                        src='/marketing-content-2.jpeg'
+                        className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
+                      />
+                    </a>
+                    <div className='flex flex-1 flex-col space-y-2 py-4'>
+                      <h3
+                        className={getClass(
+                          `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
+                          cooper.className
+                        )}
+                      >
+                        Add your Custom Features
+                      </h3>
+                      <p className='text-base text-white font-light'>
+                        Send us any material (or choose from the 1000's we
+                        have). We'll work with you to create the perfect design.
+                        Receive within 4 weeks (or faster)
+                      </p>
+                    </div>
+                  </div>
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
@@ -153,16 +216,16 @@ export default async function MainPage({
                         have). We'll work with you to create the perfect design.
                         Receive within 4 weeks (or faster)
                       </p>
-                      <div className='flex flex-1 flex-col justify-end items-start'>
-                        <a
-                          href='/collections'
-                          className='mt-8 block w-full rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
-                        >
-                          Custom Ring
-                        </a>
-                      </div>
                     </div>
                   </div>
+                </div>
+                <div className='flex flex-1 justify-center items-start'>
+                  <a
+                    href='/collections'
+                    className='mt-8 block w-full rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
+                  >
+                    Create Custom Ring
+                  </a>
                 </div>
               </div>
             </div>
@@ -247,6 +310,7 @@ const CollectionList = async ({
   selectedCollection: string;
 }) => {
   const categories = await getPopularCollections();
+
   return (
     <div className=''>
       <div className='relative box-content overflow-x-auto py-2 xl:overflow-visible'>

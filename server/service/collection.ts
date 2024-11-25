@@ -9,6 +9,8 @@ import {
 } from '../repository/collection';
 import { Collection, CollectionName } from '@/types/collection';
 import { getProducts } from './product';
+import { cache } from 'react';
+import { unstable_cache } from 'next/cache';
 
 export const getCollectionBySlug = async (
   slug: string
@@ -76,8 +78,10 @@ export const searchProductsInCollection = async (
   return { ...collection, products: filtered };
 };
 
-export const getPopularCollections = async (): Promise<CollectionName[]> => {
-  const collections = await getCollectionNames();
+export const getPopularCollections = unstable_cache(
+  async (): Promise<CollectionName[]> => {
+    const collections = await getCollectionNames();
 
-  return collections.slice(0, 5);
-};
+    return collections.slice(0, 5);
+  }
+);
