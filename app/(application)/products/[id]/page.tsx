@@ -1,6 +1,6 @@
-import { Product } from '@/types/product';
+import { Product, productVariants } from '@/types/product';
 import { addProductToCart } from '../../actions';
-import { ProductItemView } from './components/product-page';
+import { ProductItemView } from '../components/product-page';
 import {
   getPopularProducts,
   getProduct,
@@ -9,7 +9,6 @@ import {
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
-const getProductCache: typeof getProductByName = cache(getProductByName);
 const getPopularProductsCache: typeof getPopularProducts =
   cache(getPopularProducts);
 
@@ -18,10 +17,7 @@ export default async function ProductItemPage({
 }: {
   params: { id: string };
 }) {
-  const product =
-    id === 'build-your-own-band'
-      ? await getProductCache('Build Your Own Band')
-      : await getProduct(id);
+  const product = await getProduct(id);
   const relatedProducts = await getPopularProductsCache();
   if (!product) {
     notFound();
@@ -35,6 +31,7 @@ export default async function ProductItemPage({
       addProductToCart={addProductToCart}
       product={product}
       relatedProducts={relatedProducts}
+      productVariants={productVariants}
     />
   );
 }

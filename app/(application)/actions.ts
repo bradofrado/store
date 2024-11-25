@@ -1,6 +1,7 @@
 'use server';
 
 import { uploadImage as uploadImageRepo } from '@/server/repository/blob';
+import { NodeMailerEmailService } from '@/server/repository/email';
 import {
   addItemToCart,
   changeQuantityOfCartItem,
@@ -105,3 +106,25 @@ export const selectProducts = updateCollectionProducts;
 export const createCollectionItem = createCollection;
 
 export const deleteCollectionItem = deleteCollection;
+
+export const emailCustomForm = async (
+  _: Product,
+  variantSelection: VariantSelection
+) => {
+  const email = variantSelection.email;
+  if (!email) {
+    throw new Error('No email provided');
+  }
+  const name = variantSelection.name;
+  if (!name) {
+    throw new Error('No name provided');
+  }
+
+  const nodeMailer = new NodeMailerEmailService();
+  const subject = `Custom Order Request for ${name}`;
+  const body = Object.entries(variantSelection)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join('<br />');
+
+  await nodeMailer.sendMail({ to: 'venus@venusrings.store', subject, body });
+};

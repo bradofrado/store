@@ -117,9 +117,6 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
                       <p className='mt-1 text-sm font-medium text-gray-900'>
                         {formatDollarAmount(product.price ?? 0)}
                       </p>
-                    </div>
-
-                    <div className='mt-4 sm:mt-0 sm:pr-9'>
                       <label
                         htmlFor={`quantity-${productIdx}`}
                         className='sr-only'
@@ -129,7 +126,7 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
                       <select
                         id={`quantity-${productIdx}`}
                         name={`quantity-${productIdx}`}
-                        className='max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-primary-lighter focus:outline-none focus:ring-1 focus:ring-primary-lighter sm:text-sm'
+                        className='max-w-full mt-2 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-primary-lighter focus:outline-none focus:ring-1 focus:ring-primary-lighter sm:text-sm'
                         onChange={(e) => onChangeQuantity(e, id)}
                         value={quantity}
                       >
@@ -142,7 +139,9 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
                         <option value={7}>7</option>
                         <option value={8}>8</option>
                       </select>
+                    </div>
 
+                    <div className='mt-4 sm:mt-0 sm:pr-9'>
                       <div className='absolute right-0 top-0'>
                         <button
                           type='button'

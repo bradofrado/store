@@ -18,10 +18,10 @@ export const productSchema = z.object({
 });
 export type Product = z.infer<typeof productSchema>;
 
-interface ProductVariant {
+export interface ProductVariant {
   name: string;
-  values: string[];
-  type: 'button' | 'select';
+  values: (string | ProductVariant)[];
+  type: 'button' | 'select' | 'text' | 'textarea' | 'group';
 }
 export const productVariants: ProductVariant[] = [
   {

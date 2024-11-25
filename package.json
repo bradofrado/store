@@ -36,6 +36,7 @@
     "harmony-ai-editor": "^0.13.0",
     "harmony-ai-plugin": "^0.2.6",
     "next": "14.2.7",
+    "nodemailer": "^6.9.16",
     "react": "^18",
     "react-dom": "^18",
     "stripe": "^16.12.0",
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "dotenv-cli": "^7.3.0",

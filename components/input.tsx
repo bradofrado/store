@@ -3,18 +3,19 @@ import * as React from 'react';
 
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange'
+  'onChange' | 'onBlur'
 > & {
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
+  onBlur?: (value: string) => void;
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, onChange, ...props }, ref) => {
+  ({ className, type, onChange, onBlur, ...props }, ref) => {
     const formattedChange =
-      (onChange: (value: string) => void) =>
+      (onChange?: (value: string) => void) =>
       (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        onChange(value);
+        onChange?.(value);
       };
     return (
       <input
@@ -25,6 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         ref={ref}
         onChange={formattedChange(onChange)}
+        onBlur={formattedChange(onBlur)}
         {...props}
       />
     );

@@ -66,10 +66,10 @@ export const ProductVariantFilter: React.FunctionComponent = () => {
       <DisclosurePanel className='pt-6'>
         <div className='space-y-4'>
           {options.map((option, optionIdx) => (
-            <div key={option} className='flex items-center'>
+            <div key={option as string} className='flex items-center'>
               <input
-                value={option}
-                checked={checkedFilters[section].includes(option)}
+                value={option as string}
+                checked={checkedFilters[section].includes(option as string)}
                 id={`filter-mobile-${section}-${optionIdx}`}
                 name={section}
                 type='checkbox'
@@ -80,7 +80,7 @@ export const ProductVariantFilter: React.FunctionComponent = () => {
                 htmlFor={`filter-${section}-${optionIdx}`}
                 className='ml-3 text-sm text-gray-600'
               >
-                {option}
+                {option as string}
               </label>
             </div>
           ))}
