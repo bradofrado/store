@@ -40,13 +40,11 @@ export default async function MainPage() {
               `text-4xl tracking-tight text-white lg:text-6xl font-light`,
               cooper.className
             )}
-          >
-            Handcrafted rings & wedding bands as unique as your story
-          </h1>
+          >Craft your style. Elevate your look with custom wedding bands.</h1>
           <ul className='mt-8 text-lg text-white list-disc pl-8 font-light space-y-2.5'>
-            <li>Hundreds of premium materials & designs</li>
-            <li>Handmade in Boston by a single master craftsman</li>
-            <li>Free rings sizers & Design Consultation with every purchase</li>
+            <li>Hundreds of designs tailored to reflect your unique taste and style</li>
+            <li>Crafted with durable, premium materials built to last</li>
+            <li>From casual to formal, find your perfect fit</li>
           </ul>
           <a
             href='/collections'
@@ -111,13 +109,7 @@ export default async function MainPage() {
                   Start with a blank canvas or existing design. Order, then
                   customize with a professional ring designer
                 </h2>
-                <p className='mt-3 text-lg font-light text-white'>
-                  We set the bar on creating the most distinguished bands the
-                  world has to offer. Whether you are fascinated with history,
-                  your country, your love for whiskey, or things beyond this
-                  planet, your band should tell a story about what's important
-                  to you.
-                </p>
+                <p className='mt-3 text-lg font-light text-white'>We take pride in the care that we put into each band. Whether you are picking a design to remind you of an important place or a memorable event, we want this to be a ring you cherish forever.</p>
                 <div className='flex mt-4 gap-8'>
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
                     <a
@@ -138,11 +130,7 @@ export default async function MainPage() {
                       >
                         Start with the Material
                       </h3>
-                      <p className='text-base text-white font-light'>
-                        Send us any material (or choose from the 1000's we
-                        have). We'll work with you to create the perfect design.
-                        Receive within 4 weeks (or faster)
-                      </p>
+                      <p className='text-base text-white font-light'>Send us any material (or choose from the 100's we have). We'll work with you to create the perfect design. Receive within 4 weeks (or faster)</p>
                     </div>
                   </div>
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
@@ -164,11 +152,7 @@ export default async function MainPage() {
                       >
                         Add your Custom Features
                       </h3>
-                      <p className='text-base text-white font-light'>
-                        Send us any material (or choose from the 1000's we
-                        have). We'll work with you to create the perfect design.
-                        Receive within 4 weeks (or faster)
-                      </p>
+                      <p className='text-base text-white font-light'>Add custom sizing, polish, and add ons to make the ring your own.</p>
                     </div>
                   </div>
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
@@ -187,14 +171,8 @@ export default async function MainPage() {
                           `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
                           cooper.className
                         )}
-                      >
-                        Create Anything Ring
-                      </h3>
-                      <p className='text-base text-white font-light'>
-                        Send us any material (or choose from the 1000's we
-                        have). We'll work with you to create the perfect design.
-                        Receive within 4 weeks (or faster)
-                      </p>
+                      >Create an Anything Ring</h3>
+                      <p className='text-base text-white font-light'>Don't let your imagination limit your dream ring. We take pride in the quality of our bands and want to ensure that you are getting top-end care.</p>
                     </div>
                   </div>
                 </div>
@@ -224,11 +202,7 @@ export default async function MainPage() {
           >
             Our Best Selling Bands
           </h2>
-          <p className='mt-4 text-lg font-light text-gray-900'>
-            Every design you see can be completely customized to your
-            preferences. Or, order an Anything Ring and start completely from
-            scratch.
-          </p>
+          <p className='mt-4 text-lg font-light text-gray-900'>Every design you see can be completely customized to your preferences. Or, order a custom ring and start completely from scratch.</p>
           <PopularProductsList />
         </section>
 
@@ -248,13 +222,7 @@ export default async function MainPage() {
                 >
                   Reach Out to Us
                 </h2>
-                <p className='mt-3 text-lg font-light text-white'>
-                  We set the bar on creating the most distinguished bands the
-                  world has to offer. Whether you are fascinated with history,
-                  your country, your love for whiskey, or things beyond this
-                  planet, your band should tell a story about what's important
-                  to you.
-                </p>
+                <p className='mt-3 text-lg font-light text-white'>We want to make sure you are receiving top-end care and quality in your rings. If you have any questions or concerns, do not hesitate to reach out to us, and we will respond soon.</p>
                 <div className='flex mt-4'>
                   <a
                     href='mailto:venus@venusrings.store'
