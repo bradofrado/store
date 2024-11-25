@@ -4,7 +4,6 @@ import { getPopularProducts } from '@/server/service/product';
 import { emailCustomForm } from '../../actions';
 
 export default async function BuildYourOwnBandPage() {
-  const relatedProducts = await getPopularProducts();
   const product: Product = {
     id: '',
     name: 'Build Your Own Band',
@@ -97,7 +96,6 @@ export default async function BuildYourOwnBandPage() {
   return (
     <ProductItemView
       product={product}
-      relatedProducts={relatedProducts}
       productVariants={productVariantsWithComments}
       addProductToCart={emailCustomForm}
     />

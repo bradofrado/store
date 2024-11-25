@@ -61,13 +61,11 @@ interface ProductItemViewProps {
     product: Product,
     variants: VariantSelection
   ) => Promise<void>;
-  relatedProducts: Product[];
   productVariants: ProductVariant[];
 }
 export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   product,
   addProductToCart,
-  relatedProducts,
   productVariants,
 }) => {
   const reload = useReload();
@@ -130,197 +128,177 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   const hasImage = Boolean(product.imageSrc);
 
   return (
-    <main className='mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8'>
-      <div className='lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8'>
-        <div
-          className={getClass(
-            hasImage ? 'lg:col-span-5 lg:col-start-8' : 'lg:col-span-12'
-          )}
-        >
-          <div className='flex justify-between'>
-            <h1 className='text-xl font-medium text-gray-900'>
-              {product.name}
-            </h1>
-            <p className='text-xl font-medium text-gray-900'>
-              {(product.price ?? 0) >= 0
-                ? formatDollarAmount(product.price ?? 0)
-                : ''}
-            </p>
-          </div>
-          {/* Reviews */}
-          {/* <ReviewsTotal /> */}
-        </div>
-        {hasImage ? null : (
-          <p className='lg:col-span-12 text-sm mt-4 text-gray-500'>
-            {product.description}
-          </p>
+    <div className='lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8'>
+      <div
+        className={getClass(
+          hasImage ? 'lg:col-span-5 lg:col-start-8' : 'lg:col-span-12'
         )}
+      >
+        <div className='flex justify-between'>
+          <h1 className='text-xl font-medium text-gray-900'>{product.name}</h1>
+          <p className='text-xl font-medium text-gray-900'>
+            {(product.price ?? 0) >= 0
+              ? formatDollarAmount(product.price ?? 0)
+              : ''}
+          </p>
+        </div>
+        {/* Reviews */}
+        {/* <ReviewsTotal /> */}
+      </div>
+      {hasImage ? null : (
+        <p className='lg:col-span-12 text-sm mt-4 text-gray-500'>
+          {product.description}
+        </p>
+      )}
 
-        {/* Image gallery */}
+      {/* Image gallery */}
+      {hasImage ? (
+        <div className='flex flex-col items-center mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0'>
+          <h2 className='sr-only'>Images</h2>
+
+          <div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 lg:gap-8'>
+            <img
+              key={product.id}
+              alt={product.imageAlt}
+              src={product.images[selectedImage].imageSrc}
+              className={classNames(
+                'lg:col-span-2 lg:row-span-2',
+                'rounded-lg'
+              )}
+            />
+          </div>
+          {product.images.length > 1 ? (
+            <PhotoCarousel
+              selectedImage={selectedImage}
+              onSelect={setSelectedImage}
+              images={product.images}
+            />
+          ) : null}
+        </div>
+      ) : null}
+
+      <div
+        className={getClass(
+          'mt-8',
+          hasImage ? 'lg:col-span-5' : 'lg:col-span-12'
+        )}
+      >
+        <form onSubmit={onSubmit}>
+          {/* Color picker */}
+          {/* <ColorPicker value={selectedColor} onChange={setSelectedColor} /> */}
+
+          <div className='divide-y'>
+            {productVariants.map(({ name, values, type }) =>
+              product.variants[name] ? (
+                type === 'group' ? (
+                  <VariantPicker
+                    key={name}
+                    variants={values.map((value) => ({
+                      name: (value as ProductVariant).name,
+                      variants: (value as ProductVariant).values.map(
+                        (variant) => ({
+                          name: variant as string,
+                          inStock: product.variants[name].includes(
+                            variant as string
+                          ),
+                        })
+                      ),
+                      type: (value as ProductVariant).type,
+                    }))}
+                    values={values.map(
+                      (value) => variant[(value as ProductVariant).name]
+                    )}
+                    onChange={(name, value) => onChange(name)(value)}
+                  />
+                ) : (
+                  <VariantPicker
+                    key={name}
+                    variants={[
+                      {
+                        name,
+                        variants: values.map((variant) => ({
+                          name: variant as string,
+                          inStock: product.variants[name].includes(
+                            variant as string
+                          ),
+                        })),
+                        type,
+                      },
+                    ]}
+                    values={[variant[name]]}
+                    onChange={(name, value) => onChange(name)(value)}
+                  />
+                )
+              ) : null
+            )}
+          </div>
+
+          {error ? <p className='text-sm text-red-500'>{error}</p> : null}
+          <Button
+            type='submit'
+            className='mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/75 focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2'
+            loading={loading}
+          >
+            {hasImage ? 'Add to cart' : 'Submit'}
+          </Button>
+        </form>
+
+        {/* Product details */}
         {hasImage ? (
-          <div className='flex flex-col items-center mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0'>
-            <h2 className='sr-only'>Images</h2>
+          <div className='mt-10'>
+            <h2 className='text-sm font-medium text-gray-900'>Description</h2>
 
-            <div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 lg:gap-8'>
-              <img
-                key={product.id}
-                alt={product.imageAlt}
-                src={product.images[selectedImage].imageSrc}
-                className={classNames(
-                  'lg:col-span-2 lg:row-span-2',
-                  'rounded-lg'
-                )}
-              />
-            </div>
-            {product.images.length > 1 ? (
-              <PhotoCarousel
-                selectedImage={selectedImage}
-                onSelect={setSelectedImage}
-                images={product.images}
-              />
-            ) : null}
+            <div
+              dangerouslySetInnerHTML={{ __html: product.description }}
+              className='prose prose-sm mt-4 text-gray-500'
+            />
           </div>
         ) : null}
 
-        <div
-          className={getClass(
-            'mt-8',
-            hasImage ? 'lg:col-span-5' : 'lg:col-span-12'
-          )}
-        >
-          <form onSubmit={onSubmit}>
-            {/* Color picker */}
-            {/* <ColorPicker value={selectedColor} onChange={setSelectedColor} /> */}
+        <div className='mt-8 border-t border-gray-200 pt-8'>
+          <h2 className='text-sm font-medium text-gray-900'>
+            Fabric &amp; Care
+          </h2>
 
-            <div className='divide-y'>
-              {productVariants.map(({ name, values, type }) =>
-                product.variants[name] ? (
-                  type === 'group' ? (
-                    <VariantPicker
-                      key={name}
-                      variants={values.map((value) => ({
-                        name: (value as ProductVariant).name,
-                        variants: (value as ProductVariant).values.map(
-                          (variant) => ({
-                            name: variant as string,
-                            inStock: product.variants[name].includes(
-                              variant as string
-                            ),
-                          })
-                        ),
-                        type: (value as ProductVariant).type,
-                      }))}
-                      values={values.map(
-                        (value) => variant[(value as ProductVariant).name]
-                      )}
-                      onChange={(name, value) => onChange(name)(value)}
-                    />
-                  ) : (
-                    <VariantPicker
-                      key={name}
-                      variants={[
-                        {
-                          name,
-                          variants: values.map((variant) => ({
-                            name: variant as string,
-                            inStock: product.variants[name].includes(
-                              variant as string
-                            ),
-                          })),
-                          type,
-                        },
-                      ]}
-                      values={[variant[name]]}
-                      onChange={(name, value) => onChange(name)(value)}
-                    />
-                  )
-                ) : null
-              )}
-            </div>
-
-            {error ? <p className='text-sm text-red-500'>{error}</p> : null}
-            <Button
-              type='submit'
-              className='mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/75 focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2'
-              loading={loading}
-            >
-              {hasImage ? 'Add to cart' : 'Submit'}
-            </Button>
-          </form>
-
-          {/* Product details */}
-          {hasImage ? (
-            <div className='mt-10'>
-              <h2 className='text-sm font-medium text-gray-900'>Description</h2>
-
-              <div
-                dangerouslySetInnerHTML={{ __html: product.description }}
-                className='prose prose-sm mt-4 text-gray-500'
-              />
-            </div>
-          ) : null}
-
-          <div className='mt-8 border-t border-gray-200 pt-8'>
-            <h2 className='text-sm font-medium text-gray-900'>
-              Fabric &amp; Care
-            </h2>
-
-            <div className='prose prose-sm mt-4 text-gray-500'>
-              <ul role='list'>
-                {product.details.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Policies */}
-          <section aria-labelledby='policies-heading' className='mt-10'>
-            <h2 id='policies-heading' className='sr-only'>
-              Our Policies
-            </h2>
-
-            <dl className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2'>
-              {policies.map((policy) => (
-                <div
-                  key={policy.name}
-                  className='rounded-lg border border-gray-200 bg-gray-50 p-6 text-center'
-                >
-                  <dt>
-                    <policy.icon
-                      aria-hidden='true'
-                      className='mx-auto h-6 w-6 flex-shrink-0 text-gray-400'
-                    />
-                    <span className='mt-4 text-sm font-medium text-gray-900'>
-                      {policy.name}
-                    </span>
-                  </dt>
-                  <dd className='mt-1 text-sm text-gray-500'>
-                    {policy.description}
-                  </dd>
-                </div>
+          <div className='prose prose-sm mt-4 text-gray-500'>
+            <ul role='list'>
+              {product.details.map((item) => (
+                <li key={item}>{item}</li>
               ))}
-            </dl>
-          </section>
+            </ul>
+          </div>
         </div>
+
+        {/* Policies */}
+        <section aria-labelledby='policies-heading' className='mt-10'>
+          <h2 id='policies-heading' className='sr-only'>
+            Our Policies
+          </h2>
+
+          <dl className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2'>
+            {policies.map((policy) => (
+              <div
+                key={policy.name}
+                className='rounded-lg border border-gray-200 bg-gray-50 p-6 text-center'
+              >
+                <dt>
+                  <policy.icon
+                    aria-hidden='true'
+                    className='mx-auto h-6 w-6 flex-shrink-0 text-gray-400'
+                  />
+                  <span className='mt-4 text-sm font-medium text-gray-900'>
+                    {policy.name}
+                  </span>
+                </dt>
+                <dd className='mt-1 text-sm text-gray-500'>
+                  {policy.description}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       </div>
-
-      {/* Reviews */}
-      {/* <Reviews /> */}
-
-      {/* Related products */}
-      <section aria-labelledby='related-heading' className='mt-16 sm:mt-24'>
-        <h2 id='related-heading' className='text-lg font-medium text-gray-900'>
-          Customers also purchased
-        </h2>
-
-        <div className='mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
-          {relatedProducts.map((relatedProduct) => (
-            <ProductCard product={relatedProduct} key={relatedProduct.id} />
-          ))}
-        </div>
-      </section>
-    </main>
+    </div>
   );
 };
 
