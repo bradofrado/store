@@ -24,7 +24,7 @@ export default async function MainPage() {
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src='/marketing-content.jpeg'
+            src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg"
             className='h-full w-full object-cover object-center'
           />
         </div>
@@ -124,7 +124,7 @@ export default async function MainPage() {
                       href='/'
                     >
                       <img
-                        src='/marketing-content-2.jpeg'
+                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_abal_1-VIYbZmwfGKxZA1i1mn7QRgzUUlfOLg.jpg"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -150,7 +150,7 @@ export default async function MainPage() {
                       href='/'
                     >
                       <img
-                        src='/marketing-content-2.jpeg'
+                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_distinctive_and_rare_nature_of_exotic_woods_a_3-CvMidGRfZbytJNFS8iqqPsRw4XozQa.jpg"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -176,7 +176,7 @@ export default async function MainPage() {
                       href='/'
                     >
                       <img
-                        src='/marketing-content-2.jpeg'
+                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_emphasize_the_innovative_and_durable_nature_o_2-wVvsv3lDuuQ6brh5rTomvPlEzLFmF2.jpg"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
