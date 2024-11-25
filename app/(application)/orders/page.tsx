@@ -1,6 +1,7 @@
 import { getOrders } from '@/server/service/order';
 import { auth } from '@clerk/nextjs/server';
 import { OrderHistory } from './order-history';
+import { getAuth } from '@/utils/auth';
 
 const orders = [
   {
@@ -28,8 +29,8 @@ const orders = [
 ];
 
 export default async function OrderPage() {
-  const user = auth();
-  const userId = user.userId;
+  const userId = await getAuth();
+
   const orders = userId ? await getOrders({ userId }) : [];
   return (
     <main className='mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:pb-32 sm:pt-24 lg:px-8'>

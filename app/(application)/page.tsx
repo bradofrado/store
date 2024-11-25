@@ -56,7 +56,7 @@ export default async function MainPage({
             <li>Free rings sizers & Design Consultation with every purchase</li>
           </ul>
           <a
-            href='/collections/new-arrivals'
+            href='/collections'
             className='mt-12 inline-block rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100'
           >
             Explore Ring Designs
@@ -215,7 +215,7 @@ export default async function MainPage({
                 </p>
                 <div className='flex mt-4'>
                   <a
-                    href='/collections'
+                    href='mailto:venus@venusrings.store'
                     className='mt-8 block w-full rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                   >
                     Contact Us

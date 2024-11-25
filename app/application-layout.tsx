@@ -21,13 +21,7 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  useAuth,
-} from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { AvatarDropdown } from '@/components/avatar-dropdown';
 import Link from 'next/link';
 import { getCollectionNames } from '@/server/service/collection';
@@ -73,7 +67,6 @@ export const ApplicationLayout: React.FunctionComponent<{
   numCartItems: number;
   collections: CollectionName[];
 }> = ({ children, numCartItems, collections }) => {
-  const auth = useAuth();
   const [open, setOpen] = useState(false);
   const navigation: Navigation = {
     categories: [],

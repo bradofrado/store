@@ -1,11 +1,26 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { authMiddleware } from '@clerk/nextjs/server';
+import { cookies } from 'next/headers';
+import { v4 as uuidv4 } from 'uuid';
+import { getAuth } from './utils/auth';
+import { NextResponse } from 'next/server';
 
-const isPrivateRoute = createRouteMatcher(['/account(.*)']);
+export default authMiddleware({
+  async afterAuth(auth, req) {
+    const res = NextResponse.next();
+    const userGuestId = req.cookies.get('user_guest_id');
+    if (!auth.userId && !userGuestId) {
+      res.cookies.set('user_guest_id', uuidv4());
+    }
 
-export default clerkMiddleware((auth, request) => {
-  if (isPrivateRoute(request)) {
-    auth().protect();
-  }
+    return res;
+  },
+  publicRoutes(req) {
+    if (/\/account/.test(req.url)) {
+      return false;
+    }
+
+    return true;
+  },
 });
 
 export const config = {

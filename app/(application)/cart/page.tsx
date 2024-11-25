@@ -5,10 +5,10 @@ import { changeCartItemQuantity, checkout, removeCartItem } from '../actions';
 import { ProductCard } from '@/components/product-card';
 import { getPopularProducts } from '@/server/service/product';
 import { getShippingRate } from '@/server/repository/stripe';
+import { getAuth } from '@/utils/auth';
 
 export default async function CartPage() {
-  const user = auth();
-  const userId = user.userId;
+  const userId = await getAuth();
   const items = userId ? await getCartItems({ userId }) : [];
   const products = await getPopularProducts();
   const shipping = await getShippingRate();

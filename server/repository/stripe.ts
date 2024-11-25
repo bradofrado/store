@@ -8,7 +8,7 @@ interface CreateCheckoutLinkRequest {
   fromUrl: string;
   products: { stripeProductId: string; quantity: number }[];
   discounts?: { coupon: string }[];
-  customerId: string;
+  customerId?: string;
   shippingRate?: string;
 }
 export const createCheckoutSession = async ({

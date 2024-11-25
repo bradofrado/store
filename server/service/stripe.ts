@@ -15,7 +15,6 @@ import stripe from 'stripe';
 export const createCheckoutLink = async ({ userId }: { userId: string }) => {
   const cartItems = await getCartItems({ userId });
   const customer = await getCustomer({ userId, db: prisma });
-  if (!customer) throw new Error('Customer not found');
 
   if (cartItems.some(({ product }) => !product.priceId)) {
     throw new Error('Products have to have a price');

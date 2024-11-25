@@ -20,6 +20,7 @@ import { CartItem } from '@/types/cart';
 import { Image } from '@/types/image';
 import { Product } from '@/types/product';
 import { VariantSelection } from '@/types/variant';
+import { getAuth } from '@/utils/auth';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
@@ -27,8 +28,7 @@ export const addProductToCart = async (
   product: Product,
   variants: VariantSelection
 ) => {
-  const user = auth();
-  const userId = user.userId;
+  const userId = await getAuth();
   if (!userId) {
     return;
   }
@@ -58,8 +58,7 @@ export const checkout = async (): Promise<void> => {
 };
 
 export const getCheckoutLink = async () => {
-  const user = auth();
-  const userId = user.userId;
+  const userId = await getAuth();
   if (!userId) return null;
 
   const checkoutUrl = await createCheckoutLink({ userId });
