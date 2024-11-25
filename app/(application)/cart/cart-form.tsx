@@ -1,9 +1,11 @@
 'use client';
 
 import { getProductUrl } from '@/app/utils';
+import { Button } from '@/components/button';
 import { CartItem } from '@/types/cart';
 import { Product } from '@/types/product';
 import { formatDollarAmount } from '@/utils/common';
+import { calculateCartItemsTotals, hasFreeShipping } from '@/utils/totals';
 import {
   CheckIcon,
   ClockIcon,
@@ -11,7 +13,7 @@ import {
   XMarkIcon as XMarkIconMini,
 } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 type CartItemWithStock = CartItem & { inStock: boolean; leadTime: string };
 
@@ -20,14 +22,17 @@ interface CartViewProps {
   removeItem: (cartId: string) => Promise<void>;
   checkout: () => Promise<void>;
   items: CartItemWithStock[];
+  shippingAmount: number;
 }
 export const CartView: React.FunctionComponent<CartViewProps> = ({
   items,
   changeQuantity,
   removeItem,
   checkout,
+  shippingAmount,
 }) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const onChangeQuantity = async (
     event: React.ChangeEvent<HTMLSelectElement>,
     cartId: string
@@ -44,11 +49,12 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
 
   const onCheckout = (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       checkout();
     } catch (error) {
       console.error('Error checking out:', error);
+      setLoading(false);
     }
   };
 
@@ -175,27 +181,30 @@ export const CartView: React.FunctionComponent<CartViewProps> = ({
         </ul>
       </section>
 
-      <OrderSummary items={items} />
+      <OrderSummary
+        items={items}
+        shippingAmount={shippingAmount}
+        loading={loading}
+      />
     </form>
   );
 };
 
 interface OrderSummaryProps {
   items: CartItemWithStock[];
+  shippingAmount: number;
+  loading: boolean;
 }
 const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
   items,
+  shippingAmount,
+  loading,
 }) => {
-  const router = useRouter();
-  const subtotal = useMemo(
-    () =>
-      items.reduce(
-        (acc, item) => acc + item.quantity * (item.product.price ?? 0),
-        0
-      ),
-    [items]
+  const subtotal = useMemo(() => calculateCartItemsTotals(items), [items]);
+  const shippingEstimate = useMemo(
+    () => (hasFreeShipping(items) ? 0 : shippingAmount),
+    [items, shippingAmount]
   );
-  const shippingEstimate = useMemo(() => 5, []);
   //const taxEstimate = useMemo(() => subtotal * 0.085, [subtotal]);
   const total = useMemo(
     () => subtotal + shippingEstimate,
@@ -223,7 +232,9 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
             <span>Shipping estimate</span>
           </dt>
           <dd className='text-sm font-medium text-gray-900'>
-            {formatDollarAmount(shippingEstimate)}
+            {shippingEstimate === 0
+              ? 'FREE'
+              : formatDollarAmount(shippingEstimate)}
           </dd>
         </div>
         <div className='flex items-center justify-between border-t border-gray-200 pt-4'>
@@ -235,12 +246,13 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
       </dl>
 
       <div className='mt-6'>
-        <button
+        <Button
           type='submit'
           className='w-full rounded-md border border-transparent bg-primary px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-darker focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2 focus:ring-offset-gray-50'
+          loading={loading}
         >
           Checkout
-        </button>
+        </Button>
       </div>
     </section>
   );

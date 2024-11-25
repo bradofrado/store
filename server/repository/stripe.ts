@@ -7,12 +7,16 @@ const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY || '');
 interface CreateCheckoutLinkRequest {
   fromUrl: string;
   products: { stripeProductId: string; quantity: number }[];
+  discounts?: { coupon: string }[];
   customerId: string;
+  shippingRate?: string;
 }
 export const createCheckoutSession = async ({
   fromUrl,
   products,
+  discounts,
   customerId,
+  shippingRate,
 }: CreateCheckoutLinkRequest): Promise<
   stripe.Response<stripe.Checkout.Session>
 > => {
@@ -25,6 +29,13 @@ export const createCheckoutSession = async ({
     success_url: `${fromUrl}/?success=true`,
     cancel_url: `${fromUrl}/?canceled=true`,
     customer: customerId,
+    discounts: discounts,
+    shipping_address_collection: {
+      allowed_countries: ['US'],
+    },
+    shipping_options: shippingRate
+      ? [{ shipping_rate: shippingRate }]
+      : undefined,
   });
 
   return session;
@@ -203,3 +214,33 @@ export const stripeToProduct = async (
     ),
   };
 };
+
+export const getCouponsByName = async (
+  names: string[]
+): Promise<stripe.Coupon[]> => {
+  const couponResult = await stripeClient.coupons.list();
+  return couponResult.data.filter((coupon) =>
+    names.includes(coupon.name ?? '')
+  );
+};
+
+export const createCoupon = async (
+  amountOff: number,
+  name: string
+): Promise<stripe.Coupon> => {
+  const coupon = await stripeClient.coupons.create({
+    duration: 'once',
+    amount_off: amountOff,
+    currency: 'usd',
+    name,
+  });
+
+  return coupon;
+};
+
+export const getShippingRate =
+  async (): Promise<stripe.ShippingRate | null> => {
+    const rates = await stripeClient.shippingRates.list();
+
+    return rates.data.length > 0 ? rates.data[0] : null;
+  };

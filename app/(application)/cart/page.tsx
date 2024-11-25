@@ -4,12 +4,14 @@ import { getCartItems } from '@/server/service/cart';
 import { changeCartItemQuantity, checkout, removeCartItem } from '../actions';
 import { ProductCard } from '@/components/product-card';
 import { getPopularProducts } from '@/server/service/product';
+import { getShippingRate } from '@/server/repository/stripe';
 
 export default async function CartPage() {
   const user = auth();
   const userId = user.userId;
   const items = userId ? await getCartItems({ userId }) : [];
   const products = await getPopularProducts();
+  const shipping = await getShippingRate();
   return (
     <main className='mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
       <h1 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
@@ -25,6 +27,7 @@ export default async function CartPage() {
         changeQuantity={changeCartItemQuantity}
         removeItem={removeCartItem}
         checkout={checkout}
+        shippingAmount={(shipping?.fixed_amount?.amount ?? 0) / 100}
       />
 
       {/* Related products */}
