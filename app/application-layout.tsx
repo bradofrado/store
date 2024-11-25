@@ -55,157 +55,17 @@ interface Navigation {
     href: string;
   }[];
 }
-const navigation: Navigation = {
-  categories: [
-    {
-      id: 'women',
-      name: 'Women',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc:
-            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt:
-            'Models sitting back to back, wearing Basic Tee in black and bone.',
-        },
-        {
-          name: 'Basic Tees',
-          href: '#',
-          imageSrc:
-            'https://tailwindui.com/plus/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt:
-            'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Significant Other', href: '#' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'men',
-      name: 'Men',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc:
-            'https://tailwindui.com/plus/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt:
-            'Drawstring top with elastic loop closure and textured interior padding.',
-        },
-        {
-          name: 'Artwork Tees',
-          href: '#',
-          imageSrc:
-            'https://tailwindui.com/plus/img/ecommerce-images/category-page-02-image-card-06.jpg',
-          imageAlt:
-            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '/products' },
-            { name: 'Pants', href: '/products' },
-            { name: 'Sweaters', href: '/products' },
-            { name: 'T-Shirts', href: '/products' },
-            { name: 'Jackets', href: '/products' },
-            { name: 'Activewear', href: '/products' },
-            { name: 'Browse All', href: '/products' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '/products' },
-            { name: 'Wallets', href: '/products' },
-            { name: 'Bags', href: '/products' },
-            { name: 'Sunglasses', href: '/products' },
-            { name: 'Hats', href: '/products' },
-            { name: 'Belts', href: '/products' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Re-Arranged', href: '/products' },
-            { name: 'Counterfeit', href: '/products' },
-            { name: 'Full Nelson', href: '/products' },
-            { name: 'My Way', href: '/products' },
-          ],
-        },
-      ],
-    },
-  ],
-  pages: [
-    { name: 'Build Your Own', href: '/products/build-your-own-band' },
-    { name: 'Orders', href: '/orders' },
-  ],
-};
-const footerNavigation = {
-  shop: [
-    { name: 'Bags', href: '/products' },
-    { name: 'Tees', href: '/products' },
-    { name: 'Objects', href: '/products' },
-    { name: 'Home Goods', href: '/products' },
-    { name: 'Accessories', href: '/products' },
-  ],
-  company: [
-    { name: 'Terms & Conditions', href: '/terms' },
-    { name: 'Privacy', href: '/privacy' },
-  ],
-  account: [
-    { name: 'Manage Account', href: '/account' },
-    { name: 'Orders', href: '/orders' },
-  ],
-  connect: [
-    { name: 'Contact Us', href: '/products' },
-    { name: 'Facebook', href: '/products' },
-    { name: 'Instagram', href: '/products' },
-    { name: 'Pinterest', href: '/products' },
-  ],
+
+interface FooterNavigation {
+  shop: { name: string; href: string }[];
+  company: { name: string; href: string }[];
+  account: { name: string; href: string }[];
+  connect: { name: string; href: string }[];
+}
+
+const socialUrls = {
+  tiktok: 'https://www.tiktok.com/@venus_rings_llc',
+  instagram: 'https://www.instagram.com/venusrings.llc',
 };
 
 export const ApplicationLayout: React.FunctionComponent<{
@@ -223,6 +83,25 @@ export const ApplicationLayout: React.FunctionComponent<{
         href: getCollectionUrl(collection.slug),
       })),
       { name: 'Build Your Own', href: '/products/build-your-own-band' },
+    ],
+  };
+  const footerNavigation: FooterNavigation = {
+    shop: collections.map((collection) => ({
+      name: collection.name.replace('Collection', ''),
+      href: getCollectionUrl(collection.slug),
+    })),
+    company: [
+      { name: 'Terms & Conditions', href: '/terms' },
+      { name: 'Privacy', href: '/privacy' },
+    ],
+    account: [
+      //{ name: 'Manage Account', href: '/account' },
+      { name: 'Orders', href: '/orders' },
+    ],
+    connect: [
+      { name: 'Contact Us', href: 'mailto:venus@venusrings.store' },
+      { name: 'Instagram', href: socialUrls.instagram },
+      { name: 'TikTok', href: socialUrls.tiktok },
     ],
   };
 
@@ -690,32 +569,73 @@ function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
   );
 }
 
+function SocialIconInstagram(props: React.ComponentPropsWithoutRef<'svg'>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+      viewBox='0 0 24 24'
+      fill='none'
+    >
+      <g clip-path='url(#clip0_296_650)'>
+        <path
+          d='M12.188 2.98378C15.2023 2.98378 15.5603 2.9932 16.7566 3.04972C19.818 3.19101 21.2498 4.64166 21.3911 7.68427C21.4477 8.88058 21.4571 9.23853 21.4571 12.2529C21.4571 15.2672 21.4477 15.6252 21.3911 16.8215C21.2498 19.8641 19.8275 21.3147 16.7566 21.456C15.5603 21.5126 15.2117 21.522 12.188 21.522C9.16423 21.522 8.8157 21.5126 7.61938 21.456C4.54852 21.3147 3.12613 19.8547 2.98483 16.8215C2.92832 15.6252 2.9189 15.2766 2.9189 12.2529C2.9189 9.22912 2.92832 8.88058 2.98483 7.68427C3.12613 4.64166 4.54852 3.19101 7.61938 3.04972C8.8157 2.9932 9.16423 2.98378 12.188 2.98378ZM12.188 0.949097C9.11713 0.949097 8.73092 0.958516 7.52518 1.01504C3.42757 1.20343 1.13855 3.48303 0.950155 7.59007C0.893636 8.7958 0.884216 9.18202 0.884216 12.2529C0.884216 15.3237 0.893636 15.7099 0.950155 16.9157C1.13855 21.0227 3.41815 23.3023 7.52518 23.4907C8.73092 23.5472 9.11713 23.5567 12.188 23.5567C15.2588 23.5567 15.6451 23.5472 16.8508 23.4907C20.9484 23.3023 23.2374 21.0227 23.4258 16.9157C23.4823 15.7099 23.4918 15.3237 23.4918 12.2529C23.4918 9.18202 23.4823 8.7958 23.4258 7.59007C23.2374 3.49245 20.9578 1.20343 16.8508 1.01504C15.6451 0.958516 15.2588 0.949097 12.188 0.949097ZM12.188 6.45027C8.98525 6.45027 6.38539 9.05014 6.38539 12.2529C6.38539 15.4556 8.98525 18.0555 12.188 18.0555C15.3907 18.0555 17.9906 15.4556 17.9906 12.2529C17.9906 9.05014 15.3907 6.45027 12.188 6.45027ZM12.188 16.0208C10.1062 16.0208 8.42006 14.3347 8.42006 12.2529C8.42006 10.1711 10.1062 8.48495 12.188 8.48495C14.2698 8.48495 15.9559 10.1711 15.9559 12.2529C15.9559 14.3347 14.2698 16.0208 12.188 16.0208ZM18.2261 4.85832C17.4725 4.85832 16.8696 5.46119 16.8696 6.21477C16.8696 6.96836 17.4819 7.57123 18.2261 7.57123C18.9703 7.57123 19.5825 6.96836 19.5825 6.21477C19.5825 5.46119 18.9797 4.85832 18.2261 4.85832Z'
+          fill='black'
+        ></path>
+      </g>
+      <defs>
+        <clipPath id='clip0_296_650'>
+          <rect
+            width='22.6075'
+            height='22.6076'
+            fill='white'
+            transform='translate(0.884216 0.949097)'
+          ></rect>
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+function SocialIconTikTok(props: React.ComponentPropsWithoutRef<'svg'>) {
+  return (
+    <svg
+      fill='#000000'
+      viewBox='0 0 512 512'
+      {...props}
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
+      <g
+        id='SVGRepo_tracerCarrier'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      ></g>
+      <g id='SVGRepo_iconCarrier'>
+        <path d='M412.19,118.66a109.27,109.27,0,0,1-9.45-5.5,132.87,132.87,0,0,1-24.27-20.62c-18.1-20.71-24.86-41.72-27.35-56.43h.1C349.14,23.9,350,16,350.13,16H267.69V334.78c0,4.28,0,8.51-.18,12.69,0,.52-.05,1-.08,1.56,0,.23,0,.47-.05.71,0,.06,0,.12,0,.18a70,70,0,0,1-35.22,55.56,68.8,68.8,0,0,1-34.11,9c-38.41,0-69.54-31.32-69.54-70s31.13-70,69.54-70a68.9,68.9,0,0,1,21.41,3.39l.1-83.94a153.14,153.14,0,0,0-118,34.52,161.79,161.79,0,0,0-35.3,43.53c-3.48,6-16.61,30.11-18.2,69.24-1,22.21,5.67,45.22,8.85,54.73v.2c2,5.6,9.75,24.71,22.38,40.82A167.53,167.53,0,0,0,115,470.66v-.2l.2.2C155.11,497.78,199.36,496,199.36,496c7.66-.31,33.32,0,62.46-13.81,32.32-15.31,50.72-38.12,50.72-38.12a158.46,158.46,0,0,0,27.64-45.93c7.46-19.61,9.95-43.13,9.95-52.53V176.49c1,.6,14.32,9.41,14.32,9.41s19.19,12.3,49.13,20.31c21.48,5.7,50.42,6.9,50.42,6.9V131.27C453.86,132.37,433.27,129.17,412.19,118.66Z'></path>
+      </g>
+    </svg>
+  );
+}
+
 function SocialLinks() {
   return (
     <>
       <Link
-        href='https://facebook.com'
-        target='_blank'
-        aria-label='Visit us on Facebook'
-        className='text-primary data-[hover]:text-primary/75'
-      >
-        <SocialIconFacebook className='size-4' />
-      </Link>
-      <Link
-        href='https://x.com'
-        target='_blank'
-        aria-label='Visit us on X'
-        className='text-primary data-[hover]:text-primary/75'
-      >
-        <SocialIconX className='size-4' />
-      </Link>
-      <Link
-        href='https://linkedin.com'
+        href={socialUrls.instagram}
         target='_blank'
         aria-label='Visit us on LinkedIn'
         className='text-primary data-[hover]:text-primary/75'
       >
-        <SocialIconLinkedIn className='size-4' />
+        <SocialIconInstagram className='size-4' />
+      </Link>
+      <Link
+        href={socialUrls.tiktok}
+        target='_blank'
+        aria-label='Visit us on LinkedIn'
+        className='text-primary data-[hover]:text-primary/75'
+      >
+        <SocialIconTikTok className='size-4' />
       </Link>
     </>
   );

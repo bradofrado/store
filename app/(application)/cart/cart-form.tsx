@@ -196,10 +196,10 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
     [items]
   );
   const shippingEstimate = useMemo(() => 5, []);
-  const taxEstimate = useMemo(() => subtotal * 0.085, [subtotal]);
+  //const taxEstimate = useMemo(() => subtotal * 0.085, [subtotal]);
   const total = useMemo(
-    () => subtotal + shippingEstimate + taxEstimate,
-    [subtotal, shippingEstimate, taxEstimate]
+    () => subtotal + shippingEstimate,
+    [subtotal, shippingEstimate]
   );
 
   return (
@@ -221,35 +221,9 @@ const OrderSummary: React.FunctionComponent<OrderSummaryProps> = ({
         <div className='flex items-center justify-between border-t border-gray-200 pt-4'>
           <dt className='flex items-center text-sm text-gray-600'>
             <span>Shipping estimate</span>
-            <a
-              href='#'
-              className='ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500'
-            >
-              <span className='sr-only'>
-                Learn more about how shipping is calculated
-              </span>
-              <QuestionMarkCircleIcon aria-hidden='true' className='h-5 w-5' />
-            </a>
           </dt>
           <dd className='text-sm font-medium text-gray-900'>
             {formatDollarAmount(shippingEstimate)}
-          </dd>
-        </div>
-        <div className='flex items-center justify-between border-t border-gray-200 pt-4'>
-          <dt className='flex text-sm text-gray-600'>
-            <span>Tax estimate</span>
-            <a
-              href='#'
-              className='ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500'
-            >
-              <span className='sr-only'>
-                Learn more about how tax is calculated
-              </span>
-              <QuestionMarkCircleIcon aria-hidden='true' className='h-5 w-5' />
-            </a>
-          </dt>
-          <dd className='text-sm font-medium text-gray-900'>
-            {formatDollarAmount(taxEstimate)}
           </dd>
         </div>
         <div className='flex items-center justify-between border-t border-gray-200 pt-4'>

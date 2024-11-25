@@ -15,7 +15,7 @@ export const createCheckoutLink = async ({ userId }: { userId: string }) => {
   }
 
   const checkoutSession = await createCheckoutSession({
-    fromUrl: 'http://localhost:3000/cart',
+    fromUrl: process.env.DEPLOYED_URL ?? '',
     products: cartItems.map(({ product }) => ({
       stripeProductId: product.priceId ?? '',
       quantity: 1,
