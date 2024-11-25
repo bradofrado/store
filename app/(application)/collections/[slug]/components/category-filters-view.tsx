@@ -1,32 +1,11 @@
-'use client';
-
-import { useState } from 'react';
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
-} from '@heroicons/react/20/solid';
-import { productVariants } from '@/types/product';
-import { capitalizeFirstLetter, getClass } from '@/utils/common';
-import { useQueryState } from '@/hooks/query-state';
-import { Collection, CollectionName } from '@/types/collection';
-import { getCollectionUrl, getProductUrl } from '@/app/utils';
+import React, { Suspense } from 'react';
+import { getClass } from '@/utils/common';
 import { cooper } from '@/app/fonts/fonts';
+import { ProductVariantFilter } from './product-variant-filter';
+import { CollectionList } from './collection-list';
+import { MobileFilterDialog } from './mobile-filter-dialog';
+import { getCollectionBySlug } from '@/server/service/collection';
+import { Skeleton } from '@/components/skeleton';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -36,156 +15,22 @@ const sortOptions = [
   { name: 'Price: High to Low', href: '#', current: false },
 ];
 
-function classNames(...classes: (string | undefined | null)[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
 export const CategoryFiltersView: React.FunctionComponent<{
   children: React.ReactNode;
-  name: string;
-  collections: CollectionName[];
-}> = ({ children, name, collections }) => {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [checkedFilters, setCheckedFilters] = useQueryState<
-    Record<string, string[]>
-  >({
-    key: 'filter',
-    defaultValue: {
-      size: [],
-      metal: [],
-      style: [],
-      finish: [],
-      width: [],
-      addon: [],
-    },
-  });
-
-  const onFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const section = event.target.name;
-    const checked = event.target.checked;
-    const copy = { ...checkedFilters };
-    if (checked) {
-      copy[section].push(event.target.value);
-    } else {
-      copy[section] = copy[section].filter(
-        (value) => value !== event.target.value
-      );
-    }
-
-    setCheckedFilters(copy);
-  };
-
+  slug: string;
+}> = ({ children, slug }) => {
   return (
     <div className='bg-white'>
       <div>
         {/* Mobile filter dialog */}
-        <Dialog
-          open={mobileFiltersOpen}
-          onClose={setMobileFiltersOpen}
-          className='relative z-40 lg:hidden'
-        >
-          <DialogBackdrop
-            transition
-            className='fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0'
-          />
+        <MobileFilterDialog>
+          <CollectionList />
 
-          <div className='fixed inset-0 z-40 flex'>
-            <DialogPanel
-              transition
-              className='relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full'
-            >
-              <div className='flex items-center justify-between px-4'>
-                <h2 className='text-lg font-medium text-gray-900'>Filters</h2>
-                <button
-                  type='button'
-                  onClick={() => setMobileFiltersOpen(false)}
-                  className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400'
-                >
-                  <span className='sr-only'>Close menu</span>
-                  <XMarkIcon aria-hidden='true' className='h-6 w-6' />
-                </button>
-              </div>
-
-              {/* Filters */}
-              <form className='mt-4 border-t border-gray-200'>
-                <h3 className='sr-only'>Categories</h3>
-                <ul role='list' className='px-2 py-3 font-medium text-gray-900'>
-                  {collections.map((collection) => (
-                    <li key={collection.name}>
-                      <a
-                        href={getCollectionUrl(collection.slug)}
-                        className='block px-2 py-3'
-                      >
-                        {collection.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                {productVariants.map(({ name: section, values }) => (
-                  <Disclosure
-                    key={section}
-                    as='div'
-                    className='border-t border-gray-200 px-4 py-6'
-                  >
-                    <h3 className='-mx-2 -my-3 flow-root'>
-                      <DisclosureButton className='group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500'>
-                        <span className='font-medium text-gray-900'>
-                          {capitalizeFirstLetter(section)}
-                        </span>
-                        <span className='ml-6 flex items-center'>
-                          <PlusIcon
-                            aria-hidden='true'
-                            className='h-5 w-5 group-data-[open]:hidden'
-                          />
-                          <MinusIcon
-                            aria-hidden='true'
-                            className='h-5 w-5 [.group:not([data-open])_&]:hidden'
-                          />
-                        </span>
-                      </DisclosureButton>
-                    </h3>
-                    <DisclosurePanel className='pt-6'>
-                      <div className='space-y-6'>
-                        {values.map((option, optionIdx) => (
-                          <div key={option} className='flex items-center'>
-                            <input
-                              value={option}
-                              checked={checkedFilters[section].includes(option)}
-                              id={`filter-mobile-${section}-${optionIdx}`}
-                              name={section}
-                              type='checkbox'
-                              className='h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary-lighter'
-                              onChange={onFilterChange}
-                            />
-                            <label
-                              htmlFor={`filter-mobile-${section}-${optionIdx}`}
-                              className='ml-3 min-w-0 flex-1 text-gray-500'
-                            >
-                              {option}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </DisclosurePanel>
-                  </Disclosure>
-                ))}
-              </form>
-            </DialogPanel>
-          </div>
-        </Dialog>
+          <ProductVariantFilter />
+        </MobileFilterDialog>
 
         <main className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-          <div className='flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24'>
-            <h1
-              className={getClass(
-                `text-4xl tracking-tight lg:text-6xl font-light`,
-                cooper.className
-              )}
-            >
-              {name}
-            </h1>
-          </div>
+          <CollectionName slug={slug} />
 
           <section aria-labelledby='products-heading' className='pb-24 pt-6'>
             <h2 id='products-heading' className='sr-only'>
@@ -195,68 +40,8 @@ export const CategoryFiltersView: React.FunctionComponent<{
             <div className='grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4'>
               {/* Filters */}
               <form className='hidden lg:block'>
-                <h3 className='sr-only'>Categories</h3>
-                <ul
-                  role='list'
-                  className='space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900'
-                >
-                  {collections.map((collection) => (
-                    <li key={collection.name}>
-                      <a href={getCollectionUrl(collection.slug)}>
-                        {collection.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                {productVariants.map(({ name: section, values: options }) => (
-                  <Disclosure
-                    key={section}
-                    as='div'
-                    className='border-b border-gray-200 py-6'
-                  >
-                    <h3 className='-my-3 flow-root'>
-                      <DisclosureButton className='group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500'>
-                        <span className='font-medium text-gray-900'>
-                          {capitalizeFirstLetter(section)}
-                        </span>
-                        <span className='ml-6 flex items-center'>
-                          <PlusIcon
-                            aria-hidden='true'
-                            className='h-5 w-5 group-data-[open]:hidden'
-                          />
-                          <MinusIcon
-                            aria-hidden='true'
-                            className='h-5 w-5 [.group:not([data-open])_&]:hidden'
-                          />
-                        </span>
-                      </DisclosureButton>
-                    </h3>
-                    <DisclosurePanel className='pt-6'>
-                      <div className='space-y-4'>
-                        {options.map((option, optionIdx) => (
-                          <div key={option} className='flex items-center'>
-                            <input
-                              value={option}
-                              checked={checkedFilters[section].includes(option)}
-                              id={`filter-mobile-${section}-${optionIdx}`}
-                              name={section}
-                              type='checkbox'
-                              className='h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary-lighter'
-                              onChange={onFilterChange}
-                            />
-                            <label
-                              htmlFor={`filter-${section}-${optionIdx}`}
-                              className='ml-3 text-sm text-gray-600'
-                            >
-                              {option}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </DisclosurePanel>
-                  </Disclosure>
-                ))}
+                <CollectionList />
+                <ProductVariantFilter />
               </form>
 
               {/* Product grid */}
@@ -265,6 +50,24 @@ export const CategoryFiltersView: React.FunctionComponent<{
           </section>
         </main>
       </div>
+    </div>
+  );
+};
+
+const CollectionName: React.FunctionComponent<{ slug: string }> = async ({
+  slug,
+}) => {
+  const collection = await getCollectionBySlug(slug);
+  return (
+    <div className='flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24'>
+      <h1
+        className={getClass(
+          `text-4xl tracking-tight lg:text-6xl font-light`,
+          cooper.className
+        )}
+      >
+        {collection?.name ?? 'Shop All Rings'}
+      </h1>
     </div>
   );
 };
