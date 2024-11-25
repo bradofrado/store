@@ -88,7 +88,9 @@ export default function MainPage({
             </a>
           </div>
           <div className='mt-4 flow-root'>
-            <CollectionList selectedCollection={collection} />
+            <Suspense>
+              <CollectionList selectedCollection={collection} />
+            </Suspense>
             <Suspense
               key={collection}
               fallback={

@@ -83,5 +83,7 @@ export const getPopularCollections = unstable_cache(
     const collections = await getCollectionNames();
 
     return collections.slice(0, 5);
-  }
+  },
+  undefined,
+  { revalidate: 60 * 60 }
 );
