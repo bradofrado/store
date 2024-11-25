@@ -25,7 +25,7 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { AvatarDropdown } from '@/components/avatar-dropdown';
 import Link from 'next/link';
 import { getCollectionNames } from '@/server/service/collection';
-import { getCollectionUrl } from './utils';
+import { getBuildYourOwnUrl, getCollectionUrl } from './utils';
 import { CollectionName } from '@/types/collection';
 
 interface Navigation {
@@ -75,7 +75,7 @@ export const ApplicationLayout: React.FunctionComponent<{
         name: collection.name.replace('Collection', ''),
         href: getCollectionUrl(collection.slug),
       })),
-      { name: 'Build Your Own', href: '/products/build-your-own-band' },
+      { name: 'Build Your Own', href: getBuildYourOwnUrl() },
     ],
   };
   const footerNavigation: FooterNavigation = {

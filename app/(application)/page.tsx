@@ -7,6 +7,7 @@ import { ProductCard } from '@/components/product-card';
 import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
 import { CollectionList } from './collection-list';
+import { getBuildYourOwnUrl } from '../utils';
 
 export default async function MainPage() {
   const collectionNames = await getPopularCollections();
@@ -24,7 +25,7 @@ export default async function MainPage() {
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg"
+            src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg'
             className='h-full w-full object-cover object-center'
           />
         </div>
@@ -121,10 +122,10 @@ export default async function MainPage() {
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
-                      href='/'
+                      href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_abal_1-VIYbZmwfGKxZA1i1mn7QRgzUUlfOLg.jpg"
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_abal_1-VIYbZmwfGKxZA1i1mn7QRgzUUlfOLg.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -147,10 +148,10 @@ export default async function MainPage() {
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
-                      href='/'
+                      href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_distinctive_and_rare_nature_of_exotic_woods_a_3-CvMidGRfZbytJNFS8iqqPsRw4XozQa.jpg"
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_distinctive_and_rare_nature_of_exotic_woods_a_3-CvMidGRfZbytJNFS8iqqPsRw4XozQa.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -173,10 +174,10 @@ export default async function MainPage() {
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
-                      href='/'
+                      href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_emphasize_the_innovative_and_durable_nature_o_2-wVvsv3lDuuQ6brh5rTomvPlEzLFmF2.jpg"
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_emphasize_the_innovative_and_durable_nature_o_2-wVvsv3lDuuQ6brh5rTomvPlEzLFmF2.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -199,7 +200,7 @@ export default async function MainPage() {
                 </div>
                 <div className='flex flex-1 justify-center items-start'>
                   <a
-                    href='/collections'
+                    href={getBuildYourOwnUrl()}
                     className='mt-8 block w-full rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                   >
                     Create Custom Ring

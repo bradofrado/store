@@ -9,3 +9,5 @@ export const getProductUrl = (
 
 export const getCollectionUrl = (slug: string): string =>
   `/collections/${slug}`;
+
+export const getBuildYourOwnUrl = (): string => '/products/build-your-own-band';
