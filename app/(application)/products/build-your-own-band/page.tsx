@@ -2,8 +2,14 @@ import { Product, ProductVariant, productVariants } from '@/types/product';
 import { ProductItemView } from '../components/product-page';
 import { getPopularProducts } from '@/server/service/product';
 import { emailCustomForm } from '../../actions';
+import { Dialog, DialogContent } from '@/components/dialog';
+import { SuccessModal } from './success-modal';
 
-export default async function BuildYourOwnBandPage() {
+export default async function BuildYourOwnBandPage({
+  searchParams,
+}: {
+  searchParams: { success?: string };
+}) {
   const product: Product = {
     id: '',
     name: 'Build Your Own Band',
@@ -15,6 +21,8 @@ export default async function BuildYourOwnBandPage() {
     options: '',
     variants: {
       'text-group': [],
+      name: [],
+      email: [],
       'additional comments': [],
       size: [
         '5',
@@ -93,11 +101,15 @@ export default async function BuildYourOwnBandPage() {
       type: 'textarea',
     },
   ];
+
   return (
-    <ProductItemView
-      product={product}
-      productVariants={productVariantsWithComments}
-      addProductToCart={emailCustomForm}
-    />
+    <>
+      <ProductItemView
+        product={product}
+        productVariants={productVariantsWithComments}
+        addProductToCart={emailCustomForm}
+      />
+      <SuccessModal show={searchParams.success === 'true'} />
+    </>
   );
 }

@@ -24,6 +24,7 @@ import { VariantSelection } from '@/types/variant';
 import { getAuth } from '@/utils/auth';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { getBuildYourOwnUrl } from '../utils';
 
 export const addProductToCart = async (
   product: Product,
@@ -127,4 +128,6 @@ export const emailCustomForm = async (
     .join('<br />');
 
   await nodeMailer.sendMail({ to: 'venus@venusrings.store', subject, body });
+
+  redirect(`${getBuildYourOwnUrl()}?success=true`);
 };
