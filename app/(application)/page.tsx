@@ -2,28 +2,19 @@ import {
   getCollectionBySlug,
   getPopularCollections,
 } from '@/server/service/collection';
-import { getCollectionUrl } from '../utils';
 import { getPopularProducts } from '@/server/service/product';
 import { ProductCard } from '@/components/product-card';
 import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
-import Link from 'next/link';
-import { Suspense } from 'react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/carousel';
-import { SkeletonCard } from '@/components/skeleton';
+import { CollectionList } from './collection-list';
 
-export default function MainPage({
-  searchParams,
-}: {
-  searchParams?: { collection?: string };
-}) {
-  const collection = searchParams?.collection ?? 'wild-patterns';
+export default async function MainPage() {
+  const collectionNames = await getPopularCollections();
+  const collections = (
+    await Promise.all(
+      collectionNames.map((collection) => getCollectionBySlug(collection.slug))
+    )
+  ).filter((collection) => collection !== null);
 
   return (
     <>
@@ -88,22 +79,7 @@ export default function MainPage({
             </a>
           </div>
           <div className='mt-4 flow-root'>
-            <Suspense>
-              <CollectionList selectedCollection={collection} />
-            </Suspense>
-            <Suspense
-              key={collection}
-              fallback={
-                <div className='flex gap-2'>
-                  <SkeletonCard />
-                  <SkeletonCard />
-                  <SkeletonCard />
-                  <SkeletonCard />
-                </div>
-              }
-            >
-              <CollectionProductList collectionSlug={collection} />
-            </Suspense>
+            <CollectionList collections={collections} />
           </div>
 
           <div className='mt-6 px-4 sm:hidden'>
@@ -302,70 +278,6 @@ const PopularProductsList = async () => {
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-    </div>
-  );
-};
-
-const CollectionList = async ({
-  selectedCollection,
-}: {
-  selectedCollection: string;
-}) => {
-  const categories = await getPopularCollections();
-
-  return (
-    <div className=''>
-      <div className='relative box-content overflow-x-auto py-2 xl:overflow-visible'>
-        <div className='flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0'>
-          {categories.map((category, i) => (
-            <Link
-              key={category.name}
-              href={{ query: { collection: category.slug } }}
-              scroll={false}
-              className={getClass(
-                'inline-block rounded-full border border-transparent px-6 py-3 text-sm lg:text-base font-medium text-center',
-                selectedCollection === category.slug
-                  ? 'bg-primary hover:bg-primary-lighter text-white'
-                  : 'bg-secondary hover:bg-gray-100 text-gray-900'
-              )}
-            >
-              <span className='lg:hidden'>
-                {category.name.replace('Collection', '')}
-              </span>
-              <span className='hidden lg:inline'>{category.name}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CollectionProductList = async ({
-  collectionSlug,
-}: {
-  collectionSlug: string;
-}) => {
-  const collection = await getCollectionBySlug(collectionSlug);
-  return (
-    <div className='flex gap-2 mt-2'>
-      <Carousel opts={{ align: 'start' }} className='w-full'>
-        <CarouselContent>
-          {collection?.products.map((product, i) => (
-            <CarouselItem
-              key={product.id}
-              className='animate-fade-up opacity-0 lg:basis-1/4 basis-1/2'
-              style={
-                { '--animation-delay': `${i * 100}ms` } as React.CSSProperties
-              }
-            >
-              <ProductCard product={product} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
     </div>
   );
 };
