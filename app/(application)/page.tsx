@@ -8,7 +8,6 @@ import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
 import { CollectionList } from './collection-list';
 import { getBuildYourOwnUrl } from '../utils';
-
 export default async function MainPage() {
   const collectionNames = await getPopularCollections();
   const collections = (
@@ -16,7 +15,6 @@ export default async function MainPage() {
       collectionNames.map((collection) => getCollectionBySlug(collection.slug))
     )
   ).filter((collection) => collection !== null);
-
   return (
     <>
       {/* Hero section */}
@@ -129,32 +127,6 @@ export default async function MainPage() {
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0-jVpM4UiMdfBJoTSTX68PRztkJze5Jm.jpg'
-                        className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
-                      />
-                    </a>
-                    <div className='flex flex-1 flex-col space-y-2 py-4'>
-                      <h3
-                        className={getClass(
-                          `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
-                          cooper.className
-                        )}
-                      >
-                        Start with the Material
-                      </h3>
-                      <p className='text-sm lg:text-base text-white font-light'>
-                        Send us any material (or choose from the 100's we have).
-                        We'll work with you to create the perfect design.
-                        Receive within 4 weeks (or faster)
-                      </p>
-                    </div>
-                  </div>
-                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
-                    <a
-                      className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
-                      href={getBuildYourOwnUrl()}
-                    >
-                      <img
                         src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/DALL%C3%82%C2%B7E%202024-11-14%2010.51.22%20-%20A%20high-quality%20image%20of%20a%20workspace%20for%20handcrafting%20rings.%20The%20scene%20includes%20tools%20like%20pliers,%20a%20jeweler's%20torch,%20a%20hammer,%20and%20a%20magnifying%20glass%20-hU1rFNHOlHR4FZ4xZjMwrnERrVUw4U.webp"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
@@ -168,12 +140,42 @@ export default async function MainPage() {
                       >
                         Add your Custom Features
                       </h3>
-                      <p className='text-base text-white font-light'>
+                    </div>
+                    <div className='p-2'>
+                      <span className='text-white'>Label</span>
+                      <p className='text-white font-light text-sm'>
                         Add custom sizing, finishes, and add ons to make the
                         ring your own.
                       </p>
                     </div>
                   </div>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
+                    <a
+                      className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
+                      href={getBuildYourOwnUrl()}
+                    >
+                      <img
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0-jVpM4UiMdfBJoTSTX68PRztkJze5Jm.jpg'
+                        className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
+                      />
+                    </a>
+                    <div className='flex flex-1 flex-col space-y-2 py-4'>
+                      <h3
+                        className={getClass(
+                          `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
+                          cooper.className
+                        )}
+                      >
+                        Start with the Rizz
+                      </h3>
+                      <p className='text-sm lg:text-base text-white font-light'>
+                        Send us any material (or choose from the 100's we have).
+                        We'll work with you to create the perfect design.
+                        Receive within 4 weeks (or faster)
+                      </p>
+                    </div>
+                  </div>
+
                   <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
@@ -272,7 +274,6 @@ export default async function MainPage() {
     </>
   );
 }
-
 const PopularProductsList = async () => {
   const products = await getPopularProducts();
   return (
