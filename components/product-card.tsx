@@ -11,8 +11,8 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
   onClick,
 }) => {
   return (
-    <div className='group relative flex flex-col overflow-hidden bg-white'>
-      <div className='aspect-h-3 aspect-w-3 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'>
+    <div className="group relative flex flex-col overflow-hidden bg-white h-full">
+      <div className="aspect-h-3 aspect-w-3 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden h-full">
         <img
           alt={product.imageAlt}
           src={product.imageSrc}
