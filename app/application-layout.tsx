@@ -138,7 +138,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                   ))}
                 </TabList>
               </div>
-              <TabPanels as={Fragment}>
+              <TabPanels as='div'>
                 {navigation.categories.map((category) => (
                   <TabPanel
                     key={category.name}
@@ -251,7 +251,9 @@ export const ApplicationLayout: React.FunctionComponent<{
       </Dialog>
 
       <header className='relative bg-white z-10'>
-        <p className='flex h-10 items-center justify-center bg-primary px-4 text-sm font-medium text-white sm:px-6 lg:px-8'>Get free shipping on orders over $350 and 20% off your second ring</p>
+        <p className='flex h-10 items-center justify-center bg-primary px-4 text-sm font-medium text-white sm:px-6 lg:px-8'>
+          Get free shipping on orders over $350 and 20% off your second ring
+        </p>
 
         <nav
           aria-label='Top'

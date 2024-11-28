@@ -3,7 +3,7 @@ import { Product } from '@/types/product';
 import { formatDollarAmount } from '@/utils/common';
 
 export interface ProductCardProps {
-  product: Product;
+  product: Product & { href?: string };
   onClick?: () => void;
 }
 export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
@@ -11,8 +11,8 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
   onClick,
 }) => {
   return (
-    <div className="group relative flex flex-col overflow-hidden bg-white h-full">
-      <div className="aspect-h-3 aspect-w-3 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden h-full">
+    <div className='group relative flex flex-col overflow-hidden bg-white h-full'>
+      <div className='aspect-h-3 aspect-w-3 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden h-full'>
         <img
           alt={product.imageAlt}
           src={product.imageSrc}
@@ -27,7 +27,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
               {product.name}
             </button>
           ) : (
-            <a href={getProductUrl(product.id)}>
+            <a href={product.href ?? getProductUrl(product.id)}>
               <span aria-hidden='true' className='absolute inset-0' />
               {product.name}
             </a>
@@ -40,9 +40,11 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           {product.options ? (
             <p className='text-sm italic text-gray-500'>{product.options}</p>
           ) : null}
-          <p className='text-base font-normal text-gray-900'>
-            {formatDollarAmount(product.price ?? 0)}
-          </p>
+          {product.price ? (
+            <p className='text-base font-normal text-gray-900'>
+              {formatDollarAmount(product.price ?? 0)}
+            </p>
+          ) : null}
         </div>
       </div>
     </div>

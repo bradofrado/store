@@ -9,6 +9,7 @@ import {
   stripeToProduct,
 } from '../repository/stripe';
 import { prisma } from '@/prisma';
+import { getCollectionBySlug } from './collection';
 
 export const getProducts = async (): Promise<Product[]> => {
   const products = await getProductsRepo({ db: prisma });
@@ -17,8 +18,11 @@ export const getProducts = async (): Promise<Product[]> => {
 };
 
 export const getPopularProducts = async (): Promise<Product[]> => {
-  const products = await getProducts();
-  const popular = products.slice(0, 8);
+  const popularCollection = await getCollectionBySlug('best-sellers');
+  const popular = (popularCollection?.products ?? (await getProducts())).slice(
+    0,
+    8
+  );
 
   return popular;
 };

@@ -17,17 +17,18 @@ const sortOptions = [
 
 export const CategoryFiltersView: React.FunctionComponent<{
   children: React.ReactNode;
-  slug: string;
-}> = ({ children, slug }) => {
+  showCollectionList?: boolean;
+  slug?: string;
+}> = ({ children, slug, showCollectionList = true }) => {
   return (
     <div className='bg-white'>
       <div>
         {/* Mobile filter dialog */}
-        <MobileFilterDialog>
-          <CollectionList />
-
-          <ProductVariantFilter />
-        </MobileFilterDialog>
+        {showCollectionList ? (
+          <MobileFilterDialog>
+            <CollectionList />
+          </MobileFilterDialog>
+        ) : null}
 
         <main className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <CollectionName slug={slug} />
@@ -39,13 +40,20 @@ export const CategoryFiltersView: React.FunctionComponent<{
 
             <div className='grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4'>
               {/* Filters */}
-              <form className='hidden lg:block'>
-                <CollectionList />
-                <ProductVariantFilter />
-              </form>
+              {showCollectionList ? (
+                <form className='hidden lg:block'>
+                  <CollectionList />
+                </form>
+              ) : null}
 
               {/* Product grid */}
-              <div className='lg:col-span-3'>{children}</div>
+              <div
+                className={getClass(
+                  showCollectionList ? 'lg:col-span-3' : 'lg:col-span-4'
+                )}
+              >
+                {children}
+              </div>
             </div>
           </section>
         </main>
@@ -54,10 +62,10 @@ export const CategoryFiltersView: React.FunctionComponent<{
   );
 };
 
-const CollectionName: React.FunctionComponent<{ slug: string }> = async ({
+const CollectionName: React.FunctionComponent<{ slug?: string }> = async ({
   slug,
 }) => {
-  const collection = await getCollectionBySlug(slug);
+  const collection = slug ? await getCollectionBySlug(slug) : undefined;
   return (
     <div className='flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24'>
       <h1
@@ -66,7 +74,7 @@ const CollectionName: React.FunctionComponent<{ slug: string }> = async ({
           cooper.className
         )}
       >
-        {collection?.name ?? 'Shop All Rings'}
+        {collection?.name ?? 'Shop All Collections'}
       </h1>
     </div>
   );
