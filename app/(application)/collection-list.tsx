@@ -45,7 +45,7 @@ const CollectionNameList = ({
   return (
     <div className=''>
       <div className='relative box-content overflow-x-auto py-2 xl:overflow-visible'>
-        <div className='flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0'>
+        <div className='grid grid-cols-3 gap-4 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0'>
           {categories.map((category, i) => (
             <button
               key={category.name}

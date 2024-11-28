@@ -20,13 +20,13 @@ export default async function MainPage() {
   return (
     <>
       {/* Hero section */}
-      <div className="relative bg-gray-900 flex-col">
+      <div className='relative bg-gray-900 flex-col'>
         {/* Decorative image and overlay */}
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
             src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg'
-            className="h-full w-full object-cover object-center flex-nowrap"
+            className='h-full w-full object-cover object-center flex-nowrap'
           />
         </div>
         <div
@@ -40,9 +40,16 @@ export default async function MainPage() {
               `text-4xl tracking-tight text-white lg:text-6xl font-light`,
               cooper.className
             )}
-          >Handcrafted rings: Moments turned into memories.</h1>
+          >
+            Handcrafted rings: Moments turned into memories.
+          </h1>
           <ul className='mt-8 text-lg text-white list-disc pl-8 font-light space-y-2.5'>
-            <li>At Venus Rings, we believe that jewelry should be as meaning and unique as the person wearing it. Whether you have a clear idea or just a spark of inspiration, we'll work closely with you to bring your vision to life.</li>
+            <li>
+              At Venus Rings, we believe that jewelry should be as meaning and
+              unique as the person wearing it. Whether you have a clear idea or
+              just a spark of inspiration, we'll work closely with you to bring
+              your vision to life.
+            </li>
             <li>We use premium materials crafted to last.</li>
             <li>Find your style to fit your unique story.</li>
           </ul>
@@ -71,7 +78,7 @@ export default async function MainPage() {
             </h2>
             <a
               href='/collections'
-              className='hidden text-sm font-semibold text-primary hover:text-primary-lighter sm:block'
+              className='block mt-4 sm:mt-0 text-sm font-semibold text-primary hover:text-primary-lighter'
             >
               Browse all collections
               <span aria-hidden='true'> &rarr;</span>
@@ -105,16 +112,24 @@ export default async function MainPage() {
                     `text-4xl tracking-tight lg:text-6xl font-light text-white`,
                     cooper.className
                   )}
-                >Have an idea? Start here! Let's create something truly special just for you.</h2>
-                <p className='mt-3 text-lg font-light text-white'>We can create stunning, custom-designed pieces tailored to your budget, using materials of your choice. Have a sentimental item you'd like to incorporate? We'll transform it into a one-of-a-kind piece of jewelry that tells your story.</p>
-                <div className='flex mt-4 gap-8'>
-                  <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
+                >
+                  Have an idea? Start here! Let's create something truly special
+                  just for you.
+                </h2>
+                <p className='text-base mt-3 lg:text-lg font-light text-white'>
+                  We can create stunning, custom-designed pieces tailored to
+                  your budget, using materials of your choice. Have a
+                  sentimental item you'd like to incorporate? We'll transform it
+                  into a one-of-a-kind piece of jewelry that tells your story.
+                </p>
+                <div className='flex flex-wrap lg:flex-nowrap mt-4 gap-8'>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0-jVpM4UiMdfBJoTSTX68PRztkJze5Jm.jpg"
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0-jVpM4UiMdfBJoTSTX68PRztkJze5Jm.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -127,10 +142,14 @@ export default async function MainPage() {
                       >
                         Start with the Material
                       </h3>
-                      <p className='text-base text-white font-light'>Send us any material (or choose from the 100's we have). We'll work with you to create the perfect design. Receive within 4 weeks (or faster)</p>
+                      <p className='text-sm lg:text-base text-white font-light'>
+                        Send us any material (or choose from the 100's we have).
+                        We'll work with you to create the perfect design.
+                        Receive within 4 weeks (or faster)
+                      </p>
                     </div>
                   </div>
-                  <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
                       href={getBuildYourOwnUrl()}
@@ -149,16 +168,19 @@ export default async function MainPage() {
                       >
                         Add your Custom Features
                       </h3>
-                      <p className='text-base text-white font-light'>Add custom sizing, finishes, and add ons to make the ring your own.</p>
+                      <p className='text-base text-white font-light'>
+                        Add custom sizing, finishes, and add ons to make the
+                        ring your own.
+                      </p>
                     </div>
                   </div>
-                  <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
                     <a
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_2-wEK0il0WLX8vk2wAD8nCwWRG9i9aBP.jpg"
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_2-wEK0il0WLX8vk2wAD8nCwWRG9i9aBP.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -168,15 +190,21 @@ export default async function MainPage() {
                           `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
                           cooper.className
                         )}
-                      >Create an Anything Ring</h3>
-                      <p className='text-base text-white font-light'>Don't let your imagination limit your dream ring. We take pride in the quality of our bands and want to ensure that you are getting top-end care.</p>
+                      >
+                        Create an Anything Ring
+                      </h3>
+                      <p className='text-base text-white font-light'>
+                        Don't let your imagination limit your dream ring. We
+                        take pride in the quality of our bands and want to
+                        ensure that you are getting top-end care.
+                      </p>
                     </div>
                   </div>
                 </div>
-                <div className='flex flex-1 justify-center items-start'>
+                <div className='flex justify-center items-start'>
                   <a
                     href={getBuildYourOwnUrl()}
-                    className='mt-8 block w-full rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
+                    className='mt-8 block rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                   >
                     Create Custom Ring
                   </a>
@@ -199,7 +227,11 @@ export default async function MainPage() {
           >
             Our Best Selling Bands
           </h2>
-          <p className='mt-4 text-lg font-light text-gray-900'>Every design you see can be completely customized to your preferences. Or, order a custom ring and start completely from scratch.</p>
+          <p className='mt-4 text-lg font-light text-gray-900'>
+            Every design you see can be completely customized to your
+            preferences. Or, order a custom ring and start completely from
+            scratch.
+          </p>
           <PopularProductsList />
         </section>
 
@@ -219,7 +251,11 @@ export default async function MainPage() {
                 >
                   Reach Out to Us
                 </h2>
-                <p className='mt-3 text-lg font-light text-white'>We want to make sure you are receiving top-end care and quality in your rings. If you have any questions or concerns, do not hesitate to reach out to us, and we will respond soon.</p>
+                <p className='mt-3 text-lg font-light text-white'>
+                  We want to make sure you are receiving top-end care and
+                  quality in your rings. If you have any questions or concerns,
+                  do not hesitate to reach out to us, and we will respond soon.
+                </p>
                 <div className='flex mt-4'>
                   <a
                     href='mailto:venus@venusrings.store'
