@@ -8,7 +8,6 @@ import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
 import { CollectionList } from './collection-list';
 import { getBuildYourOwnUrl } from '../utils';
-
 export default async function MainPage() {
   const collectionNames = await getPopularCollections();
   const collections = (
@@ -16,7 +15,6 @@ export default async function MainPage() {
       collectionNames.map((collection) => getCollectionBySlug(collection.slug))
     )
   ).filter((collection) => collection !== null);
-
   return (
     <>
       {/* Hero section */}
@@ -268,11 +266,51 @@ export default async function MainPage() {
             </div>
           </div>
         </section>
+        <div className='mr-auto ml-auto block gap-y-0 gap-x-0 flex-wrap list-none min-h-full shrink-0 w-[calc(50%_-_4px)] max-w-full justify-start items-start flex-col relative pr-[70px] pl-[70px] pt-[60px] pb-[70px] h-full text-[#121212bf] bg-white self-start mt-5 border-l-0 border-r-0 border-t-0 border-b-0'>
+          <div className='block'>
+            <div className='block'>
+              <div className='animate-slide-in'>
+                <div className='flex'>
+                  <div className='grow'>
+                    <div className='block'>
+                      <img
+                        src='//sunbeamplay.co/cdn/shop/files/80183.jpg?v=1732080116&width=1500'
+                        className='absolute h-full max-w-full border-l-0 border-r-0 border-t-0 border-b-0'
+                      />
+                    </div>
+                  </div>
+                  <div className='grow'>
+                    <div className='flex'>
+                      <h2 className='text-[40px] text-left self-start leading-[1.3] border-l-0 border-r-0 border-t-0 border-b-0 text-[#121212]'>
+                        Design With love and Honor
+                      </h2>
+                      <div className='text-left'>
+                        <p className='block border-l-0 border-r-0 border-t-0 border-b-0'>
+                          We've felt how challenging it can be to keep young
+                          babies engaged in meaningful ways during quiet
+                          moments. That’s what inspired us to design products
+                          that help parents create faith-centered moments with
+                          their little ones, even in their wiggliest, most
+                          curious months.
+                        </p>
+                      </div>
+                      <a
+                        href='https://example.com'
+                        className='text-[15px] text-left flex justify-center items-center self-start opacity-50 relative tracking-[1px] leading-[1.2] mt-[30px] pr-[30px] pl-[30px] min-w-[122px] min-h-[47px] text-white bg-[#121212]'
+                      >
+                        Our Story
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
 }
-
 const PopularProductsList = async () => {
   const products = await getPopularProducts();
   return (
