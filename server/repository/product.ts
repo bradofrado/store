@@ -239,6 +239,11 @@ export const prismaToProduct = (
     images: prismaProduct.images.map(prismaToImage),
     options: '',
     details: prismaProduct.details,
-    variants: productVariantSchema.parse(prismaProduct.variants),
+    variants: productVariantSchema.parse(
+      Object.entries(prismaProduct.variants as object).reduce(
+        (prev, [key, value]) => ({ ...prev, [key.toLowerCase()]: value }),
+        {}
+      )
+    ),
   };
 };

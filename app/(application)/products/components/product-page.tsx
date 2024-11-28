@@ -61,7 +61,7 @@ interface ProductItemViewProps {
     product: Product,
     variants: VariantSelection
   ) => Promise<void>;
-  productVariants: ProductVariant[];
+  productVariants?: ProductVariant[];
 }
 export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   product,
@@ -107,6 +107,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
+      productVariants &&
       !productVariants.every((_variant) =>
         _variant.type === 'group'
           ? _variant.values.every(
@@ -188,7 +189,7 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
           {/* <ColorPicker value={selectedColor} onChange={setSelectedColor} /> */}
 
           <div className='divide-y'>
-            {productVariants.map(({ name, values, type }) =>
+            {productVariants?.map(({ name, values, type }) =>
               product.variants[name] ? (
                 type === 'group' ? (
                   <VariantPicker
@@ -231,6 +232,27 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
                 )
               ) : null
             )}
+            {productVariants === undefined
+              ? Object.entries(product.variants).map(([name, values]) => (
+                  <VariantPicker
+                    key={name}
+                    variants={[
+                      {
+                        name,
+                        variants: values.map((variant) => ({
+                          name: variant as string,
+                          inStock: product.variants[name].includes(
+                            variant as string
+                          ),
+                        })),
+                        type: 'button',
+                      },
+                    ]}
+                    values={[variant[name]]}
+                    onChange={(name, value) => onChange(name)(value)}
+                  />
+                ))
+              : null}
           </div>
 
           {error ? <p className='text-sm text-red-500'>{error}</p> : null}
@@ -254,49 +276,6 @@ export const ProductItemView: React.FunctionComponent<ProductItemViewProps> = ({
             />
           </div>
         ) : null}
-
-        <div className='mt-8 border-t border-gray-200 pt-8'>
-          <h2 className='text-sm font-medium text-gray-900'>
-            Fabric &amp; Care
-          </h2>
-
-          <div className='prose prose-sm mt-4 text-gray-500'>
-            <ul role='list'>
-              {product.details.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Policies */}
-        <section aria-labelledby='policies-heading' className='mt-10'>
-          <h2 id='policies-heading' className='sr-only'>
-            Our Policies
-          </h2>
-
-          <dl className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2'>
-            {policies.map((policy) => (
-              <div
-                key={policy.name}
-                className='rounded-lg border border-gray-200 bg-gray-50 p-6 text-center'
-              >
-                <dt>
-                  <policy.icon
-                    aria-hidden='true'
-                    className='mx-auto h-6 w-6 flex-shrink-0 text-gray-400'
-                  />
-                  <span className='mt-4 text-sm font-medium text-gray-900'>
-                    {policy.name}
-                  </span>
-                </dt>
-                <dd className='mt-1 text-sm text-gray-500'>
-                  {policy.description}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </section>
       </div>
     </div>
   );
@@ -340,23 +319,29 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
               <RadioGroup
                 value={values[i]}
                 onChange={(value) => onChange(name, value)}
-                className='grid grid-cols-3 gap-3 sm:grid-cols-6'
+                className={getClass(
+                  'grid grid-cols-3 gap-3',
+                  variants.length >= 6 ? 'sm:grid-cols-6' : '',
+                  variants.length <= 3 ? 'sm:grid-cols-3' : ''
+                )}
               >
-                {variants.map((variant) => (
-                  <Radio
-                    key={variant.name}
-                    value={variant.name}
-                    disabled={!variant.inStock}
-                    className={classNames(
-                      variant.inStock
-                        ? 'cursor-pointer focus:outline-none'
-                        : 'cursor-not-allowed opacity-25',
-                      'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-primary data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-primary-lighter data-[focus]:ring-offset-2 data-[checked]:hover:bg-primary-lighter sm:flex-1'
-                    )}
-                  >
-                    {variant.name}
-                  </Radio>
-                ))}
+                {variants.map((variant) =>
+                  variant.inStock ? (
+                    <Radio
+                      key={variant.name}
+                      value={variant.name}
+                      disabled={!variant.inStock}
+                      className={classNames(
+                        variant.inStock
+                          ? 'cursor-pointer focus:outline-none'
+                          : 'cursor-not-allowed opacity-25',
+                        'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-primary data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-primary-lighter data-[focus]:ring-offset-2 data-[checked]:hover:bg-primary-lighter sm:flex-1'
+                      )}
+                    >
+                      {variant.name}
+                    </Radio>
+                  ) : null
+                )}
               </RadioGroup>
             </fieldset>
           ) : type === 'select' ? (

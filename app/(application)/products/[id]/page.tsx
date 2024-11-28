@@ -18,10 +18,6 @@ export default async function ProductItemPage({
     variant: { size: '6.5', width: '8mm' },
   }));
   return (
-    <ProductItemView
-      addProductToCart={addProductToCart}
-      product={product}
-      productVariants={productVariants}
-    />
+    <ProductItemView addProductToCart={addProductToCart} product={product} />
   );
 }
