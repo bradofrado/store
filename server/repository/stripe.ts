@@ -238,9 +238,13 @@ export const createCoupon = async (
   return coupon;
 };
 
-export const getShippingRate =
-  async (): Promise<stripe.ShippingRate | null> => {
-    const rates = await stripeClient.shippingRates.list();
+export const getShippingRate = async (
+  productIds: string[]
+): Promise<stripe.ShippingRate | null> => {
+  const rates = await stripeClient.shippingRates.list();
+  if (productIds.length === 1 && productIds[0] === 'prod_RIazPZ1JclpMnl') {
+    return null;
+  }
 
-    return rates.data.length > 0 ? rates.data[0] : null;
-  };
+  return rates.data.length > 0 ? rates.data[0] : null;
+};

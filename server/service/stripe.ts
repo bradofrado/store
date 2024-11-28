@@ -50,7 +50,9 @@ const calculateDiscountsAndShipping = async (
     const hasBogo = expandProductQuantities.length > 1;
 
     if (!hasFreeShipping(cartItems)) {
-      const shippingRate = await getShippingRate();
+      const shippingRate = await getShippingRate(
+        cartItems.map(({ product }) => product.id)
+      );
       shippingId = shippingRate?.id ?? null;
     }
 

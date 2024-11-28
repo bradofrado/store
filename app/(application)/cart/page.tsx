@@ -11,7 +11,7 @@ export default async function CartPage() {
   const userId = await getAuth();
   const items = userId ? await getCartItems({ userId }) : [];
   const products = await getPopularProducts();
-  const shipping = await getShippingRate();
+  const shipping = await getShippingRate(products.map((product) => product.id));
   return (
     <main className='mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
       <h1 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>

@@ -16,6 +16,9 @@ export const getProducts = async ({
   db,
 }: GetProductsRequest): Promise<Product[]> => {
   const products = await db.product.findMany({
+    where: {
+      isDeleted: false,
+    },
     ...productPayload,
   });
 
@@ -33,6 +36,7 @@ export const getProduct = async ({
   const product = await db.product.findUnique({
     where: {
       id,
+      isDeleted: false,
     },
     ...productPayload,
   });
@@ -53,6 +57,7 @@ export const getProductByName = async ({
   const product = await db.product.findFirst({
     where: {
       name,
+      isDeleted: false,
     },
     ...productPayload,
   });
