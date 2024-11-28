@@ -311,6 +311,7 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
           <div className='flex items-center justify-between'>
             <h2 className='text-sm font-medium text-gray-900'>
               {name
+                .trim()
                 .split(' ')
                 .map((name) => capitalizeFirstLetter(name))
                 .join(' ')}
