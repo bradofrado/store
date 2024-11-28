@@ -296,6 +296,14 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
   onChange,
 }) => {
   const [tempState, setTempState] = useState(values);
+
+  const updateState = (i: number) => (value: string) => {
+    setTempState((prev) => {
+      const copy = [...prev];
+      copy[i] = value;
+      return copy;
+    });
+  };
   return (
     <div className='py-4 flex gap-4'>
       {variants.map(({ name, variants, type }, i) => (
@@ -317,8 +325,11 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
           {type === 'button' ? (
             <fieldset aria-label={`Choose a ${name}`} className='mt-2'>
               <RadioGroup
-                value={values[i]}
-                onChange={(value) => onChange(name, value)}
+                value={tempState[i]}
+                onChange={(value) => {
+                  tempState[i] = value;
+                  onChange(name, value);
+                }}
                 className={getClass(
                   'grid grid-cols-3 gap-3',
                   variants.length >= 6 ? 'sm:grid-cols-6' : '',
@@ -346,8 +357,11 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
             </fieldset>
           ) : type === 'select' ? (
             <Select
-              onValueChange={(value) => onChange(name, value)}
-              defaultValue={values[i]}
+              onValueChange={(value) => {
+                tempState[i] = value;
+                onChange(name, value);
+              }}
+              defaultValue={tempState[i]}
             >
               <SelectTrigger className='mt-2'>
                 <SelectValue
@@ -370,26 +384,14 @@ const VariantPicker: React.FunctionComponent<VariantPickerProps> = ({
             <Input
               className='mt-2'
               value={tempState[i]}
-              onChange={(value) =>
-                setTempState((prev) => {
-                  const copy = [...prev];
-                  copy[i] = value;
-                  return copy;
-                })
-              }
+              onChange={updateState(i)}
               onBlur={(value) => onChange(name, value)}
             />
           ) : (
             <Textarea
               className='mt-2'
               value={tempState[i]}
-              onChange={(value) =>
-                setTempState((prev) => {
-                  const copy = [...prev];
-                  copy[i] = value;
-                  return copy;
-                })
-              }
+              onChange={updateState(i)}
               onBlur={(value) => onChange(name, value)}
             />
           )}
