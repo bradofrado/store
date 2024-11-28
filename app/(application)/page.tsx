@@ -20,13 +20,13 @@ export default async function MainPage() {
   return (
     <>
       {/* Hero section */}
-      <div className='relative bg-gray-900'>
+      <div className="relative bg-gray-900 flex-col">
         {/* Decorative image and overlay */}
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
             src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg'
-            className='h-full w-full object-cover object-center'
+            className="h-full w-full object-cover object-center flex-nowrap"
           />
         </div>
         <div
@@ -40,11 +40,11 @@ export default async function MainPage() {
               `text-4xl tracking-tight text-white lg:text-6xl font-light`,
               cooper.className
             )}
-          >Craft your style. Elevate your look with custom wedding bands.</h1>
+          >Handcrafted rings: Moments turned into memories.</h1>
           <ul className='mt-8 text-lg text-white list-disc pl-8 font-light space-y-2.5'>
-            <li>Hundreds of designs tailored to reflect your unique taste and style</li>
-            <li>Crafted with durable, premium materials built to last</li>
-            <li>From casual to formal, find your perfect fit</li>
+            <li>At Venus Rings, we believe that jewelry should be as meaning and unique as the person wearing it. Whether you have a clear idea or just a spark of inspiration, we'll work closely with you to bring your vision to life.</li>
+            <li>We use premium materials crafted to last.</li>
+            <li>Find your style to fit your unique story.</li>
           </ul>
           <a
             href='/collections'
@@ -105,11 +105,8 @@ export default async function MainPage() {
                     `text-4xl tracking-tight lg:text-6xl font-light text-white`,
                     cooper.className
                   )}
-                >
-                  Start with a blank canvas or existing design. Order, then
-                  customize with a professional ring designer
-                </h2>
-                <p className='mt-3 text-lg font-light text-white'>We take pride in the care that we put into each band. Whether you are picking a design to remind you of an important place or a memorable event, we want this to be a ring you cherish forever.</p>
+                >Have an idea? Start here! Let's create something truly special just for you.</h2>
+                <p className='mt-3 text-lg font-light text-white'>We can create stunning, custom-designed pieces tailored to your budget, using materials of your choice. Have a sentimental item you'd like to incorporate? We'll transform it into a one-of-a-kind piece of jewelry that tells your story.</p>
                 <div className='flex mt-4 gap-8'>
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
                     <a
@@ -117,7 +114,7 @@ export default async function MainPage() {
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_abal_1-VIYbZmwfGKxZA1i1mn7QRgzUUlfOLg.jpg'
+                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0-jVpM4UiMdfBJoTSTX68PRztkJze5Jm.jpg"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -139,7 +136,7 @@ export default async function MainPage() {
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_distinctive_and_rare_nature_of_exotic_woods_a_3-CvMidGRfZbytJNFS8iqqPsRw4XozQa.jpg'
+                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/DALL%C3%82%C2%B7E%202024-11-14%2010.51.22%20-%20A%20high-quality%20image%20of%20a%20workspace%20for%20handcrafting%20rings.%20The%20scene%20includes%20tools%20like%20pliers,%20a%20jeweler's%20torch,%20a%20hammer,%20and%20a%20magnifying%20glass%20-hU1rFNHOlHR4FZ4xZjMwrnERrVUw4U.webp"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -152,7 +149,7 @@ export default async function MainPage() {
                       >
                         Add your Custom Features
                       </h3>
-                      <p className='text-base text-white font-light'>Add custom sizing, polish, and add ons to make the ring your own.</p>
+                      <p className='text-base text-white font-light'>Add custom sizing, finishes, and add ons to make the ring your own.</p>
                     </div>
                   </div>
                   <div className='group relative flex flex-col overflow-hidden items-center basis-1/3'>
@@ -161,7 +158,7 @@ export default async function MainPage() {
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_emphasize_the_innovative_and_durable_nature_o_2-wVvsv3lDuuQ6brh5rTomvPlEzLFmF2.jpg'
+                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_2-wEK0il0WLX8vk2wAD8nCwWRG9i9aBP.jpg"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
