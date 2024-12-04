@@ -8,7 +8,6 @@ import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
 import { CollectionList } from './collection-list';
 import { getBuildYourOwnUrl } from '../utils';
-
 export default async function MainPage() {
   const collectionNames = await getPopularCollections();
   const collections = (
@@ -16,7 +15,6 @@ export default async function MainPage() {
       collectionNames.map((collection) => getCollectionBySlug(collection.slug))
     )
   ).filter((collection) => collection !== null);
-
   return (
     <>
       {/* Hero section */}
@@ -45,11 +43,9 @@ export default async function MainPage() {
           </h1>
           <ul className='mt-8 text-lg text-white list-disc pl-8 font-light space-y-2.5'>
             <li>
-              At Venus Rings, we believe that jewelry should be as meaning and
-              unique as the person wearing it. Whether you have a clear idea or
-              just a spark of inspiration, we'll work closely with you to bring
-              your vision to life.
+              Here is some text that is going on here. I am trying to make it 
             </li>
+            <li>We want you to be happy with these things.</li>
             <li>We use premium materials crafted to last.</li>
             <li>Find your style to fit your unique story.</li>
           </ul>
@@ -84,6 +80,12 @@ export default async function MainPage() {
               <span aria-hidden='true'> &rarr;</span>
             </a>
           </div>
+          <p className='text-base mt-3 lg:text-lg font-light text-black'>
+            We can create stunning, custom-designed pieces tailored to your
+            budget, using materials of your choice. Have a sentimental item
+            you'd like to incorporate? We'll transform it into a one-of-a-kind
+            piece of jewelry that tells your story.
+          </p>
           <div className='mt-4 flow-root'>
             <CollectionList collections={collections} />
           </div>
@@ -249,19 +251,95 @@ export default async function MainPage() {
                     cooper.className
                   )}
                 >
-                  Reach Out to Us
+                  Here is what you should do
                 </h2>
                 <p className='mt-3 text-lg font-light text-white'>
-                  We want to make sure you are receiving top-end care and
-                  quality in your rings. If you have any questions or concerns,
-                  do not hesitate to reach out to us, and we will respond soon.
+                  We want to make sure you are doing everything in your power to
+                  win the fight. So win the fight.
                 </p>
-                <div className='flex mt-4'>
+                <div className='flex flex-wrap lg:flex-nowrap mt-4 gap-8'>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
+                    <a
+                      className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
+                      href={getBuildYourOwnUrl()}
+                    >
+                      <img
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_abal_1-VIYbZmwfGKxZA1i1mn7QRgzUUlfOLg.jpg'
+                        className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
+                      />
+                    </a>
+                    <div className='flex flex-1 flex-col space-y-2 py-4'>
+                      <h3
+                        className={getClass(
+                          `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
+                          cooper.className
+                        )}
+                      >
+                        Then do the things
+                      </h3>
+                    </div>
+                  </div>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
+                    <a
+                      className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
+                      href={getBuildYourOwnUrl()}
+                    >
+                      <img
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Vision_XL_mossy_oak_obsession_camouflage_pattern_1-sxQNUao1W6uDck38z5UJxePUSAeedF.jpg'
+                        className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
+                      />
+                    </a>
+                    <div className='flex flex-1 flex-col space-y-2 py-4'>
+                      <h3
+                        className={getClass(
+                          `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
+                          cooper.className
+                        )}
+                      >
+                        More things
+                      </h3>
+                    </div>
+                  </div>
+                  <div className='group relative flex flex-col overflow-hidden items-center basis-full lg:basis-1/3'>
+                    <a
+                      className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
+                      href={getBuildYourOwnUrl()}
+                    >
+                      <img
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/marketing-content-TKN6Si7pxGd4N82jCdTP4PB6yl41xm.jpeg'
+                        className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
+                      />
+                    </a>
+                    <div className='flex flex-1 flex-col space-y-2 py-4'>
+                      <h3
+                        className={getClass(
+                          `text-2xl tracking-tight lg:text-3xl leading-tight font-light text-white`,
+                          cooper.className
+                        )}
+                      >
+                        Start with the thing
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                <div className='flex mt-4 gap-2'>
                   <a
                     href='mailto:venus@venusrings.store'
                     className='mt-8 block w-full rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
                   >
                     Contact Us
+                  </a>
+                  <a
+                    href='mailto:venus@venusrings.store'
+                    className='mt-8 block w-full rounded-full border border-transparent px-8 py-3 text-base font-medium hover:bg-gray-100 sm:w-auto bg-[#3159a9] text-white'
+                  >
+                    Contact Us
+                  </a>
+                  <a
+                    href='mailto:venus@venusrings.store'
+                    className='mt-8 block w-full rounded-full border border-transparent px-8 py-3 text-base font-medium hover:bg-gray-100 sm:w-auto bg-[#2a4a8a] text-white'
+                  >
+                    Go Home
                   </a>
                 </div>
               </div>
@@ -272,7 +350,6 @@ export default async function MainPage() {
     </>
   );
 }
-
 const PopularProductsList = async () => {
   const products = await getPopularProducts();
   return (

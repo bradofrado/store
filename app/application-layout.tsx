@@ -27,7 +27,6 @@ import Link from 'next/link';
 import { getCollectionNames } from '@/server/service/collection';
 import { getBuildYourOwnUrl, getCollectionUrl } from './utils';
 import { CollectionName } from '@/types/collection';
-
 interface Navigation {
   categories: {
     id: string;
@@ -41,7 +40,10 @@ interface Navigation {
     sections: {
       id: string;
       name: string;
-      items: { name: string; href: string }[];
+      items: {
+        name: string;
+        href: string;
+      }[];
     }[];
   }[];
   pages: {
@@ -49,19 +51,28 @@ interface Navigation {
     href: string;
   }[];
 }
-
 interface FooterNavigation {
-  shop: { name: string; href: string }[];
-  company: { name: string; href: string }[];
-  account: { name: string; href: string }[];
-  connect: { name: string; href: string }[];
+  shop: {
+    name: string;
+    href: string;
+  }[];
+  company: {
+    name: string;
+    href: string;
+  }[];
+  account: {
+    name: string;
+    href: string;
+  }[];
+  connect: {
+    name: string;
+    href: string;
+  }[];
 }
-
 const socialUrls = {
   tiktok: 'https://www.tiktok.com/@venus_rings_llc',
   instagram: 'https://www.instagram.com/venusrings.llc',
 };
-
 export const ApplicationLayout: React.FunctionComponent<{
   children: React.ReactNode;
   numCartItems: number;
@@ -75,7 +86,10 @@ export const ApplicationLayout: React.FunctionComponent<{
         name: collection.name.replace('Collection', ''),
         href: getCollectionUrl(collection.slug),
       })),
-      { name: 'Build Your Own', href: getBuildYourOwnUrl() },
+      {
+        name: 'Build Your Own',
+        href: getBuildYourOwnUrl(),
+      },
     ],
   };
   const footerNavigation: FooterNavigation = {
@@ -84,20 +98,37 @@ export const ApplicationLayout: React.FunctionComponent<{
       href: getCollectionUrl(collection.slug),
     })),
     company: [
-      { name: 'Terms & Conditions', href: '/terms' },
-      { name: 'Privacy', href: '/privacy' },
+      {
+        name: 'Terms & Conditions',
+        href: '/terms',
+      },
+      {
+        name: 'Privacy',
+        href: '/privacy',
+      },
     ],
     account: [
       //{ name: 'Manage Account', href: '/account' },
-      { name: 'Orders', href: '/orders' },
+      {
+        name: 'Orders',
+        href: '/orders',
+      },
     ],
     connect: [
-      { name: 'Contact Us', href: 'mailto:venus@venusrings.store' },
-      { name: 'Instagram', href: socialUrls.instagram },
-      { name: 'TikTok', href: socialUrls.tiktok },
+      {
+        name: 'Contact Us',
+        href: 'mailto:venus@venusrings.store',
+      },
+      {
+        name: 'Instagram',
+        href: socialUrls.instagram,
+      },
+      {
+        name: 'TikTok',
+        href: socialUrls.tiktok,
+      },
     ],
   };
-
   return (
     <div className='bg-white'>
       {/* Mobile menu */}
@@ -408,7 +439,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                   <span className='ml-3 block text-sm font-medium'>CAD</span>
                   <span className='sr-only'>, change currency</span>
                 </a>
-              </div> */}
+               </div> */}
 
               {/* Search */}
               {/* <div className='flex lg:ml-6'>
@@ -416,7 +447,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                   <span className='sr-only'>Search</span>
                   <MagnifyingGlassIcon aria-hidden='true' className='h-6 w-6' />
                 </a>
-              </div> */}
+               </div> */}
 
               <SignedIn>
                 {' '}
@@ -533,7 +564,6 @@ export const ApplicationLayout: React.FunctionComponent<{
     </div>
   );
 };
-
 function SocialIconX(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox='0 0 16 16' fill='currentColor' {...props}>
@@ -541,7 +571,6 @@ function SocialIconX(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconFacebook(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox='0 0 16 16' fill='currentColor' {...props}>
@@ -553,7 +582,6 @@ function SocialIconFacebook(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox='0 0 16 16' fill='currentColor' {...props}>
@@ -561,7 +589,6 @@ function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconInstagram(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
@@ -589,7 +616,6 @@ function SocialIconInstagram(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconTikTok(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
@@ -610,7 +636,6 @@ function SocialIconTikTok(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialLinks() {
   return (
     <>
@@ -621,14 +646,6 @@ function SocialLinks() {
         className='text-primary data-[hover]:text-primary/75'
       >
         <SocialIconInstagram className='size-4' />
-      </Link>
-      <Link
-        href={socialUrls.tiktok}
-        target='_blank'
-        aria-label='Visit us on LinkedIn'
-        className='text-primary data-[hover]:text-primary/75'
-      >
-        <SocialIconTikTok className='size-4' />
       </Link>
     </>
   );
