@@ -8,7 +8,6 @@ import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
 import { CollectionList } from './collection-list';
 import { getBuildYourOwnUrl } from '../utils';
-
 export default async function MainPage() {
   const collectionNames = await getPopularCollections();
   const collections = (
@@ -16,7 +15,6 @@ export default async function MainPage() {
       collectionNames.map((collection) => getCollectionBySlug(collection.slug))
     )
   ).filter((collection) => collection !== null);
-
   return (
     <>
       {/* Hero section */}
@@ -268,11 +266,85 @@ export default async function MainPage() {
             </div>
           </div>
         </section>
+        <div className='block tracking-[0.6px] list-disc text-[#121212bf] border'>
+          text
+          <div className='block tracking-[0.6px] px-0 py-9 pt-9 pb-9 list-disc text-[#ffffffbf] bg-[#a8beaa] border'>
+            text
+            <div className='block tracking-[0.6px] mx-auto my-0 mr-[120px] ml-[120px] px-[50px] py-0 pr-[50px] pl-[50px] max-w-[1200px] list-disc text-[#ffffffbf] border'>
+              text
+              <div className='block opacity-[0.01] relative tracking-[0.6px] list-disc text-[#ffffffbf] border'>
+                text
+                <div className='flex gap-0 flex-wrap relative tracking-[0.6px] text-[#ffffffbf] border'>
+                  text
+                  <div className='block grow shrink-0 relative tracking-[0.6px] w-[550px] max-w-full text-[#ffffffbf] border'>
+                    text
+                    <div className='block grow shrink-0 relative tracking-[0.6px] pt-0 px-0 pb-[550px] w-[550px] min-h-full max-w-full border border-l border-r border-t border-b overflow-hidden text-[#121212bf] bg-white border-[#1212120c]'>
+                      text
+                      <img
+                        src='//sunbeamplay.co/cdn/shop/files/80183.jpg?v=1732080116&width=1500'
+                        className='absolute top-0 left-0 tracking-[0.6px] w-full h-[550px] max-w-full overflow-clip text-[#121212bf] border'
+                      />
+                    </div>
+                  </div>
+                  <div className='block grow shrink-0 relative tracking-[0.6px] w-[550px] max-w-full text-[#ffffffbf] border'>
+                    text
+                    <div className='flex justify-start items-start flex-col self-start grow shrink-0 relative tracking-[0.6px] px-[70px] pr-[70px] pl-[70px] pt-[60px] pb-[70px] w-[550px] h-[552px] max-w-full overflow-hidden text-[#121212bf] bg-white'>
+                      text
+                      <h2 className='block text-[40px] text-left self-start tracking-[0.6px] leading-[52px] text-[#121212] border'>
+                        Designed with love for little hands
+                      </h2>
+                      <div className='block text-left self-start tracking-[0.6px] mb-0 mx-0 mt-5 text-[#121212bf] border'>
+                        text
+                        <p className='block text-left self-start tracking-[0.6px] mt-5 text-[#121212bf] border'>
+                          We've felt how challenging it can be to keep young
+                          babies engaged in meaningful ways during quiet
+                          moments. That’s what inspired us to design products
+                          that help parents create faith-centered moments with
+                          their little ones, even in their wiggliest, most
+                          curious months.
+                        </p>
+                      </div>
+                      <a
+                        href='https://example.com'
+                        className='text-[15px] text-left flex justify-center self-start opacity-50 relative tracking-[1px] leading-[18px] mb-0 mx-0 mt-[30px] px-[30px] py-0 pr-[30px] pl-[30px] min-w-[122px] min-h-[47px] border-none text-white bg-[#121212] border-white'
+                      >
+                        Our Story
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <style>{`.scroll-trigger.animate--fade-in, .scroll-trigger.animate--slide-in {
+      opacity: 0.01;
+    }
+.scroll-trigger.animate--slide-in {
+      transform: translateY(2rem);
+    }
+.scroll-trigger:not(.scroll-trigger--offscreen).animate--slide-in {
+      animation-duration: 0.6s;
+animation-timing-function: cubic-bezier(0, 0, 0.3, 1);
+animation-iteration-count: 1;
+animation-direction: normal;
+animation-fill-mode: forwards;
+animation-play-state: running;
+animation-name: slideIn;
+animation-timeline: auto;
+animation-range-start: normal;
+animation-range-end: normal;
+animation-delay: calc(var(--animation-order) * 75ms);
+    }
+
+    @keyframes slideIn { 
+  0% { transform: translateY(2rem); opacity: 0.01; }
+  100% { transform: translateY(0px); opacity: 1; }
+}`}</style>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
 }
-
 const PopularProductsList = async () => {
   const products = await getPopularProducts();
   return (
