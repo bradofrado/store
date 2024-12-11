@@ -29,12 +29,24 @@ const config: Config = {
       },
       keyframes: {
         'fade-in': {
-          from: { opacity: '0', transform: 'translateY(-10px)' },
-          to: { opacity: '1', transform: 'none' },
+          from: {
+            opacity: '0',
+            transform: 'translateY(-10px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'none',
+          },
         },
         'fade-up': {
-          from: { opacity: '0', transform: 'translateY(20px)' },
-          to: { opacity: '1', transform: 'none' },
+          from: {
+            opacity: '0',
+            transform: 'translateY(20px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'none',
+          },
         },
       },
       animation: {
