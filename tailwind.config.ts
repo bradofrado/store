@@ -2,7 +2,6 @@ import type { Config } from 'tailwindcss';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 import aspectRatio from '@tailwindcss/aspect-ratio';
-
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -48,10 +47,21 @@ const config: Config = {
             transform: 'none',
           },
         },
+        slideIn: {
+          '0%': {
+            transform: 'translateY(2rem)',
+            opacity: '0.01',
+          },
+          '100%': {
+            transform: 'translateY(0px)',
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'fade-in': 'fade-in 1s var(--animation-delay,0ms) ease forwards',
         'fade-up': 'fade-up 1s var(--animation-delay,0ms) ease forwards',
+        'slide-in': 'slideIn 0.6s cubic-bezier(0, 0, 0.3, 1) forwards',
       },
     },
   },
