@@ -33,7 +33,7 @@
     "class-variance-authority": "^0.7.0",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.3.0",
-    "harmony-ai-editor": "^0.13.0",
+    "harmony-ai-editor": "^0.13.3",
     "harmony-ai-plugin": "^0.2.6",
     "next": "14.2.7",
     "nodemailer": "^6.9.16",
