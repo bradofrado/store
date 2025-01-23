@@ -8,7 +8,6 @@ import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
 import { CollectionList } from './collection-list';
 import { getBuildYourOwnUrl } from '../utils';
-
 export default async function MainPage() {
   const collectionNames = await getPopularCollections();
   const collections = (
@@ -16,7 +15,6 @@ export default async function MainPage() {
       collectionNames.map((collection) => getCollectionBySlug(collection.slug))
     )
   ).filter((collection) => collection !== null);
-
   return (
     <>
       {/* Hero section */}
@@ -45,10 +43,10 @@ export default async function MainPage() {
           </h1>
           <ul className='mt-8 text-lg text-white list-disc pl-8 font-light space-y-2.5'>
             <li>
-              At Venus Rings, we believe that jewelry should be as meaning and
-              unique as the person wearing it. Whether you have a clear idea or
-              just a spark of inspiration, we'll work closely with you to bring
-              your vision to life.
+              At Venus Rings, we believe that jewelry should be as meaningful
+              and unique as the person wearing it. Whether you have a clear idea
+              or just a spark of inspiration, we&#039;ll work closely with you
+              to bring your vision to life.
             </li>
             <li>We use premium materials crafted to last.</li>
             <li>Find your style to fit your unique story.</li>
@@ -143,9 +141,9 @@ export default async function MainPage() {
                         Start with the Material
                       </h3>
                       <p className='text-sm lg:text-base text-white font-light'>
-                        Send us any material (or choose from the 100's we have).
-                        We'll work with you to create the perfect design.
-                        Receive within 4 weeks (or faster)
+                        Send us any material or memento. We&#039;ll work with
+                        you to create the perfect design. Receive within 5 weeks
+                        (or faster)
                       </p>
                     </div>
                   </div>
@@ -191,12 +189,10 @@ export default async function MainPage() {
                           cooper.className
                         )}
                       >
-                        Create an Anything Ring
+                        Create Anything
                       </h3>
                       <p className='text-base text-white font-light'>
-                        Don't let your imagination limit your dream ring. We
-                        take pride in the quality of our bands and want to
-                        ensure that you are getting top-end care.
+                        Don&#039;t let your imagination limit your dream ring. 
                       </p>
                     </div>
                   </div>
@@ -252,9 +248,9 @@ export default async function MainPage() {
                   Reach Out to Us
                 </h2>
                 <p className='mt-3 text-lg font-light text-white'>
-                  We want to make sure you are receiving top-end care and
-                  quality in your rings. If you have any questions or concerns,
-                  do not hesitate to reach out to us, and we will respond soon.
+                  We want to make sure you are receiving quality care in your
+                  rings. If you have any questions or concerns, do not hesitate
+                  to reach out to us, and we will respond soon.
                 </p>
                 <div className='flex mt-4'>
                   <a
@@ -272,7 +268,6 @@ export default async function MainPage() {
     </>
   );
 }
-
 const PopularProductsList = async () => {
   const products = await getPopularProducts();
   return (

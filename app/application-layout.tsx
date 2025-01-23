@@ -27,7 +27,6 @@ import Link from 'next/link';
 import { getCollectionNames } from '@/server/service/collection';
 import { getBuildYourOwnUrl, getCollectionUrl } from './utils';
 import { CollectionName } from '@/types/collection';
-
 interface Navigation {
   categories: {
     id: string;
@@ -41,7 +40,10 @@ interface Navigation {
     sections: {
       id: string;
       name: string;
-      items: { name: string; href: string }[];
+      items: {
+        name: string;
+        href: string;
+      }[];
     }[];
   }[];
   pages: {
@@ -49,19 +51,28 @@ interface Navigation {
     href: string;
   }[];
 }
-
 interface FooterNavigation {
-  shop: { name: string; href: string }[];
-  company: { name: string; href: string }[];
-  account: { name: string; href: string }[];
-  connect: { name: string; href: string }[];
+  shop: {
+    name: string;
+    href: string;
+  }[];
+  company: {
+    name: string;
+    href: string;
+  }[];
+  account: {
+    name: string;
+    href: string;
+  }[];
+  connect: {
+    name: string;
+    href: string;
+  }[];
 }
-
 const socialUrls = {
   tiktok: 'https://www.tiktok.com/@venus_rings_llc',
   instagram: 'https://www.instagram.com/venusrings.llc',
 };
-
 export const ApplicationLayout: React.FunctionComponent<{
   children: React.ReactNode;
   numCartItems: number;
@@ -75,7 +86,10 @@ export const ApplicationLayout: React.FunctionComponent<{
         name: collection.name.replace('Collection', ''),
         href: getCollectionUrl(collection.slug),
       })),
-      { name: 'Build Your Own', href: getBuildYourOwnUrl() },
+      {
+        name: 'Build Your Own',
+        href: getBuildYourOwnUrl(),
+      },
     ],
   };
   const footerNavigation: FooterNavigation = {
@@ -84,20 +98,37 @@ export const ApplicationLayout: React.FunctionComponent<{
       href: getCollectionUrl(collection.slug),
     })),
     company: [
-      { name: 'Terms & Conditions', href: '/terms' },
-      { name: 'Privacy', href: '/privacy' },
+      {
+        name: 'Terms & Conditions',
+        href: '/terms',
+      },
+      {
+        name: 'Privacy',
+        href: '/privacy',
+      },
     ],
     account: [
       //{ name: 'Manage Account', href: '/account' },
-      { name: 'Orders', href: '/orders' },
+      {
+        name: 'Orders',
+        href: '/orders',
+      },
     ],
     connect: [
-      { name: 'Contact Us', href: 'mailto:venus@venusrings.store' },
-      { name: 'Instagram', href: socialUrls.instagram },
-      { name: 'TikTok', href: socialUrls.tiktok },
+      {
+        name: 'Contact Us',
+        href: 'mailto:venus@venusrings.store',
+      },
+      {
+        name: 'Instagram',
+        href: socialUrls.instagram,
+      },
+      {
+        name: 'TikTok',
+        href: socialUrls.tiktok,
+      },
     ],
   };
-
   return (
     <div className='bg-white'>
       {/* Mobile menu */}
@@ -252,7 +283,7 @@ export const ApplicationLayout: React.FunctionComponent<{
 
       <header className='relative bg-white z-10'>
         <p className='flex h-10 items-center justify-center bg-primary px-4 text-sm font-medium text-white sm:px-6 lg:px-8'>
-          Get free shipping on orders over $350 and 20% off your second ring
+          Free shipping on all orders!
         </p>
         <header
           className='grid items-center gap-[normal_20px] grid-cols-[auto_auto_1fr] tracking-[0.6px] mx-auto my-0 mr-auto ml-auto px-4 py-4 lg:px-[50px] lg:py-5 max-w-[1200px]'
@@ -276,7 +307,7 @@ export const ApplicationLayout: React.FunctionComponent<{
             >
               <div className='text-sm inline-block tracking-[0.6px] leading-[0] w-full m-0'>
                 <img
-                  src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus-rings-logo-dQDfoGNVMOc1guAyXyGYM6meMrnNsY.png'
+                  src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Venus%20Logo%20Web-Peq8ktYbF8YSU40vrZqRIlHvRDu3sf.svg'
                   className='text-sm tracking-[0.6px] leading-[0] w-[100px] max-w-full overflow-clip border-gray-200'
                 />
               </div>
@@ -428,7 +459,6 @@ export const ApplicationLayout: React.FunctionComponent<{
     </div>
   );
 };
-
 function SocialIconX(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox='0 0 16 16' fill='currentColor' {...props}>
@@ -436,7 +466,6 @@ function SocialIconX(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconFacebook(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox='0 0 16 16' fill='currentColor' {...props}>
@@ -448,7 +477,6 @@ function SocialIconFacebook(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox='0 0 16 16' fill='currentColor' {...props}>
@@ -456,7 +484,6 @@ function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconInstagram(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
@@ -484,7 +511,6 @@ function SocialIconInstagram(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialIconTikTok(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
@@ -505,7 +531,6 @@ function SocialIconTikTok(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
-
 function SocialLinks() {
   return (
     <>
