@@ -11,11 +11,12 @@ import {
   deleteProduct,
   updatePrice,
   updateProduct,
+  getProduct,
 } from '@/server/repository/product';
 import {
   getCharge,
   getOrderFromCharge,
-  getProduct,
+  getProduct as getStripeProduct,
   validateStripeWebhook,
 } from '@/server/repository/stripe';
 import { checkoutCart } from '@/server/service/cart';
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
   try {
     const event = await validateStripeWebhook(request);
     if (event.type === 'product.created') {
-      const product = await getProduct(event.data.object.id);
+      const product = await getStripeProduct(event.data.object.id);
       if (!product) {
         return new Response('Invalid Product', { status: 400 });
       }
@@ -33,16 +34,19 @@ export async function POST(request: Request) {
 
       return new Response('Created product', { status: 200 });
     } else if (event.type === 'product.updated') {
-      const stripeProduct = event.data.object;
-      const product = await getProduct(event.data.object.id);
-      if (!product) {
+      const stripeProduct = await getStripeProduct(event.data.object.id);
+      if (!stripeProduct) {
         return new Response('Invalid Product', { status: 400 });
+      }
+
+      if (!(await getProduct({ db: prisma, id: stripeProduct.id }))) {
+        return new Response('Product does not exist', { status: 200 });
       }
 
       const updatedProduct = await updateProduct({
         db: prisma,
-        product,
-        id: product.id,
+        product: stripeProduct,
+        id: stripeProduct.id,
       });
 
       return new Response('Updated product', { status: 200 });
@@ -61,9 +65,15 @@ export async function POST(request: Request) {
           status: 400,
         });
       }
-      const product = await getProduct(event.data.object.product as string);
+      const product = await getStripeProduct(
+        event.data.object.product as string
+      );
       if (!product) {
         return new Response('No need to update product', { status: 200 });
+      }
+
+      if (!(await getProduct({ db: prisma, id: product.id }))) {
+        return new Response('Product does not exist', { status: 200 });
       }
 
       const newPrice = await createPrice({
