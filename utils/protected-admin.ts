@@ -1,4 +1,4 @@
-import { auth, clerkClient } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
 import { getAuth } from './auth';
 
@@ -14,7 +14,7 @@ export const protectedAdminPage = <T>(
       notFound();
     }
 
-    const user = await clerkClient.users.getUser(userId);
+    const user = await (await clerkClient()).users.getUser(userId);
     if (!adminEmails.includes(user.emailAddresses[0]?.emailAddress)) {
       notFound();
     }

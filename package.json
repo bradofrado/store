@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "withenv": "dotenv -e .env --",
-    "dev": "npm run withenv next dev",
+    "dev": "NODE_ENV=development npm run withenv next dev",
     "build": "npm run withenv next build",
     "vercel-build": "npm run db:generate && npm run db:deploy && npm run build",
     "start": "npm run withenv next start",
@@ -17,7 +17,7 @@
     "db:studio": "npm run withenv prisma studio"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.31.6",
+    "@clerk/nextjs": "^6.34.1",
     "@headlessui/react": "^2.1.4",
     "@heroicons/react": "^2.1.5",
     "@prisma/client": "^5.19.1",
@@ -35,7 +35,7 @@
     "embla-carousel-react": "^8.3.0",
     "harmony-ai-editor": "^0.13.3",
     "harmony-ai-plugin": "^0.2.6",
-    "next": "14.2.7",
+    "next": "14.2.25",
     "nodemailer": "^6.9.16",
     "react": "^18",
     "react-dom": "^18",
@@ -57,6 +57,6 @@
     "prettier": "^3.3.3",
     "prisma": "^5.19.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "5.9.3"
   }
 }
