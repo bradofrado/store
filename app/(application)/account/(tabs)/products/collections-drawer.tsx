@@ -195,6 +195,14 @@ const EditProducts: React.FunctionComponent<EditProductsProps> = ({
     onChange(selectedProducts);
   };
 
+  const selected = products.filter((product) =>
+    selectedProducts.includes(product.id)
+  );
+
+  const notSelected = products.filter(
+    (product) => !selectedProducts.includes(product.id)
+  );
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -207,8 +215,25 @@ const EditProducts: React.FunctionComponent<EditProductsProps> = ({
             Select the products that should be apart of this collection
           </DialogDescription>
         </DialogHeader>
+        <div className="grid grid-cols-6 gap-2 max-h-[calc(3*(theme('spacing.14')+theme('spacing.2')))] overflow-auto border-b border-gray-300 pb-4">
+          {selected.map((product) => (
+            <Card
+              key={product.id}
+              className='h-20 relative overflow-hidden hover:bg-gray-50 hover:border-gray-300 hover:cursor-pointer'
+              onClick={() => onSelect(product)}
+            >
+              <div className='h-14 w-14'>
+                <img
+                  className='object-cover h-full w-full'
+                  src={product.imageSrc}
+                />
+              </div>
+              <span className='text-xs text-nowrap'>{product.name}</span>
+            </Card>
+          ))}
+        </div>
         <div className="grid grid-cols-6 gap-2 max-h-[calc(3*(theme('spacing.14')+theme('spacing.2')))] overflow-auto">
-          {products.map((product) => (
+          {notSelected.map((product) => (
             <Card
               key={product.id}
               className='h-20 relative overflow-hidden hover:bg-gray-50 hover:border-gray-300 hover:cursor-pointer'

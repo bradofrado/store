@@ -63,25 +63,8 @@ export default async function MainPage() {
         {/* Category section */}
         <section
           aria-labelledby='category-heading'
-          className='pt-24 sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8'
+          className='xl:mx-auto xl:px-16 px-6'
         >
-          <div className='px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0'>
-            <h2
-              className={getClass(
-                `text-4xl tracking-tight lg:text-6xl font-light`,
-                cooper.className
-              )}
-            >
-              Explore our Collections
-            </h2>
-            <a
-              href='/collections'
-              className='block mt-4 sm:mt-0 text-sm font-semibold text-primary hover:text-primary-lighter'
-            >
-              Browse all collections
-              <span aria-hidden='true'> &rarr;</span>
-            </a>
-          </div>
           <div className='mt-4 flow-root'>
             <CollectionList collections={collections} />
           </div>

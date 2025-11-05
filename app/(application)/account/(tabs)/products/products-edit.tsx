@@ -20,6 +20,8 @@ import { Image } from '@/types/image';
 import { Product } from '@/types/product';
 import { useState } from 'react';
 import { UploadImageDialog } from './upload-image';
+import { getProductUrl } from '@/app/utils';
+import { Button } from '@/components/button';
 
 interface ProductsEditProps {
   products: Product[];
@@ -109,13 +111,20 @@ const EditProductDrawer: React.FunctionComponent<EditProductDrawerProps> = ({
               ) : null
             )}
           </div>
-          <UploadImageDialog
-            uploadedImages={uploadedImages}
-            uploadImage={uploadImage}
-            selectImage={(imageUrl) => selectPhoto(product.id, null, imageUrl)}
-          >
-            Add Image
-          </UploadImageDialog>
+          <div>
+            <UploadImageDialog
+              uploadedImages={uploadedImages}
+              uploadImage={uploadImage}
+              selectImage={(imageUrl) =>
+                selectPhoto(product.id, null, imageUrl)
+              }
+            >
+              Add Image
+            </UploadImageDialog>
+          </div>
+          <Button variant='outline' className='block mt-4' asChild>
+            <a href={getProductUrl(product.id)}>Go to product</a>
+          </Button>
         </DrawerBody>
       </DrawerContent>
     </Drawer>

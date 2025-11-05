@@ -19,6 +19,14 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'files.stripe.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'necgqvap1g3t014x.public.blob.vercel-storage.com',
+      },
     ],
   },
 };

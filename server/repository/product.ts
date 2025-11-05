@@ -4,7 +4,11 @@ import { prismaToImage } from './image';
 
 export const productPayload = {
   include: {
-    images: true,
+    images: {
+      orderBy: {
+        primary: 'desc',
+      },
+    },
     prices: true,
   },
 } satisfies Prisma.ProductFindManyArgs;

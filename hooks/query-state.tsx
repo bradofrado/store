@@ -1,10 +1,9 @@
 'use client';
 import { decodeState, encodeState } from '@/utils/common';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   createContext,
   FC,
-  Suspense,
   useCallback,
   useContext,
   useEffect,
@@ -54,8 +53,7 @@ export function useQueryState<T>({
   }, []);
 
   const value: T | undefined = useMemo(() => {
-    if (!searchParams)
-      throw new Error('Must use QueryStateProvider to use useQueryState');
+    if (!searchParams) return defaultValue;
     const val = searchParams.get(key);
     return val ? decodeState<T>(val) : defaultValue;
   }, [key, searchParams, defaultValue]);
@@ -85,7 +83,13 @@ const QueryStateProviderComponent: React.FC<{ children: React.ReactNode }> = ({
   const [forceRerender, setForceRerender] = useState(0);
   const router = useRouter();
 
-  const searchParams = useSearchParams();
+  const searchParams = useMemo(
+    () =>
+      typeof window !== 'undefined'
+        ? new URL(window.location.href).searchParams
+        : undefined,
+    []
+  );
 
   const setUrl = useCallback(
     (newUrl: string) => {
@@ -152,9 +156,5 @@ const QueryStateProviderComponent: React.FC<{ children: React.ReactNode }> = ({
 export const QueryStateProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  return (
-    <Suspense>
-      <QueryStateProviderComponent>{children}</QueryStateProviderComponent>
-    </Suspense>
-  );
+  return <QueryStateProviderComponent>{children}</QueryStateProviderComponent>;
 };
