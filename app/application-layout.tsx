@@ -307,7 +307,7 @@ export const ApplicationLayout: React.FunctionComponent<{
             >
               <div className='text-sm inline-block tracking-[0.6px] leading-[0] w-full m-0'>
                 <img
-                  src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Venus%20Logo%20Web-Peq8ktYbF8YSU40vrZqRIlHvRDu3sf.svg'
+                  src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/Venus%20Logo%20Web.svg'
                   className='text-sm tracking-[0.6px] leading-[0] w-[100px] max-w-full overflow-clip border-gray-200'
                 />
               </div>

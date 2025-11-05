@@ -23,7 +23,7 @@ export default async function MainPage() {
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
           <img
             alt=''
-            src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0-QZID4qLjzwnjGS3UZMFUCU7bDuYBwK.jpg'
+            src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0.jpg'
             className='h-full w-full object-cover object-center flex-nowrap'
           />
         </div>
@@ -110,7 +110,7 @@ export default async function MainPage() {
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0-jVpM4UiMdfBJoTSTX68PRztkJze5Jm.jpg'
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -136,7 +136,7 @@ export default async function MainPage() {
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/DALL%C3%82%C2%B7E%202024-11-14%2010.51.22%20-%20A%20high-quality%20image%20of%20a%20workspace%20for%20handcrafting%20rings.%20The%20scene%20includes%20tools%20like%20pliers,%20a%20jeweler's%20torch,%20a%20hammer,%20and%20a%20magnifying%20glass%20-hU1rFNHOlHR4FZ4xZjMwrnERrVUw4U.webp"
+                        src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/DALL%C3%82%C2%B7E%202024-11-14%2010.51.22%20-%20A%20high-quality%20image%20of%20a%20workspace%20for%20handcrafting%20rings.%20The%20scene%20includes%20tools%20like%20pliers,%20a%20jeweler's%20torch,%20a%20hammer,%20and%20a%20magnifying%20glass%20.webp"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>
@@ -161,7 +161,7 @@ export default async function MainPage() {
                       href={getBuildYourOwnUrl()}
                     >
                       <img
-                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_2-wEK0il0WLX8vk2wAD8nCwWRG9i9aBP.jpg'
+                        src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_2.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
                     </a>

@@ -1,7 +1,7 @@
-import { list, ListBlobResult, put, PutBlobResult } from '@vercel/blob';
+import { copy, list, ListBlobResult, put, PutBlobResult } from '@vercel/blob';
 
 export const uploadImage = async (imageFile: File): Promise<PutBlobResult> => {
-  const blob = await put(imageFile.name, imageFile, {
+  const blob = await put(`venus/${imageFile.name}`, imageFile, {
     access: 'public',
   });
 
@@ -9,6 +9,7 @@ export const uploadImage = async (imageFile: File): Promise<PutBlobResult> => {
 };
 
 export const listImages = async (): Promise<ListBlobResult> => {
-  const images = await list();
+  const images = await list({ prefix: 'venus/' });
+
   return images;
 };
