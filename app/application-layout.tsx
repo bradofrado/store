@@ -90,6 +90,10 @@ export const ApplicationLayout: React.FunctionComponent<{
         name: 'Build Your Own',
         href: getBuildYourOwnUrl(),
       },
+      {
+        name: 'Jewelry',
+        href: '/jewelry',
+      },
     ],
   };
   const footerNavigation: FooterNavigation = {
