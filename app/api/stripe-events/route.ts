@@ -120,8 +120,9 @@ export async function POST(request: Request) {
         stripeId: charge.customer,
       });
       if (!customer) {
+        // Sometimes charges come through that are invoices not associated with the store
         return new Response('Invalid Charge. Customer does not exist', {
-          status: 400,
+          status: 200,
         });
       }
       if (!charge.receipt_url) {
