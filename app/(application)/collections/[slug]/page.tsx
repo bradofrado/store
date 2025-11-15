@@ -20,19 +20,23 @@ export default async function ProductsPage({
       <h2 id='product-heading' className='sr-only'>
         Products
       </h2>
-      <Suspense
-        key={searchParams?.filter}
-        fallback={
-          <div className='flex gap-4'>
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-          </div>
-        }
-      >
-        <ProductList slug={slug} filter={searchParams?.filter} />
-      </Suspense>
+      {searchParams?.filter ? (
+        <Suspense
+          key={searchParams?.filter}
+          fallback={
+            <div className='flex gap-4'>
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          }
+        >
+          <ProductList slug={slug} filter={searchParams?.filter} />
+        </Suspense>
+      ) : (
+        <ProductList slug={slug} filter={undefined} />
+      )}
     </>
   );
 }
