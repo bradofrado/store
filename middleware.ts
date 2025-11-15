@@ -20,15 +20,6 @@ export default clerkMiddleware(async (auth, req) => {
   // For all other routes (public routes), allow access to everyone including crawlers
   const response = NextResponse.next();
 
-  // Set guest ID cookie for unauthenticated users (but allow crawlers to continue)
-  const { userId } = await auth();
-  if (!userId) {
-    const userGuestId = req.cookies.get('user_guest_id');
-    if (!userGuestId) {
-      response.cookies.set('user_guest_id', uuidv4());
-    }
-  }
-
   // Allow all requests to proceed - public routes are accessible to everyone including crawlers
   return response;
 });
