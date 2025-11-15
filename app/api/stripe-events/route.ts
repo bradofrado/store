@@ -40,14 +40,9 @@ export async function POST(request: Request) {
       }
 
       if (!(await getProduct({ db: prisma, id: stripeProduct.id }))) {
-        return new Response('Product does not exist', { status: 200 });
+        await createProduct({ db: prisma, product: stripeProduct });
+        return new Response('Created product', { status: 200 });
       }
-
-      const updatedProduct = await updateProduct({
-        db: prisma,
-        product: stripeProduct,
-        id: stripeProduct.id,
-      });
 
       return new Response('Updated product', { status: 200 });
     } else if (event.type === 'product.deleted') {
