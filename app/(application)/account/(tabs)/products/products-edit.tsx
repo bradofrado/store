@@ -4,24 +4,13 @@ import {
   selectProductImage,
   uploadImage,
 } from '@/app/(application)/actions';
-import { ConfirmButton } from '@/components/confirm-button';
-import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/drawer';
-import { Label } from '@/components/label';
+import { Button } from '@/components/button';
 import { ProductCard } from '@/components/product-card';
 import { useReload } from '@/hooks/reload';
-import { Image } from '@/types/image';
 import { Product } from '@/types/product';
 import { useState } from 'react';
-import { UploadImageDialog } from './upload-image';
-import { getProductUrl } from '@/app/utils';
-import { Button } from '@/components/button';
+import { ProductCreate } from './product-create';
+import { ProductEditFull } from './product-edit-full';
 
 interface ProductsEditProps {
   products: Product[];
@@ -39,9 +28,15 @@ export const ProductsEdit: React.FunctionComponent<ProductsEditProps> = ({
 }) => {
   const reload = useReload();
   const [openProduct, setOpenProduct] = useState<number>(-1);
+  const [createOpen, setCreateOpen] = useState(false);
 
   return (
     <>
+      <div className='mb-4'>
+        <Button type='button' onClick={() => setCreateOpen(true)}>
+          New Product
+        </Button>
+      </div>
       <div className='grid grid-cols-3 gap-2'>
         {products.map((product, i) => (
           <ProductCard
@@ -51,122 +46,23 @@ export const ProductsEdit: React.FunctionComponent<ProductsEditProps> = ({
           />
         ))}
       </div>
-      {openProduct > -1 ? (
-        <EditProductDrawer
+      {openProduct > -1 && (
+        <ProductEditFull
           uploadedImages={uploadedImages}
           product={products[openProduct]}
-          open={openProduct !== undefined}
+          open={true}
           setOpen={(open) => setOpenProduct(open ? 0 : -1)}
           uploadImage={reload(uploadImage)}
           selectPhoto={reload(selectPhoto)}
           deletePhoto={reload(deletePhoto)}
         />
-      ) : null}
+      )}
+      <ProductCreate
+        open={createOpen}
+        setOpen={setCreateOpen}
+        uploadedImages={uploadedImages}
+        uploadImage={reload(uploadImage)}
+      />
     </>
-  );
-};
-
-interface EditProductDrawerProps {
-  uploadedImages: string[];
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  product: Product;
-  uploadImage: typeof uploadImage;
-  selectPhoto: typeof selectProductImage;
-  deletePhoto: typeof deleteProductImage;
-}
-const EditProductDrawer: React.FunctionComponent<EditProductDrawerProps> = ({
-  open,
-  setOpen,
-  product,
-  uploadImage,
-  selectPhoto,
-  deletePhoto,
-  uploadedImages,
-}) => {
-  return (
-    <Drawer direction='right' open={open} onOpenChange={setOpen}>
-      <DrawerContent className='h-screen top-0 right-0 left-auto !mt-0 w-[500px] rounded-none'>
-        <DrawerHeader>
-          <DrawerTitle>Update a Product</DrawerTitle>
-          <DrawerDescription>
-            Primary image is edited through Stripe.
-          </DrawerDescription>
-        </DrawerHeader>
-        <DrawerBody>
-          <Label>Images</Label>
-          <div className='mt-2 flex flex-col gap-2 mb-4'>
-            {product.images.map((image) =>
-              !image.primary ? (
-                <EditImage
-                  key={image.id}
-                  image={image}
-                  onUpload={uploadImage}
-                  onChange={async (imageUrl) => {
-                    await selectPhoto(product.id, image, imageUrl);
-                  }}
-                  onDelete={() => deletePhoto(image.id)}
-                  uploadedImages={uploadedImages}
-                />
-              ) : null
-            )}
-          </div>
-          <div>
-            <UploadImageDialog
-              uploadedImages={uploadedImages}
-              uploadImage={uploadImage}
-              selectImage={(imageUrl) =>
-                selectPhoto(product.id, null, imageUrl)
-              }
-            >
-              Add Image
-            </UploadImageDialog>
-          </div>
-          <Button variant='outline' className='block mt-4' asChild>
-            <a href={getProductUrl(product.id)}>Go to product</a>
-          </Button>
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
-  );
-};
-
-interface EditImageProps {
-  image: Image;
-  onUpload: typeof uploadImage;
-  onChange: (imageUrl: string) => Promise<void>;
-  onDelete: () => void;
-  uploadedImages: string[];
-}
-const EditImage: React.FunctionComponent<EditImageProps> = ({
-  image,
-  onUpload,
-  onChange,
-  onDelete,
-  uploadedImages,
-}) => {
-  return (
-    <div className='flex gap-4 items-center justify-between'>
-      <div className='h-14 w-14'>
-        <img className='object-cover h-full w-full' src={image.imageSrc} />
-      </div>
-      <div className='flex gap-2'>
-        <UploadImageDialog
-          uploadedImages={uploadedImages}
-          uploadImage={onUpload}
-          selectImage={onChange}
-        >
-          Change
-        </UploadImageDialog>
-        <ConfirmButton
-          variant='outline'
-          onConfirm={onDelete}
-          title='Delete Image'
-          description='Are you sure you want to delete this image off the product? This action cannot be reversed.'
-        >
-          Delete
-        </ConfirmButton>
-      </div>
-    </div>
   );
 };

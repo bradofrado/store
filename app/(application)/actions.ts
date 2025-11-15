@@ -131,3 +131,61 @@ export const emailCustomForm = async (
 
   redirect(`${getBuildYourOwnUrl()}?success=true`);
 };
+
+// Product CRUD operations
+export interface CreateProductData {
+  name: string;
+  description: string;
+  price: number;
+  primaryImageUrl: string;
+  variants: Record<string, string[]>;
+  details: string[];
+}
+
+export const createProductAction = async (
+  data: CreateProductData
+): Promise<Product> => {
+  const userId = await getAuth();
+  if (!userId) {
+    throw new Error('Unauthorized');
+  }
+
+  const { createProduct } = await import('@/server/service/product');
+  const product = await createProduct(data);
+
+  return product;
+};
+
+export interface UpdateProductData {
+  id: string;
+  name?: string;
+  description?: string;
+  price?: number;
+  primaryImageUrl?: string;
+  variants?: Record<string, string[]>;
+  details?: string[];
+}
+
+export const updateProductAction = async (
+  data: UpdateProductData
+): Promise<Product> => {
+  const userId = await getAuth();
+  if (!userId) {
+    throw new Error('Unauthorized');
+  }
+
+  const { updateProduct } = await import('@/server/service/product');
+  const product = await updateProduct(data);
+
+  return product;
+};
+
+export const deleteProductAction = async (productId: string): Promise<void> => {
+  const userId = await getAuth();
+  if (!userId) {
+    throw new Error('Unauthorized');
+  }
+
+  const { deleteProduct } = await import('@/server/service/product');
+  await deleteProduct(productId);
+};

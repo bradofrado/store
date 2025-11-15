@@ -248,3 +248,104 @@ export const getShippingRate = async (
 
   return rates.data.length > 0 ? rates.data[0] : null;
 };
+
+interface CreateProductRequest {
+  name: string;
+  description: string;
+  images: string[];
+  metadata: Record<string, string>;
+  price: number;
+}
+export const createStripeProduct = async ({
+  name,
+  description,
+  images,
+  metadata,
+  price,
+}: CreateProductRequest): Promise<stripe.Product> => {
+  // Create the product first
+  const product = await stripeClient.products.create({
+    name,
+    description,
+    images,
+    metadata,
+  });
+
+  // Create the price for the product
+  await stripeClient.prices.create({
+    product: product.id,
+    unit_amount: Math.round(price * 100), // Convert to cents
+    currency: 'usd',
+  });
+
+  // Fetch the product with expanded price
+  const productWithPrice = await getStripeProduct(product.id);
+
+  return productWithPrice;
+};
+
+interface UpdateProductRequest {
+  productId: string;
+  name?: string;
+  description?: string;
+  images?: string[];
+  metadata?: Record<string, string>;
+}
+export const updateStripeProduct = async ({
+  productId,
+  name,
+  description,
+  images,
+  metadata,
+}: UpdateProductRequest): Promise<stripe.Product> => {
+  const product = await stripeClient.products.update(productId, {
+    name,
+    description,
+    images,
+    metadata,
+  });
+
+  return product;
+};
+
+interface UpdateProductPriceRequest {
+  productId: string;
+  oldPriceId?: string;
+  newPrice: number;
+}
+export const updateStripeProductPrice = async ({
+  productId,
+  oldPriceId,
+  newPrice,
+}: UpdateProductPriceRequest): Promise<stripe.Price> => {
+  // Archive the old price if it exists
+  if (oldPriceId) {
+    await stripeClient.prices.update(oldPriceId, {
+      active: false,
+    });
+  }
+
+  // Create a new price
+  const price = await stripeClient.prices.create({
+    product: productId,
+    unit_amount: Math.round(newPrice * 100), // Convert to cents
+    currency: 'usd',
+  });
+
+  // Update the product's default price
+  await stripeClient.products.update(productId, {
+    default_price: price.id,
+  });
+
+  return price;
+};
+
+export const archiveStripeProduct = async (
+  productId: string
+): Promise<stripe.Product> => {
+  const product = await stripeClient.products.update(productId, {
+    active: false,
+  });
+
+  return product;
+};
