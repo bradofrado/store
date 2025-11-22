@@ -39,7 +39,7 @@ export default async function MainPage() {
               cooper.className
             )}
           >
-            Handcrafted rings: Moments turned into memories.
+            Handcrafted rings: Moments turned into memory things.
           </h1>
           <ul className='mt-8 text-lg text-white list-disc pl-8 font-light space-y-2.5'>
             <li>
@@ -49,10 +49,13 @@ export default async function MainPage() {
               to bring your vision to life.
             </li>
             <li>We use premium materials crafted to last.</li>
+            <li className='text-left list-item mt-2.5 border-l-0 border-r-0 border-t-0 border-b-0'>
+              We use it all!
+            </li>
             <li>Find your style to fit your unique story.</li>
           </ul>
           <a
-            href='/collections'
+            href='/test/url'
             className='mt-12 inline-block rounded-full border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100'
           >
             Explore Ring Designs
@@ -88,15 +91,6 @@ export default async function MainPage() {
           <div className='rounded-lg'>
             <div className='relative bg-gray-900 bg-opacity-75 px-6 py-32 sm:px-12 sm:py-20 lg:px-16 rounded-3xl'>
               <div className='relative mx-auto flex flex-col'>
-                <h2
-                  className={getClass(
-                    `text-4xl tracking-tight lg:text-6xl font-light text-white`,
-                    cooper.className
-                  )}
-                >
-                  Have an idea? Start here! Let's create something truly special
-                  just for you.
-                </h2>
                 <p className='text-base mt-3 lg:text-lg font-light text-white'>
                   We can create stunning, custom-designed pieces tailored to
                   your budget, using materials of your choice. Have a
@@ -180,6 +174,15 @@ export default async function MainPage() {
                     </div>
                   </div>
                 </div>
+                <h2
+                  className={getClass(
+                    `text-4xl tracking-tight lg:text-6xl font-light text-white`,
+                    cooper.className
+                  )}
+                >
+                  Have an idea? Start here! Let&#039;s create something truly
+                  special just for you bro!
+                </h2>
                 <div className='flex justify-center items-start'>
                   <a
                     href={getBuildYourOwnUrl()}
