@@ -80,6 +80,42 @@ export default async function MainPage() {
           </div>
         </section>
 
+        {/* Luxury Jewelry Banner section */}
+        <section
+          aria-labelledby='luxury-jewelry-heading'
+          className='pt-24 sm:pt-32'
+        >
+          <div className='relative overflow-hidden'>
+            <img
+              src='/luxury-jewelry-banner.jpg'
+              alt='Luxury jewelry collection for men and women'
+              className='w-full h-auto'
+            />
+            <div className='absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-16'>
+              <div className='mx-auto max-w-3xl flex flex-col items-center text-center'>
+                {/* <h2
+                  id='luxury-jewelry-heading'
+                  className={getClass(
+                    `text-4xl tracking-tight lg:text-6xl font-light text-white`,
+                    cooper.className
+                  )}
+                >
+                  Elevate Your Style
+                </h2>
+                <p className='mt-4 text-xl font-light text-white'>
+                  Luxury Jewelry for Men & Women
+                </p> */}
+                <a
+                  href='/jewelry'
+                  className={`mt-8 inline-block rounded-full border border-transparent bg-white px-8 py-3 font-medium text-gray-900 hover:bg-gray-100 text-2xl ${cooper.className}`}
+                >
+                  Shop Jewelry
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Featured section */}
         <section
           aria-labelledby='social-impact-heading'
