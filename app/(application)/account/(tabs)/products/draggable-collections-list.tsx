@@ -107,6 +107,7 @@ export const DraggableCollectionsList: React.FunctionComponent<
               createCollection={createCollection}
               uploadImage={uploadImage}
               uploadedImages={uploadedImages}
+              collectionCount={items.length}
             />
           </div>
         </SortableContext>

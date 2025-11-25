@@ -12,13 +12,10 @@ import {
   getCollectionNames,
 } from '@/server/service/collection';
 import { listImages } from '@/server/repository/blob';
-import Link from 'next/link';
 import { getProducts } from '@/server/service/product';
-import { CollectionsCreate } from './collections-create';
 import { CollectionsDrawerContainer } from './collections-drawer-container';
 import { Suspense } from 'react';
-import { CollectionName } from '@/types/collection';
-import { Skeleton, SkeletonCard } from '@/components/skeleton';
+import { SkeletonCard } from '@/components/skeleton';
 import { DraggableCollectionsList } from './draggable-collections-list';
 
 interface CollectionsEditProps {

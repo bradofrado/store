@@ -23,10 +23,11 @@ interface CollectionsCreateProps {
   createCollection: typeof createCollectionItem;
   uploadImage: typeof uploadImage;
   uploadedImages: string[];
+  collectionCount: number;
 }
 export const CollectionsCreate: React.FunctionComponent<
   CollectionsCreateProps
-> = ({ createCollection, uploadImage, uploadedImages }) => {
+> = ({ createCollection, uploadImage, uploadedImages, collectionCount }) => {
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
   const [slugTouched, setSlugTouched] = useState(false);
@@ -46,7 +47,13 @@ export const CollectionsCreate: React.FunctionComponent<
   };
 
   const onContinue = async () => {
-    await createCollection({ id: '', name, slug, imageSrc });
+    await createCollection({
+      id: '',
+      name,
+      slug,
+      imageSrc,
+      order: collectionCount,
+    });
     router.push(`?edit-collection=${slug}`);
   };
 
