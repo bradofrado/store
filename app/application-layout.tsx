@@ -9,48 +9,19 @@ import {
   PopoverButton,
   PopoverGroup,
   PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
 } from '@headlessui/react';
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
+  ChevronDownIcon,
 } from '@heroicons/react/24/outline';
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { AvatarDropdown } from '@/components/avatar-dropdown';
 import Link from 'next/link';
 import { getCollectionNames } from '@/server/service/collection';
 import { getBuildYourOwnUrl, getCollectionUrl } from './utils';
-import { CollectionName } from '@/types/collection';
-interface Navigation {
-  categories: {
-    id: string;
-    name: string;
-    featured: {
-      name: string;
-      href: string;
-      imageSrc: string;
-      imageAlt: string;
-    }[];
-    sections: {
-      id: string;
-      name: string;
-      items: {
-        name: string;
-        href: string;
-      }[];
-    }[];
-  }[];
-  pages: {
-    name: string;
-    href: string;
-  }[];
-}
+import { Collection } from '@/types/collection';
 interface FooterNavigation {
   shop: {
     name: string;
@@ -76,31 +47,22 @@ const socialUrls = {
 export const ApplicationLayout: React.FunctionComponent<{
   children: React.ReactNode;
   numCartItems: number;
-  collections: CollectionName[];
-}> = ({ children, numCartItems, collections }) => {
+  forHerCollections: Collection[];
+  forHimCollections: Collection[];
+}> = ({ children, numCartItems, forHerCollections, forHimCollections }) => {
   const [open, setOpen] = useState(false);
-  const navigation: Navigation = {
-    categories: [],
-    pages: [
-      ...collections.map((collection) => ({
+
+  const footerNavigation: FooterNavigation = {
+    shop: [
+      ...forHerCollections.map((collection) => ({
         name: collection.name.replace('Collection', ''),
         href: getCollectionUrl(collection.slug),
       })),
-      {
-        name: 'Build Your Own',
-        href: getBuildYourOwnUrl(),
-      },
-      {
-        name: 'Jewelry',
-        href: '/jewelry',
-      },
+      ...forHimCollections.map((collection) => ({
+        name: collection.name.replace('Collection', ''),
+        href: getCollectionUrl(collection.slug),
+      })),
     ],
-  };
-  const footerNavigation: FooterNavigation = {
-    shop: collections.map((collection) => ({
-      name: collection.name.replace('Collection', ''),
-      href: getCollectionUrl(collection.slug),
-    })),
     company: [
       {
         name: 'Terms & Conditions',
@@ -160,93 +122,43 @@ export const ApplicationLayout: React.FunctionComponent<{
             </div>
 
             {/* Links */}
-            <TabGroup className='mt-2'>
-              <div className='border-b'>
-                <TabList className='-mb-px flex space-x-8 px-4'>
-                  {navigation.categories.map((category) => (
-                    <Tab
-                      key={category.name}
-                      className='flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-primary data-[selected]:text-primary'
+            <div className='space-y-6 border-t px-4 py-6 mt-2'>
+              <div className='flow-root'>
+                <div className='font-medium text-gray-900 mb-4'>For Her</div>
+                <div className='ml-4 space-y-4'>
+                  {forHerCollections.map((collection) => (
+                    <a
+                      key={collection.id}
+                      href={getCollectionUrl(collection.slug)}
+                      className='block text-gray-500'
                     >
-                      {category.name}
-                    </Tab>
+                      {collection.name.replace('Collection', '')}
+                    </a>
                   ))}
-                </TabList>
-              </div>
-              <TabPanels as='div'>
-                {navigation.categories.map((category) => (
-                  <TabPanel
-                    key={category.name}
-                    className='space-y-10 px-4 pb-8 pt-10'
-                  >
-                    <div className='grid grid-cols-2 gap-x-4'>
-                      {category.featured.map((item) => (
-                        <div key={item.name} className='group relative text-sm'>
-                          <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75'>
-                            <img
-                              alt={item.imageAlt}
-                              src={item.imageSrc}
-                              className='object-cover object-center'
-                            />
-                          </div>
-                          <a
-                            href={item.href}
-                            className='mt-6 block font-medium text-gray-900'
-                          >
-                            <span
-                              aria-hidden='true'
-                              className='absolute inset-0 z-10'
-                            />
-                            {item.name}
-                          </a>
-                          <p aria-hidden='true' className='mt-1'>
-                            Shop now
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                    {category.sections.map((section) => (
-                      <div key={section.name}>
-                        <p
-                          id={`${category.id}-${section.id}-heading-mobile`}
-                          className='font-medium text-gray-900'
-                        >
-                          {section.name}
-                        </p>
-                        <ul
-                          role='list'
-                          aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                          className='mt-6 flex flex-col space-y-6'
-                        >
-                          {section.items.map((item) => (
-                            <li key={item.name} className='flow-root'>
-                              <a
-                                href={item.href}
-                                className='-m-2 block p-2 text-gray-500'
-                              >
-                                {item.name}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </TabPanel>
-                ))}
-              </TabPanels>
-            </TabGroup>
-
-            <div className='space-y-6 border-t px-4 py-6'>
-              {navigation.pages.map((page) => (
-                <div key={page.name} className='flow-root'>
-                  <a
-                    href={page.href}
-                    className='-m-2 block p-2 font-medium text-gray-900'
-                  >
-                    {page.name}
-                  </a>
                 </div>
-              ))}
+              </div>
+              <div className='flow-root'>
+                <div className='font-medium text-gray-900 mb-4'>For Him</div>
+                <div className='ml-4 space-y-4'>
+                  {forHimCollections.map((collection) => (
+                    <a
+                      key={collection.id}
+                      href={getCollectionUrl(collection.slug)}
+                      className='block text-gray-500'
+                    >
+                      {collection.name.replace('Collection', '')}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              {/* <div className='flow-root'>
+                <a
+                  href='/about'
+                  className='-m-2 block p-2 font-medium text-gray-900'
+                >
+                  About Us
+                </a>
+              </div> */}
             </div>
 
             <div className='space-y-6 border-t px-4 py-6'>
@@ -318,23 +230,92 @@ export const ApplicationLayout: React.FunctionComponent<{
             </a>
           </h1>
           <nav className='hidden lg:block col-[navigation] row-[navigation] tracking-[0.6px]'>
-            <ul className='inline-flex flex-wrap tracking-[0.6px]'>
-              {navigation.pages.map((page) => (
-                <li
-                  key={page.name}
-                  className='text-left list-item tracking-[0.6px]'
+            <PopoverGroup className='inline-flex flex-wrap tracking-[0.6px]'>
+              {/* For Her Dropdown */}
+              <Popover>
+                <PopoverButton className='text-sm text-left flex items-center tracking-[0.6px] leading-[1.3] p-3 border-none outline-none hover:text-gray-600 data-[open]:text-gray-900'>
+                  <span>For Her</span>
+                </PopoverButton>
+                <PopoverPanel
+                  transition
+                  className='fixed left-0 right-0 z-50 mt-3 w-full transition duration-200 ease-out data-[closed]:-translate-y-4 data-[closed]:opacity-0'
                 >
-                  <a
-                    href={page.href}
-                    className='text-sm text-left flex items-center tracking-[0.6px] leading-[1.3] p-3 pr-3 pl-3 pt-3 pb-3 border-none border-[#121212bf]'
-                  >
-                    <span className='text-sm text-left tracking-[0.6px] leading-[1.3]'>
-                      {page.name}
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+                  <div className='bg-white shadow-lg border-t border-gray-200'>
+                    <div className='max-w-7xl mx-auto px-8 py-12'>
+                      <h3 className='text-sm font-semibold text-gray-900 mb-6'>
+                        Collections
+                      </h3>
+                      <div className='grid grid-cols-3 gap-6'>
+                        {forHerCollections.map((collection) => (
+                          <a
+                            key={collection.id}
+                            href={getCollectionUrl(collection.slug)}
+                            className='group'
+                          >
+                            <div className='aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75'>
+                              <img
+                                src={collection.imageSrc}
+                                alt={collection.name}
+                                className='h-full w-full object-cover object-center'
+                              />
+                            </div>
+                            <p className='mt-4 text-sm font-medium text-gray-900'>
+                              {collection.name.replace('Collection', '')}
+                            </p>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </PopoverPanel>
+              </Popover>
+
+              {/* For Him Dropdown */}
+              <Popover>
+                <PopoverButton className='text-sm text-left flex items-center tracking-[0.6px] leading-[1.3] p-3 border-none outline-none hover:text-gray-600 data-[open]:text-gray-900'>
+                  <span>For Him</span>
+                </PopoverButton>
+                <PopoverPanel
+                  transition
+                  className='fixed left-0 right-0 z-50 mt-3 w-full transition duration-200 ease-out data-[closed]:-translate-y-4 data-[closed]:opacity-0'
+                >
+                  <div className='bg-white shadow-lg border-t border-gray-200'>
+                    <div className='max-w-7xl mx-auto px-8 py-12'>
+                      <h3 className='text-sm font-semibold text-gray-900 mb-6'>
+                        Collections
+                      </h3>
+                      <div className='grid grid-cols-3 gap-6'>
+                        {forHimCollections.map((collection) => (
+                          <a
+                            key={collection.id}
+                            href={getCollectionUrl(collection.slug)}
+                            className='group'
+                          >
+                            <div className='aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75'>
+                              <img
+                                src={collection.imageSrc}
+                                alt={collection.name}
+                                className='h-full w-full object-cover object-center'
+                              />
+                            </div>
+                            <p className='mt-4 text-sm font-medium text-gray-900'>
+                              {collection.name.replace('Collection', '')}
+                            </p>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </PopoverPanel>
+              </Popover>
+
+              {/* <a
+                href='/about'
+                className='text-sm text-left flex items-center tracking-[0.6px] leading-[1.3] p-3 border-none hover:text-gray-600'
+              >
+                About Us
+              </a> */}
+            </PopoverGroup>
           </nav>
           <div className='flex justify-self-end col-[icons] row-[icons] tracking-[0.6px] pl-0 py-0 pr-2 items-center'>
             <div className='tracking-[0.6px]'></div>

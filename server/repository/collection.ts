@@ -150,6 +150,27 @@ export const getCollectionBySlug = async ({
   return prismaToCollection(collection);
 };
 
+interface GetCollectionByNameRequest {
+  db: Db;
+  name: string;
+}
+export const getCollectionByName = async ({
+  db,
+  name,
+}: GetCollectionByNameRequest): Promise<Collection | null> => {
+  const collections = await db.collection.findMany({
+    where: {
+      name: {
+        equals: name,
+      },
+    },
+    ...collectionPayload,
+  });
+  if (!collections[0]) {
+    return null;
+  }
+  return prismaToCollection(collections[0]);
+};
 export const prismaToCollection = (
   collection: Prisma.CollectionGetPayload<typeof collectionPayload>
 ): Collection => {
