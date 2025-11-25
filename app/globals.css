@@ -9,3 +9,55 @@
 :root {
   --muted: 240 4.8% 95.9%;
 }
+
+/* Swiper Collection Carousel Styles */
+.collection-swiper {
+  padding: 2rem 0;
+}
+
+.collection-swiper .swiper-slide-collection {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collection-swiper .swiper-button-next,
+.collection-swiper .swiper-button-prev {
+  color: #1f2937;
+}
+
+.collection-swiper .swiper-button-next:after,
+.collection-swiper .swiper-button-prev:after {
+  font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+  .collection-swiper .swiper-button-next,
+  .collection-swiper .swiper-button-prev {
+    display: none;
+  }
+}
+
+/* Product Grid Animation */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}

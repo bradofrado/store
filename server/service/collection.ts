@@ -90,7 +90,7 @@ export const getPopularCollections = unstable_cache(
   async (): Promise<CollectionName[]> => {
     const collections = await getCollectionNames();
 
-    return collections.slice(0, 5);
+    return collections;
   },
   undefined,
   { revalidate: 60 * 60 }
