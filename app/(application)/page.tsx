@@ -220,7 +220,7 @@ export default async function MainPage() {
           className='pt-24 sm:pt-32 rounded-lg'
         >
           <div className='rounded-lg'>
-            <div className='relative bg-gray-900 bg-opacity-75 px-6 py-32 sm:px-12 sm:py-20 lg:px-16 rounded-3xl'>
+            <div className='relative bg-opacity-75 px-6 py-32 sm:px-12 sm:py-20 lg:px-16 rounded-3xl bg-gray-600'>
               <div className='relative mx-auto flex flex-col'>
                 <h2
                   className={getClass(
@@ -247,6 +247,50 @@ export default async function MainPage() {
             </div>
           </div>
         </section>
+        <div className='block pt-9 pb-9 border-l-0 border-r-0 border-t-0 border-b-0 bg-auto text-[#ffffffbf] bg-gray-600 rounded-3xl mt-16'>
+          <div className='block mr-auto ml-auto mt-0 mb-0 pr-[50px] pl-[50px] pt-0 pb-0 max-w-[1200px] border-l-0 border-r-0 border-t-0 border-b-0'>
+            <div className='block opacity-[0.01] relative border-l-0 border-r-0 border-t-0 border-b-0 z-0 animate-slide-in'>
+              <div className='flex gap-y-0 gap-x-0 flex-wrap mb-0 pr-0 pl-0 pt-0 pb-0 border-l-0 border-r-0 border-t-0 border-b-0 list-none'>
+                <div className='grow shrink-0 relative w-[calc(50%_-_4px)] max-w-full border-l-0 border-r-0 border-t-0 border-b-0'>
+                  <div className='block relative pb-[100%] min-h-full border-l border-r border-t border-b rounded-tl-none rounded-tr-none rounded-bl-none rounded-br-none overflow-x-hidden overflow-y-hidden shadow-none bg-auto text-[#121212bf] bg-white'>
+                    <img
+                      className='block absolute top-0 left-0 w-full h-full max-w-full border-l-0 border-r-0 border-t-0 border-b-0 rounded-tl-none rounded-tr-none rounded-bl-none rounded-br-none overflow-x-clip overflow-y-clip transition-opacity duration-[0.4s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] delay-0 object-cover'
+                      style={{
+                        transitionBehavior: 'normal',
+                      }}
+                      src='https://files.stripe.com/links/MDB8YWNjdF8xUTFaeExHMkJ2T1VpZ21OfGZsX2xpdmVfUTFJT1Nra1VWWkN2cXhRSDVmajRSdEY200R6ZmdsGh'
+                    />
+                  </div>
+                </div>
+                <div className='grow shrink-0 relative w-[calc(50%_-_4px)] max-w-full border-l-0 border-r-0 border-t-0 border-b-0'>
+                  <div className='flex justify-start items-start flex-col self-start relative pr-[70px] pl-[70px] pt-[60px] pb-[70px] h-full border-l-0 border-r-0 border-t-0 border-b-0 rounded-tl-none rounded-tr-none rounded-bl-none rounded-br-none overflow-x-hidden overflow-y-hidden shadow-none z-[1] bg-auto text-[#121212bf] bg-white'>
+                    <h2 className='text-[40px] text-left self-start leading-[1.3] mr-0 ml-0 mt-0 mb-0 border-l-0 border-r-0 border-t-0 border-b-0 text-[#121212]'>
+                      Designed with love for little hands
+                    </h2>
+                    <div className='text-left self-start mt-5 border-l-0 border-r-0 border-t-0 border-b-0'>
+                      <p className='block mr-0 ml-0 mt-0 mb-0 border-l-0 border-r-0 border-t-0 border-b-0'>
+                        We&#039;ve felt how challenging it can be to keep young
+                        babies engaged in meaningful ways during quiet moments.
+                        That’s what inspired us to design products that help
+                        parents create faith-centered moments with their little
+                        ones, even in their wiggliest, most curious months.
+                      </p>
+                    </div>
+                    <a
+                      className='text-[15px] text-left no-underline flex justify-center items-center self-start relative tracking-[1px] leading-[1.2] mt-[30px] pr-[30px] pl-[30px] pt-0 pb-0 min-w-[122px] min-h-[47px] border-l-0 border-r-0 border-t-0 border-b-0 rounded-tl-none rounded-tr-none rounded-bl-none rounded-br-none transition-shadow duration-[0.1s] ease-[ease] delay-0 text-white bg-[#121212]'
+                      style={{
+                        transitionBehavior: 'normal',
+                      }}
+                      href='/pages/about-us'
+                    >
+                      Our Story
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
