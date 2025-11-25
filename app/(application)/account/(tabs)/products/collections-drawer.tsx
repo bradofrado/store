@@ -70,6 +70,7 @@ export const EditCollectionDrawer: React.FunctionComponent<
       name,
       slug,
       imageSrc: imageUrl,
+      order: collection.order,
     });
   };
 

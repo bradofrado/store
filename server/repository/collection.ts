@@ -39,12 +39,16 @@ export const getCollectionNames = async ({
         not: 'all',
       },
     },
+    orderBy: {
+      order: 'asc',
+    },
   });
   return collections.map((collection) => ({
     id: collection.id,
     name: collection.name,
     slug: collection.slug,
     imageSrc: collection.imageSrc,
+    order: collection.order,
   }));
 };
 
@@ -60,6 +64,7 @@ export const createCollection = ({
       slug: collection.slug,
       name: collection.name,
       imageSrc: collection.imageSrc,
+      order: collection.order || 0,
     },
   });
 };
@@ -79,6 +84,7 @@ export const updateCollection = ({
       slug: collection.slug,
       name: collection.name,
       imageSrc: collection.imageSrc,
+      order: collection.order,
     },
   });
 };
@@ -179,6 +185,7 @@ export const prismaToCollection = (
     name: collection.name,
     slug: collection.slug,
     imageSrc: collection.imageSrc,
+    order: collection.order,
     products: collection.products.map(({ product }) =>
       prismaToProduct(product)
     ),

@@ -41,6 +41,7 @@ model Collection {
     updatedAt DateTime @updatedAt
     imageSrc  String
     slug      String @unique
+    order     Int      @default(0)
 }
 
 model CollectionProduct {

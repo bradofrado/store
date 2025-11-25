@@ -22,11 +22,15 @@ export default async function AppLayout({
 
   const forHerCollections = (
     await Promise.all(forHerNames.map((name) => getCollectionByName(name)))
-  ).filter((c): c is NonNullable<typeof c> => c !== null);
+  )
+    .filter((c): c is NonNullable<typeof c> => c !== null)
+    .sort((a, b) => a.order - b.order);
 
   const forHimCollections = (
     await Promise.all(forHimNames.map((name) => getCollectionByName(name)))
-  ).filter((c): c is NonNullable<typeof c> => c !== null);
+  )
+    .filter((c): c is NonNullable<typeof c> => c !== null)
+    .sort((a, b) => a.order - b.order);
 
   return (
     <ApplicationLayout

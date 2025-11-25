@@ -108,6 +108,23 @@ export const createCollectionItem = createCollection;
 
 export const deleteCollectionItem = deleteCollection;
 
+export const reorderCollections = async (
+  collectionIds: string[]
+): Promise<void> => {
+  'use server';
+  const { prisma } = await import('@/prisma');
+
+  // Update each collection's order based on its position in the array
+  await Promise.all(
+    collectionIds.map((id, index) =>
+      prisma.collection.update({
+        where: { id },
+        data: { order: index },
+      })
+    )
+  );
+};
+
 export const emailCustomForm = async (
   _: Product,
   variantSelection: VariantSelection

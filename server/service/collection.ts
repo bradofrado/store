@@ -24,6 +24,7 @@ export const getCollectionBySlug = async (
       imageSrc:
         'https://tailwindui.com/plus/img/ecommerce-images/home-page-01-category-01.jpg',
       products: await getProducts(),
+      order: 0,
     };
   }
   return getCollectionBySlugRepo({ db: prisma, slug });

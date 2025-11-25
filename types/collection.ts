@@ -7,6 +7,7 @@ export const collectionSchema = z.object({
   name: z.string(),
   slug: z.string(),
   imageSrc: z.string(),
+  order: z.number().default(0),
 });
 export type Collection = z.infer<typeof collectionSchema>;
 export type CollectionName = Omit<Collection, 'products'>;
