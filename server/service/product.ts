@@ -10,6 +10,7 @@ import {
 } from '../repository/stripe';
 import { prisma } from '@/prisma';
 import { getCollectionBySlug } from './collection';
+import { unstable_cache } from 'next/cache';
 
 export const getProducts = async (): Promise<Product[]> => {
   const products = await getProductsRepo({ db: prisma });
@@ -17,15 +18,18 @@ export const getProducts = async (): Promise<Product[]> => {
   return products;
 };
 
-export const getPopularProducts = async (): Promise<Product[]> => {
-  const popularCollection = await getCollectionBySlug('best-sellers');
-  const popular = (popularCollection?.products ?? (await getProducts())).slice(
-    0,
-    8
-  );
+export const getPopularProducts = unstable_cache(
+  async (): Promise<Product[]> => {
+    const popularCollection = await getCollectionBySlug('best-sellers');
+    const popular = (
+      popularCollection?.products ?? (await getProducts())
+    ).slice(0, 8);
 
-  return popular;
-};
+    return popular;
+  },
+  undefined,
+  { revalidate: 60 * 60 }
+);
 
 export const getProduct = async (
   productId: string
@@ -78,10 +82,9 @@ export interface CreateProductRequest {
 export const createProduct = async (
   data: CreateProductRequest
 ): Promise<Product> => {
-  const {
-    createStripeProduct,
-    stripeToProduct,
-  } = await import('../repository/stripe');
+  const { createStripeProduct, stripeToProduct } = await import(
+    '../repository/stripe'
+  );
   const { createProduct: createProductRepo } = await import(
     '../repository/product'
   );
@@ -129,15 +132,10 @@ export interface UpdateProductRequest {
 export const updateProduct = async (
   data: UpdateProductRequest
 ): Promise<Product> => {
-  const {
-    updateStripeProduct,
-    updateStripeProductPrice,
-    stripeToProduct,
-  } = await import('../repository/stripe');
-  const {
-    updateProduct: updateProductRepo,
-    getProduct: getProductRepo,
-  } = await import('../repository/product');
+  const { updateStripeProduct, updateStripeProductPrice, stripeToProduct } =
+    await import('../repository/stripe');
+  const { updateProduct: updateProductRepo, getProduct: getProductRepo } =
+    await import('../repository/product');
 
   // Get the current product
   const currentProduct = await getProductRepo({ id: data.id, db: prisma });
@@ -182,9 +180,7 @@ export const updateProduct = async (
   }
 
   // Fetch updated product from Stripe
-  const { getProduct: getStripeProduct } = await import(
-    '../repository/stripe'
-  );
+  const { getProduct: getStripeProduct } = await import('../repository/stripe');
   const updatedStripeProduct = await getStripeProduct(data.id);
   if (!updatedStripeProduct) {
     throw new Error('Failed to fetch updated product from Stripe');

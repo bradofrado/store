@@ -52,6 +52,25 @@ export const getCollectionNames = async ({
   }));
 };
 
+export const getCollections = async ({
+  db,
+}: {
+  db: Db;
+}): Promise<Collection[]> => {
+  const collections = await db.collection.findMany({
+    where: {
+      slug: {
+        not: 'all',
+      },
+    },
+    orderBy: {
+      order: 'asc',
+    },
+    ...collectionPayload,
+  });
+  return collections.map((collection) => prismaToCollection(collection));
+};
+
 export const createCollection = ({
   collection,
   db,

@@ -7,6 +7,7 @@ import {
   createCollection as createCollectionRepo,
   deleteCollection as deleteCollectionRepo,
   getCollectionByName as getCollectionByNameRepo,
+  getCollections,
 } from '../repository/collection';
 import { Collection, CollectionName } from '@/types/collection';
 import { getProducts } from './product';
@@ -29,6 +30,26 @@ export const getCollectionBySlug = async (
   }
   return getCollectionBySlugRepo({ db: prisma, slug });
 };
+
+export const getNavbarCollections = unstable_cache(
+  async () => {
+    // Fetch specific collections for navigation
+    const forHerNames = ['For Her', 'Pressed Flowers', 'Sea Shell'];
+    const forHimNames = ['For Him', 'Black Ceramic', 'Crushed Stones'];
+
+    const forHerCollections = (
+      await Promise.all(forHerNames.map((name) => getCollectionByName(name)))
+    ).filter((c): c is NonNullable<typeof c> => c !== null);
+
+    const forHimCollections = (
+      await Promise.all(forHimNames.map((name) => getCollectionByName(name)))
+    ).filter((c): c is NonNullable<typeof c> => c !== null);
+
+    return { forHerCollections, forHimCollections };
+  },
+  undefined,
+  { revalidate: 60 * 60 }
+);
 
 export const getCollectionByName = async (
   name: string
@@ -87,8 +108,8 @@ export const searchProductsInCollection = async (
 };
 
 export const getPopularCollections = unstable_cache(
-  async (): Promise<CollectionName[]> => {
-    const collections = await getCollectionNames();
+  async (): Promise<Collection[]> => {
+    const collections = await getCollections({ db: prisma });
 
     return collections;
   },

@@ -5,6 +5,7 @@ import { getNumberOfCartItems } from '@/server/service/cart';
 import {
   getCollectionByName,
   getCollectionBySlug,
+  getNavbarCollections,
 } from '@/server/service/collection';
 import { getAuth } from '@/utils/auth';
 
@@ -16,21 +17,7 @@ export default async function AppLayout({
   const userId = await getAuth();
   const cartItems = userId ? await getNumberOfCartItems({ userId: userId }) : 0;
 
-  // Fetch specific collections for navigation
-  const forHerNames = ['For Her', 'Pressed Flowers', 'Sea Shell'];
-  const forHimNames = ['For Him', 'Black Ceramic', 'Crushed Stones'];
-
-  const forHerCollections = (
-    await Promise.all(forHerNames.map((name) => getCollectionByName(name)))
-  )
-    .filter((c): c is NonNullable<typeof c> => c !== null)
-    .sort((a, b) => a.order - b.order);
-
-  const forHimCollections = (
-    await Promise.all(forHimNames.map((name) => getCollectionByName(name)))
-  )
-    .filter((c): c is NonNullable<typeof c> => c !== null)
-    .sort((a, b) => a.order - b.order);
+  const { forHerCollections, forHimCollections } = await getNavbarCollections();
 
   return (
     <ApplicationLayout

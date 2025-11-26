@@ -8,21 +8,20 @@ import { getClass } from '@/utils/common';
 import { cooper } from '../fonts/fonts';
 import { CollectionList } from './collection-list';
 import { getBuildYourOwnUrl } from '../utils';
+import Image from 'next/image';
+
 export default async function MainPage() {
-  const collectionNames = await getPopularCollections();
-  const collections = (
-    await Promise.all(
-      collectionNames.map((collection) => getCollectionBySlug(collection.slug))
-    )
-  ).filter((collection) => collection !== null);
+  const collections = await getPopularCollections();
+
   return (
     <>
       {/* Hero section */}
       <div className='relative bg-gray-900 flex-col'>
         {/* Decorative image and overlay */}
         <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
-          <img
+          <Image
             alt=''
+            fill
             src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/Leonardo_Kino_XL_collection_of_flat_rings_bands_made_from_natu_0.jpg'
             className='h-full w-full object-cover object-center flex-nowrap'
           />
@@ -86,25 +85,16 @@ export default async function MainPage() {
           className='pt-24 sm:pt-32'
         >
           <div className='relative overflow-hidden'>
-            <img
+            <Image
+              width={1584}
+              height={672}
+              style={{ position: undefined }}
               src='/luxury-jewelry-banner.jpg'
               alt='Luxury jewelry collection for men and women'
               className='w-full h-auto'
             />
             <div className='absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-16'>
               <div className='mx-auto max-w-3xl flex flex-col items-center text-center'>
-                {/* <h2
-                  id='luxury-jewelry-heading'
-                  className={getClass(
-                    `text-4xl tracking-tight lg:text-6xl font-light text-white`,
-                    cooper.className
-                  )}
-                >
-                  Elevate Your Style
-                </h2>
-                <p className='mt-4 text-xl font-light text-white'>
-                  Luxury Jewelry for Men & Women
-                </p> */}
                 <a
                   href='/jewelry'
                   className={`mt-8 inline-block rounded-full border border-transparent bg-white px-8 py-3 font-medium text-gray-900 hover:bg-gray-100 text-2xl ${cooper.className}`}
@@ -145,7 +135,10 @@ export default async function MainPage() {
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
                       href={getBuildYourOwnUrl()}
                     >
-                      <img
+                      <Image
+                        width={2048}
+                        height={1143}
+                        alt='Start with the Material'
                         src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_0.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
@@ -171,7 +164,10 @@ export default async function MainPage() {
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
                       href={getBuildYourOwnUrl()}
                     >
-                      <img
+                      <Image
+                        width={1792}
+                        height={1024}
+                        alt='Add your Custom Features'
                         src="https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/DALL%C3%82%C2%B7E%202024-11-14%2010.51.22%20-%20A%20high-quality%20image%20of%20a%20workspace%20for%20handcrafting%20rings.%20The%20scene%20includes%20tools%20like%20pliers,%20a%20jeweler's%20torch,%20a%20hammer,%20and%20a%20magnifying%20glass%20.webp"
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
@@ -196,7 +192,10 @@ export default async function MainPage() {
                       className='w-full aspect-1 bg-gray-200 sm:aspect-none rounded-lg overflow-hidden'
                       href={getBuildYourOwnUrl()}
                     >
-                      <img
+                      <Image
+                        width={2064}
+                        height={1152}
+                        alt='Create Anything'
                         src='https://necgqvap1g3t014x.public.blob.vercel-storage.com/venus/Leonardo_Phoenix_A_visually_striking_collage_of_various_modern_2.jpg'
                         className='h-full w-full object-cover object-center sm:h-full sm:w-full group-hover:scale-105 transition ease-in-out duration-300'
                       />
