@@ -151,6 +151,7 @@ export const ApplicationLayout: React.FunctionComponent<{
                   ))}
                 </div>
               </div>
+              <Link href='/jewelry' className='block text-gray-900'>Jewelry</Link>
               {/* <div className='flow-root'>
                 <a
                   href='/about'
@@ -308,6 +309,10 @@ export const ApplicationLayout: React.FunctionComponent<{
                   </div>
                 </PopoverPanel>
               </Popover>
+
+              <Link href='/jewelry' className='text-sm text-left flex items-center tracking-[0.6px] leading-[1.3] p-3 border-none outline-none hover:text-gray-600 data-[open]:text-gray-900'>
+                <span>Jewelry</span>
+              </Link>
 
               {/* <a
                 href='/about'
